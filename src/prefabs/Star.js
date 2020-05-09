@@ -13,14 +13,20 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         this.setScale(scale);
         this.setDepth(5); //behind bigger satellites, ahead of smaller
     
+
+        this.radius = 100 * scale;
         this.x_velocity = 0;
         this.y_velocity = 0;
         this.x_acceleration = 0;
         this.y_acceleration = 0;
-
-
+        this.trajectory = 0;
+        this.lastTrajectory = 0;
 
         this.speedMod = 50;
+
+        //STATES
+        this.isEnteringOrbit = false;
+        this.isLeavingOrbit = false; 
     }
 
     update() {
@@ -38,6 +44,9 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         this.y_velocity *= this.speedMod; 
 
         this.setVelocity(this.x_velocity, this.y_velocity);
+
+        this.findTrajectory();
+        this.rotation += this.trajectory - this.lastTrajectory;
         
         this.resetAcceleration();
     }
@@ -54,14 +63,27 @@ class Star extends Phaser.Physics.Arcade.Sprite {
 
     normalizeVelocity() {
         if (this.x_velocity * this.y_velocity != 0) 
-            {  
-                let velVectorLength = Math.sqrt(
+        {  
+            let velVectorLength = Math.sqrt(
                 (this.x_velocity * this.x_velocity)
                 +
                 (this.y_velocity * this.y_velocity)
-                );  
+            );  
+
             this.x_velocity /= velVectorLength;
             this.y_velocity /= velVectorLength;
         }
+    }
+
+    findTrajectory() {
+        this.lastTrajectory = this.trajectory;
+        this.trajectory = Math.atan(
+            (this.y_velocity)
+            /
+            (this.x_velocity)
+        );
+        if (this.x_velocity >= 0) this.trajectory += Math.PI;
+
+        //console.log((this.trajectory * 180 / Math.PI) + 90 );
     }
 }

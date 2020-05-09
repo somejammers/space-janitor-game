@@ -13,15 +13,22 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         this.setScale(scale);
 
         //Orbital
-        this.orbital = this.scene.add.sprite(
+        this.orbital = this.scene.physics.add.sprite(
             this.x, this.y, "Orbital"
         );
+        
+        this.orbitalBody = this.orbital.body;
+        this.orbital.setImmovable(true);
         this.orbital.setDepth(3);
 
         this.orbitalRadius = 150 * scale;
         this.orbitalAccelMod = 0.2;
+        this.orbitalEntered = false;
         this.distToStar;
         this.lastDistToStar = 301; //need to have this reset on orbit leave
+
+        this.scene.physics.add.overlap(this.scene.star, this.orbital, this.orbitalEntry, null, this);
+            this.barrierTouched = true;
 
     }
 
@@ -34,10 +41,21 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
             (this.y - this.scene.star.y) * (this.y - this.scene.star.y)
         );
 
-        if //distance btwn star and satellite < orbital_radius
-        ( this.orbitalRadius > this.distToStar ) {
+        this.orbitalRotation();
 
-            console.log("in orbit");
+    }
+
+    orbitalEntry() {
+        this.findClockRotation();
+        //so it runs once
+        this.orbitalBody.setEnable(false);
+        this.orbitalEntered = true;
+    }
+
+    orbitalRotation() {
+        if //distance btwn star and satellite < orbital_radius
+        ( this.orbitalRadius > this.distToStar + this.scene.star.radius ) {
+            
             //This prevents star from spiraling out of orbit, and instead
             //closes in on origin
             this.lastDistToStar = 
@@ -64,6 +82,20 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                 this.orbitalAccelMod * (accelTowardsThisX - this.scene.star.x),
                 this.orbitalAccelMod * (accelTowardsThisY - this.scene.star.y)
             )
+        }
+        //star leaving orbital
+        else if (this.orbitalEntered) {
+            this.orbitalEntered = false;
+            this.orbitalBody.setEnable(true);
+        }
+    }
+
+    findClockRotation() {
+        //if star enters 
+        if (this.scene.star.isEnteringOrbit) {
+
+            this.scene.star.isEnteringOrbit = false;
+            
         }
     }
 }
