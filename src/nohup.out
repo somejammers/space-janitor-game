@@ -1,0 +1,173 @@
+extServer: Server started at http://127.0.0.1:45653/
+updateManager: Checking for updates.
+12:20:53.573 › Checking for update
+12:20:53.590 › Error: Error: ENOENT: no such file or directory, open '/snap/standard-notes/10/resources/app-update.yml'
+updateManager: Exception caught while checking for autoupdates: [Error: ENOENT: no such file or directory, open '/snap/standard-notes/10/resources/app-update.yml'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/snap/standard-notes/10/resources/app-update.yml'
+}
+updateManager: Finished checking for updates. Latest version:
+ 3.4.1 Current version: 3.4.1
+PackageManager: received sync event for: Batch Manager (undefined) (deleted: false), Extensions (undefined) (deleted: false)
+PackageManager: Tried to install a component with no download url: Batch Manager
+PackageManager: Tried to install a component with no download url: Extensions
+archiveManager: Data backup successfully saved: 2020-05-07T19-21-35.184Z.txt
+Discord 0.0.10
+Starting app.
+Starting updater.
+[Modules] Modules initializing
+[Modules] Distribution: remote
+[Modules] Host updates: enabled
+[Modules] Module updates: enabled
+[Modules] Module install path: /home/a/.config/discord/0.0.10/modules
+[Modules] Module installed file path: /home/a/.config/discord/0.0.10/modules/installed.json
+[Modules] Module download path: /home/a/.config/discord/0.0.10/modules/pending
+[1245:0507/123638.710172:ERROR:buffer_manager.cc(488)] [.DisplayCompositor]GL ERROR :GL_INVALID_OPERATION : glBufferData: <- error from previous GL command
+[Modules] No updates to install
+[Modules] Checking for host updates.
+[Modules] Host is up to date.
+[Modules] Checking for module updates at https://discordapp.com/api/modules/stable/versions.json
+[Modules] No module updates available.
+[1245:0507/123639.473213:ERROR:buffer_manager.cc(488)] [.DisplayCompositor]GL ERROR :GL_INVALID_OPERATION : glBufferData: <- error from previous GL command
+[000:000] [1355] (audio_device_pulse_linux.cc:1604): failed to connect context, error=-1
+[000:002] [1355] (audio_device_pulse_linux.cc:145): failed to initialize PulseAudio
+[000:003] [1355] (audio_device_impl.cc:377): Audio device initialization failed.
+[Modules] Starting to install discord_krisp...
+[Modules] Fetching discord_krisp@0 from https://discordapp.com/api/modules/stable/discord_krisp/0
+[Modules] Streaming discord_krisp@0 to /home/a/.config/discord/0.0.10/modules/pending/discord_krisp-0.zip
+Error downloading with electron net: HTTP Error: Status Code 403
+Falling back to node net library..
+(electron) 'isAccessibilitySupportEnabled function' is deprecated and will be removed. Please use 'accessibilitySupportEnabled property' instead.
+[Modules] Failed fetching module discord_krisp@0: Error: HTTP Error: Status Code 403
+[Modules] Finished module downloads. [success: 0] [failure: 1]
+(electron) 'setBadgeCount function' is deprecated and will be removed. Please use 'badgeCount property' instead.
+[Modules] Checking for host updates.
+[Modules] Host is up to date.
+[Modules] Checking for module updates at https://discordapp.com/api/modules/stable/versions.json
+[Modules] No module updates available.
+[Child 9759, MediaDecoderStateMachine #1] WARNING: Decoder=7f48ef30e400 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 9759, MediaDecoderStateMachine #1] WARNING: Decoder=7f48ef30e400 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 9759, MediaDecoderStateMachine #1] WARNING: Decoder=7f48ef30e400 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 9759, MediaDecoderStateMachine #1] WARNING: Decoder=7f48ef30e400 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 9759, MediaDecoderStateMachine #1] WARNING: Decoder=7f48ef30e400 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 9759, MediaDecoderStateMachine #1] WARNING: Decoder=7f48ef30e400 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 9759, MediaDecoderStateMachine #1] WARNING: Decoder=7f48ef30e400 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 9759, MediaDecoderStateMachine #1] WARNING: Decoder=7f48ef30e400 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 9759, MediaDecoderStateMachine #1] WARNING: Decoder=7f48ef30e400 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 9759, MediaDecoderStateMachine #1] WARNING: Decoder=7f48ef30e400 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 9759, MediaDecoderStateMachine #1] WARNING: Decoder=7f48ef30e400 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 9759, MediaDecoderStateMachine #1] WARNING: Decoder=7f48ef30e400 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 9759, MediaDecoderStateMachine #1] WARNING: Decoder=7f48dbe8b800 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 9759, MediaDecoderStateMachine #1] WARNING: Decoder=7f48dbe8b800 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 9759, MediaDecoderStateMachine #1] WARNING: Decoder=7f48dbe8b800 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 9759, MediaDecoderStateMachine #1] WARNING: Decoder=7f48dbe8b800 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 9759, MediaDecoderStateMachine #1] WARNING: Decoder=7f48dbe8b800 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 9759, MediaDecoderStateMachine #1] WARNING: Decoder=7f48dbe8b800 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 9759, MediaDecoderStateMachine #1] WARNING: Decoder=7f48dbe8b800 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 9759, MediaDecoderStateMachine #1] WARNING: Decoder=7f48dc633000 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 9759, MediaDecoderStateMachine #1] WARNING: Decoder=7f48dc633000 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 9759, MediaDecoderStateMachine #1] WARNING: Decoder=7f48dc633000 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x6B0029,name=PNecko::Msg_RemoveRequestContext) Channel closing: too late to send/recv, messages will be lost
+
+Discord 0.0.10
+Starting app.
+Another instance exists. Quitting.
+[Modules] Checking for host updates.
+[Modules] Host is up to date.
+[Modules] Checking for module updates at https://discordapp.com/api/modules/stable/versions.json
+[Modules] No module updates available.
+
+(discord:1179): libnotify-WARNING **: 15:52:57.545: Failed to connect to proxy
+
+(discord:1179): libnotify-WARNING **: 15:52:57.550: Failed to connect to proxy
+
+(discord:1179): libnotify-WARNING **: 15:52:57.554: Failed to connect to proxy
+
+(discord:1179): libnotify-WARNING **: 15:54:07.532: Failed to connect to proxy
+
+(discord:1179): libnotify-WARNING **: 15:54:07.534: Failed to connect to proxy
+
+(discord:1179): libnotify-WARNING **: 15:54:07.537: Failed to connect to proxy
+16:33:05 INFO: Opening in existing instance
+16:35:52 INFO: Opening in existing instance
+[Modules] Checking for host updates.
+[Modules] Host is up to date.
+[Modules] Checking for module updates at https://discordapp.com/api/modules/stable/versions.json
+[Modules] No module updates available.
+[Modules] Checking for host updates.
+[Modules] Host is up to date.
+[Modules] Checking for module updates at https://discordapp.com/api/modules/stable/versions.json
+[Modules] No module updates available.
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x6B0029,name=PNecko::Msg_RemoveRequestContext) Channel closing: too late to send/recv, messages will be lost
+
+[Modules] Checking for host updates.
+[Modules] Host is up to date.
+[Modules] Checking for module updates at https://discordapp.com/api/modules/stable/versions.json
+[Modules] No module updates available.
+[Child 28532, MediaDecoderStateMachine #1] WARNING: Decoder=7f1b7ad1e800 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 28532, MediaDecoderStateMachine #1] WARNING: Decoder=7f1b7ad1e800 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 28532, MediaDecoderStateMachine #1] WARNING: Decoder=7f1b7ad1e800 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 28532, MediaDecoderStateMachine #1] WARNING: Decoder=7f1b7ad1e800 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 28532, MediaDecoderStateMachine #1] WARNING: Decoder=7f1b7ad1e800 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 28532, MediaDecoderStateMachine #1] WARNING: Decoder=7f1b7ad1e800 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 28532, MediaDecoderStateMachine #1] WARNING: Decoder=7f1b7ad1e800 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 28532, MediaDecoderStateMachine #1] WARNING: Decoder=7f1b62a8e800 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 28532, MediaDecoderStateMachine #1] WARNING: Decoder=7f1b62a9a800 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 28532, MediaDecoderStateMachine #1] WARNING: Decoder=7f1b62a9a800 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Modules] Checking for host updates.
+[Modules] Host is up to date.
+[Modules] Checking for module updates at https://discordapp.com/api/modules/stable/versions.json
+[Modules] No module updates available.
+[Child 20393, MediaDecoderStateMachine #1] WARNING: Decoder=7f3597be7000 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 20393, MediaDecoderStateMachine #1] WARNING: Decoder=7f3597be7000 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 20393, MediaDecoderStateMachine #1] WARNING: Decoder=7f3597be7000 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 20393, MediaDecoderStateMachine #1] WARNING: Decoder=7f3597be7000 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 20393, MediaDecoderStateMachine #1] WARNING: Decoder=7f3597be7000 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 20393, MediaDecoderStateMachine #1] WARNING: Decoder=7f3597be7000 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 20393, MediaDecoderStateMachine #1] WARNING: Decoder=7f3597be7000 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 20393, MediaDecoderStateMachine #1] WARNING: Decoder=7f3597be7000 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 20393, MediaDecoderStateMachine #1] WARNING: Decoder=7f3597be7000 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 20393, MediaDecoderStateMachine #1] WARNING: Decoder=7f3597be7000 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 20393, MediaDecoderStateMachine #1] WARNING: Decoder=7f3597be7000 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 20393, MediaDecoderStateMachine #1] WARNING: Decoder=7f3597be7000 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 20393, MediaDecoderStateMachine #1] WARNING: Decoder=7f3588f2b800 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 20393, MediaDecoderStateMachine #1] WARNING: Decoder=7f3588f2b800 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-DqkhD2/firefox-76.0+build2/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Modules] Checking for host updates.
+[Modules] Host is up to date.
+[Modules] Checking for module updates at https://discordapp.com/api/modules/stable/versions.json
+[Modules] No module updates available.
+
+(discord:1179): libnotify-WARNING **: 21:18:17.237: Failed to connect to proxy
+
+(discord:1179): libnotify-WARNING **: 21:18:17.241: Failed to connect to proxy
+
+(discord:1179): libnotify-WARNING **: 21:18:17.244: Failed to connect to proxy
+
+(discord:1179): libnotify-WARNING **: 21:18:18.764: Failed to connect to proxy
+
+(discord:1179): libnotify-WARNING **: 21:18:18.768: Failed to connect to proxy
+
+(discord:1179): libnotify-WARNING **: 21:18:18.770: Failed to connect to proxy
+
+(discord:1179): libnotify-WARNING **: 21:18:22.311: Failed to connect to proxy
+
+(discord:1179): libnotify-WARNING **: 21:18:22.316: Failed to connect to proxy
+
+(discord:1179): libnotify-WARNING **: 21:18:22.319: Failed to connect to proxy
+
+(discord:1179): libnotify-WARNING **: 21:21:10.064: Failed to connect to proxy
+
+(discord:1179): libnotify-WARNING **: 21:21:10.069: Failed to connect to proxy
+
+(discord:1179): libnotify-WARNING **: 21:21:10.072: Failed to connect to proxy
+
+(discord:1179): libnotify-WARNING **: 21:21:25.424: Failed to connect to proxy
+
+(discord:1179): libnotify-WARNING **: 21:21:25.429: Failed to connect to proxy
+
+(discord:1179): libnotify-WARNING **: 21:21:25.432: Failed to connect to proxy
+xcb_connection_has_error() returned true
