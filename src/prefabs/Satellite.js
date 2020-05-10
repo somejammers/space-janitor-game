@@ -109,7 +109,18 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
     }
 
     findClockRotation() {
-        //if star enters 
+        //uses velocity vector & distanceToStar vector
+
+        let distVecX = this.x - this.scene.star.x;
+        let distVecY = this.y - this.scene.star.y;
+        let crossZ = (this.scene.star.x_velocity * distVecY)
+                     -
+                     (this.scene.star.y_velocity * distVecX);
+
+        if(crossZ >= 0) this.clockRotation = 1;
+        else this.clockRotation = -1;
         
     }
+
+    
 }

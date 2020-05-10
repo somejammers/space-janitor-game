@@ -325,3 +325,28 @@ Falling back to node net library..
 [Modules] Host is up to date.
 [Modules] Checking for module updates at https://discordapp.com/api/modules/stable/versions.json
 [Modules] No module updates available.
+extServer: Server started at http://127.0.0.1:45653/
+updateManager: Checking for updates.
+18:18:08.469 › Checking for update
+18:18:08.484 › Error: Error: ENOENT: no such file or directory, open '/snap/standard-notes/10/resources/app-update.yml'
+updateManager: Exception caught while checking for autoupdates: [Error: ENOENT: no such file or directory, open '/snap/standard-notes/10/resources/app-update.yml'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/snap/standard-notes/10/resources/app-update.yml'
+}
+updateManager: Error: net::ERR_INTERNET_DISCONNECTED
+    at SimpleURLLoaderWrapper.<anonymous> (electron/js2c/browser_init.js:2519:21)
+    at SimpleURLLoaderWrapper.emit (events.js:210:5)
+PackageManager: received sync event for: Batch Manager (undefined) (deleted: false), Extensions (undefined) (deleted: false)
+PackageManager: Tried to install a component with no download url: Batch Manager
+PackageManager: Tried to install a component with no download url: Extensions
+archiveManager: Data backup successfully saved: 2020-05-10T01-19-21.520Z.txt
+[Modules] Checking for host updates.
+[Modules] Host is up to date.
+[Modules] Checking for module updates at https://discordapp.com/api/modules/stable/versions.json
+[Modules] No module updates available.
+[Modules] Checking for host updates.
+[Modules] Host is up to date.
+[Modules] Checking for module updates at https://discordapp.com/api/modules/stable/versions.json
+[Modules] No module updates available.
