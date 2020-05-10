@@ -10,6 +10,8 @@ class Level1 extends Phaser.Scene {
 
     create() {
 
+        keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
+
         console.log("in level 1");
         
         //Star

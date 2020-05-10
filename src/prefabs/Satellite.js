@@ -12,6 +12,8 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         else this.setDepth(4);
         this.setScale(scale);
 
+        this.setVisible(false);
+
         //Orbital
         this.orbital = this.scene.physics.add.sprite(
             this.x, this.y, "Orbital"
@@ -21,15 +23,19 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         this.orbital.setImmovable(true);
         this.orbital.setDepth(3);
 
-        this.orbitalRadius = 150 * scale;
-        this.orbitalAccelMod = 0.2;
+        this.orbitalRadius = 200 * scale;
+        this.orbitalAccelModDefault = 0.03;
+        this.orbitalAccelModScaling = 1 + 0.0005 * this.scene.star.speedMod;
+        this.orbitalAccelMod = this.orbitalAccelModDefault;
         this.orbitalEntered = false;
+        this.canLeaveOrbit = false;
         this.distToStar;
         this.lastDistToStar = 301; //need to have this reset on orbit leave
+        this.clockRotation = 1;
+        this.isOrbitingSmoothly = false;
 
         this.scene.physics.add.overlap(this.scene.star, this.orbital, this.orbitalEntry, null, this);
             this.barrierTouched = true;
-
     }
 
     update() {
@@ -50,11 +56,12 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         //so it runs once
         this.orbitalBody.setEnable(false);
         this.orbitalEntered = true;
+        this.starIsOrbiting = true;
     }
 
     orbitalRotation() {
         if //distance btwn star and satellite < orbital_radius
-        ( this.orbitalRadius > this.distToStar + this.scene.star.radius ) {
+        ( this.starIsOrbiting && keyDOWN.isDown ) { //&& key is down
             
             //This prevents star from spiraling out of orbit, and instead
             //closes in on origin
@@ -66,36 +73,43 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
             //https://en.wikipedia.org/wiki/Circle#Equations
             //parametric form: x = origin.x + radius * cos(0~2pi)
             // positive angleOffset for counter clockwise
-            let angleOffset = 1 * Math.PI / 180; //convert 10 deg to rad
+            let angleOffset = this.clockRotation * (this.scene.star.speedMod / 40) * Math.PI / 180; //tweak this for difficulty scaling
             let angle = Math.atan(
                 (this.y - this.scene.star.y)
                 /
                 (this.x - this.scene.star.x)
             );
-
             if (this.x - this.scene.star.x >= 0) angle += Math.PI;
             
             let accelTowardsThisX = this.x + this.lastDistToStar * Math.cos(angle + angleOffset);
             let accelTowardsThisY = this.y + this.lastDistToStar * Math.sin(angle + angleOffset);
 
-            this.scene.star.addAcceleration(
-                this.orbitalAccelMod * (accelTowardsThisX - this.scene.star.x),
-                this.orbitalAccelMod * (accelTowardsThisY - this.scene.star.y)
-            )
+            let addAccelX = this.orbitalAccelMod * (accelTowardsThisX - this.scene.star.x);
+            let addAccelY = this.orbitalAccelMod * (accelTowardsThisY - this.scene.star.y);
+
+            this.orbitalAccelMod *= this.orbitalAccelModScaling;
+            this.scene.star.addAcceleration(addAccelX, addAccelY);
+        
+            //helps the asynchonicity, but might make it lag. 
+            this.scene.star.update();
+
+            this.canLeaveOrbit = true;
+
         }
         //star leaving orbital
-        else if (this.orbitalEntered) {
+        else if (this.canLeaveOrbit || this.distToStar - 2 * this.scene.star.radius > this.orbitalRadius) {
+            console.log("leaving orbit");
+            this.starIsOrbiting = false;
             this.orbitalEntered = false;
-            this.orbitalBody.setEnable(true);
+            this.orbitalAccelMod = this.orbitalAccelModDefault;
+            if (this.distToStar - 2 * this.scene.star.radius > this.orbitalRadius)
+                this.orbitalBody.setEnable(true);
+                this.canLeaveOrbit = false;
         }
     }
 
     findClockRotation() {
         //if star enters 
-        if (this.scene.star.isEnteringOrbit) {
-
-            this.scene.star.isEnteringOrbit = false;
-            
-        }
+        
     }
 }

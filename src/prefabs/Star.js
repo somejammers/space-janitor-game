@@ -22,7 +22,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         this.trajectory = 0;
         this.lastTrajectory = 0;
 
-        this.speedMod = 50;
+        this.speedMod = 100;
 
         //STATES
         this.isEnteringOrbit = false;
@@ -49,6 +49,11 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         this.rotation += this.trajectory - this.lastTrajectory;
         
         this.resetAcceleration();
+    }
+
+    changeVelocity(x, y) {
+        this.x_velocity = x;
+        this.y_velocity = y;
     }
 
     addAcceleration(x, y) {
@@ -84,6 +89,6 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         );
         if (this.x_velocity >= 0) this.trajectory += Math.PI;
 
-        //console.log((this.trajectory * 180 / Math.PI) + 90 );
+        // console.log((this.trajectory * 180 / Math.PI));
     }
 }
