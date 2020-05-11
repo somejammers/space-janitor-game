@@ -136,3 +136,27 @@ Falling back to node net library..
 [Modules] Finished module downloads. [success: 0] [failure: 1]
 (electron) 'setBadgeCount function' is deprecated and will be removed. Please use 'badgeCount property' instead.
 18:24:58 INFO: Opening in existing instance
+
+(discord:1575): libnotify-WARNING **: 18:50:41.291: Failed to connect to proxy
+
+(discord:1575): libnotify-WARNING **: 18:50:41.296: Failed to connect to proxy
+
+(discord:1575): libnotify-WARNING **: 18:50:41.300: Failed to connect to proxy
+
+(discord:1575): libnotify-WARNING **: 18:50:44.524: Failed to connect to proxy
+
+(discord:1575): libnotify-WARNING **: 18:50:44.526: Failed to connect to proxy
+
+(discord:1575): libnotify-WARNING **: 18:50:44.528: Failed to connect to proxy
+
+(discord:1575): libnotify-WARNING **: 18:50:47.530: Failed to connect to proxy
+
+(discord:1575): libnotify-WARNING **: 18:50:47.531: Failed to connect to proxy
+
+(discord:1575): libnotify-WARNING **: 18:50:47.533: Failed to connect to proxy
+
+(discord:1575): libnotify-WARNING **: 18:50:51.772: Failed to connect to proxy
+
+(discord:1575): libnotify-WARNING **: 18:50:51.776: Failed to connect to proxy
+
+(discord:1575): libnotify-WARNING **: 18:50:51.777: Failed to connect to proxy

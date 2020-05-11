@@ -77,7 +77,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
 
     orbitalRotation() {
         if //distance btwn star and satellite < orbital_radius
-        ( this.canReEnterOrbit && keySPACE.isDown ) 
+        ( this.canReEnterOrbit && keySPACE.isDown && this.distToStar - 2*this.scene.star.radius/4 <= this.orbitalRadius) 
         { //&& key is down
                         //This prevents star from spiraling out of orbit, and instead
             //closes in on origin
@@ -129,8 +129,12 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         }
         //star leaving orbital
         else if (this.canStopOrbiting) {
+            console.log("reset");
             this.lastDistToStar = this.distToStar;
-            if (this.distToStar - 1.5 * this.scene.star.radius > this.orbitalRadius) {
+            //balance this later
+            this.orbitalAccelMod = this.orbitalAccelModDefault * 10; //not a full reset of accel but a bit better
+            this.currRotationDuration = 0;
+            if (this.distToStar - 2*this.scene.star.radius/4 > this.orbitalRadius) {
                 this.canReEnterOrbit = false;       
                 this.orbitalAccelMod = this.orbitalAccelModDefault;
                 this.orbitalEntered = false;
