@@ -28,4 +28,4 @@ let config = {
 
 let game = new Phaser.Game(config);
 
-let keyDOWN;
+let keySPACE;

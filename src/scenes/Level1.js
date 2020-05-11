@@ -10,7 +10,7 @@ class Level1 extends Phaser.Scene {
 
     create() {
 
-        keyDOWN = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.DOWN);
+        keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
         console.log("in level 1");
         

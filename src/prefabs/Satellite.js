@@ -73,7 +73,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
 
     orbitalRotation() {
         if //distance btwn star and satellite < orbital_radius
-        ( this.canReEnterOrbit && keyDOWN.isDown ) 
+        ( this.canReEnterOrbit && keySPACE.isDown ) 
         { //&& key is down
                         //This prevents star from spiraling out of orbit, and instead
             //closes in on origin
