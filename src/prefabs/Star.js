@@ -24,9 +24,6 @@ class Star extends Phaser.Physics.Arcade.Sprite {
 
         this.speedMod = 100;
 
-        //STATES
-        this.isEnteringOrbit = false;
-        this.isLeavingOrbit = false; 
     }
 
     update() {

@@ -18,6 +18,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         this.orbital = this.scene.physics.add.sprite(
             this.x, this.y, "Orbital"
         );
+        this.orbital.setScale(scale);
         
         this.orbitalBody = this.orbital.body;
         this.orbital.setImmovable(true);
@@ -28,11 +29,13 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         this.orbitalAccelModScaling = 1 + 0.0005 * this.scene.star.speedMod;
         this.orbitalAccelMod = this.orbitalAccelModDefault;
         this.orbitalEntered = false;
-        this.canLeaveOrbit = false;
+        this.canLeaveOrbital = false;
         this.distToStar;
-        this.lastDistToStar = 301; //need to have this reset on orbit leave
+        this.lastDistToStar; //need to have this reset on orbit leave
         this.clockRotation = 1;
         this.isOrbitingSmoothly = false;
+        this.canReEnterOrbit = false;
+        this.currRotationDuration = 0;
 
         this.scene.physics.add.overlap(this.scene.star, this.orbital, this.orbitalEntry, null, this);
             this.barrierTouched = true;
@@ -52,22 +55,31 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
     }
 
     orbitalEntry() {
-        this.findClockRotation();
-        //so it runs once
-        this.orbitalBody.setEnable(false);
-        this.orbitalEntered = true;
-        this.starIsOrbiting = true;
+        // to make sure this runs once
+        if (!this.orbitalEntered) {
+            console.log("has entered orbit");
+
+            this.findClockRotation();
+            this.orbitalBody.setEnable(false);
+            this.orbitalEntered = true;
+            this.canReEnterOrbit = true;
+        }
     }
 
     orbitalRotation() {
-        if //distance btwn star and satellite < orbital_radius
-        ( this.starIsOrbiting && keyDOWN.isDown ) { //&& key is down
-            
-            //This prevents star from spiraling out of orbit, and instead
+        if (!this.canReEnterOrbit) this.lastDistToStar = this.distToStar;
+        else if //distance btwn star and satellite < orbital_radius
+        ( this.canReEnterOrbit && keyDOWN.isDown ) { //&& key is down
+                        //This prevents star from spiraling out of orbit, and instead
             //closes in on origin
+
+            //The currRotationDuration check is required for smooth orbitting, since the acceleration to
+            //  lastDistStar makes going backwards really jumpy
             this.lastDistToStar = 
-                this.lastDistToStar <= this.distToStar ? 
+                this.lastDistToStar <= this.distToStar && this.currRotationDuration > 90 ? 
                 this.lastDistToStar : this.distToStar;
+
+            this.currRotationDuration ++;
             //accelerate towards next point on parametric equation on circumference
             // next point is taken every frame, based on the current distToStar as radius
             //https://en.wikipedia.org/wiki/Circle#Equations
@@ -87,24 +99,34 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
             let addAccelX = this.orbitalAccelMod * (accelTowardsThisX - this.scene.star.x);
             let addAccelY = this.orbitalAccelMod * (accelTowardsThisY - this.scene.star.y);
 
+            let distCorrection = Math.sqrt(
+                (accelTowardsThisX - this.scene.star.x) * (accelTowardsThisX - this.scene.star.x)
+                +
+                (accelTowardsThisY - this.scene.star.y) * (accelTowardsThisY - this.scene.star.y)
+            ) / 2;
+            
             this.orbitalAccelMod *= this.orbitalAccelModScaling;
-            this.scene.star.addAcceleration(addAccelX, addAccelY);
+            this.scene.star.addAcceleration(addAccelX * distCorrection, addAccelY * distCorrection);
         
             //helps the asynchonicity, but might make it lag. 
             this.scene.star.update();
 
-            this.canLeaveOrbit = true;
+            this.canLeaveOrbital = true;
 
         }
         //star leaving orbital
-        else if (this.canLeaveOrbit || this.distToStar - 2 * this.scene.star.radius > this.orbitalRadius) {
-            console.log("leaving orbit");
-            this.starIsOrbiting = false;
-            this.orbitalEntered = false;
+        else if (this.canLeaveOrbital) {
+            console.log("let go of key");
             this.orbitalAccelMod = this.orbitalAccelModDefault;
-            if (this.distToStar - 2 * this.scene.star.radius > this.orbitalRadius)
+            this.canReEnterOrbit = false;
+            // actually leaves orbital
+            if (this.distToStar - 1.5 * this.scene.star.radius > this.orbitalRadius) {
+                console.log("has left orbit");
+                this.orbitalEntered = false;
                 this.orbitalBody.setEnable(true);
-                this.canLeaveOrbit = false;
+                this.canLeaveOrbital = false;
+                this.currRotationDuration = 0;
+            }
         }
     }
 

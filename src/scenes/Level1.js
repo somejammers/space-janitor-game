@@ -22,7 +22,11 @@ class Level1 extends Phaser.Scene {
         );
 
         this.satellite = new Satellite(
-            this, canvas_width/2, canvas_height/2, 1, "Satellite"
+            this, canvas_width/1.5, canvas_height/2, 1, "Satellite"
+        );
+
+        this.satellite_2 = new Satellite(
+            this, canvas_width/9, canvas_height/2, 1, "Satellite"
         );
     }
 

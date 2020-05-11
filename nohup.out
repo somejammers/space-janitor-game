@@ -350,3 +350,19 @@ archiveManager: Data backup successfully saved: 2020-05-10T01-19-21.520Z.txt
 [Modules] Host is up to date.
 [Modules] Checking for module updates at https://discordapp.com/api/modules/stable/versions.json
 [Modules] No module updates available.
+[Modules] Checking for host updates.
+[Modules] Host is up to date.
+[Modules] Checking for module updates at https://discordapp.com/api/modules/stable/versions.json
+[Modules] No module updates available.
+
+(discord:10552): libnotify-WARNING **: 01:25:55.584: Failed to connect to proxy
+
+(discord:10552): libnotify-WARNING **: 01:25:55.588: Failed to connect to proxy
+
+(discord:10552): libnotify-WARNING **: 01:25:55.591: Failed to connect to proxy
+
+(discord:10552): libnotify-WARNING **: 01:26:12.126: Failed to connect to proxy
+
+(discord:10552): libnotify-WARNING **: 01:26:12.129: Failed to connect to proxy
+
+(discord:10552): libnotify-WARNING **: 01:26:12.134: Failed to connect to proxy
