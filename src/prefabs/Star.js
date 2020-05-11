@@ -9,8 +9,8 @@ class Star extends Phaser.Physics.Arcade.Sprite {
 
         this.radius;
 
-        this.setCircle(100, 10, 10);
-        this.setScale(scale);
+        this.setCircle(100, 0, 0);
+        this.setScale(scale); //scales hitbox and sprite
         this.setDepth(5); //behind bigger satellites, ahead of smaller
     
 
