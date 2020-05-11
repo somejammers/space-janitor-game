@@ -26,7 +26,11 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
 
         this.orbital.setImmovable(true);
         this.orbital.setDepth(3);
-        this.orbital.setCircle(this.orbitalRadius, 0, 0);
+        //we offset the radius by star.radius in order to not let the star ride
+        //the outer edge of the orbital
+        this.orbital.setCircle(
+            this.orbitalRadius - this.scene.star.radius/2, 
+            this.scene.star.radius/2, this.scene.star.radius/2);
 
         this.orbitalAccelModDefault = 0.03;
         this.orbitalAccelModScaling = 1 + 0.0005 * this.scene.star.speedMod;
@@ -104,14 +108,14 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
             let addAccelX = this.orbitalAccelMod * (accelTowardsThisX - this.scene.star.x);
             let addAccelY = this.orbitalAccelMod * (accelTowardsThisY - this.scene.star.y);
 
-            let distCorrection = Math.sqrt(
-                (accelTowardsThisX - this.scene.star.x) * (accelTowardsThisX - this.scene.star.x)
-                +
-                (accelTowardsThisY - this.scene.star.y) * (accelTowardsThisY - this.scene.star.y)
-            ) / 2;
+            // let distCorrection = Math.sqrt(
+            //     (accelTowardsThisX - this.scene.star.x) * (accelTowardsThisX - this.scene.star.x)
+            //     +
+            //     (accelTowardsThisY - this.scene.star.y) * (accelTowardsThisY - this.scene.star.y)
+            // ) / 2;
             
             this.orbitalAccelMod *= this.orbitalAccelModScaling;
-            this.scene.star.addAcceleration(addAccelX * distCorrection, addAccelY * distCorrection);
+            this.scene.star.addAcceleration(addAccelX, addAccelY);
         
             //helps the asynchonicity, but might make it lag. 
             this.scene.star.update();
