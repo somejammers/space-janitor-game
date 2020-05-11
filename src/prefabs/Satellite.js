@@ -129,11 +129,10 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         }
         //star leaving orbital
         else if (this.canStopOrbiting) {
-            console.log("let go of key");
-            this.orbitalAccelMod = this.orbitalAccelModDefault;
-            this.canReEnterOrbit = false;
-            // actually leaves orbital
+            this.lastDistToStar = this.distToStar;
             if (this.distToStar - 1.5 * this.scene.star.radius > this.orbitalRadius) {
+                this.canReEnterOrbit = false;       
+                this.orbitalAccelMod = this.orbitalAccelModDefault;
                 this.orbitalEntered = false;
                 this.orbitalBody.setEnable(true);
                 this.canStopOrbiting = false;
