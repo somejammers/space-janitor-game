@@ -38,10 +38,33 @@ class Level1 extends Phaser.Scene {
 
         this.satelliteGroup.add(this.satellite_2);
 
+        this.satellite_3 = new Satellite(
+            this, canvas_width/2, canvas_height/9, 0.19, "Satellite"
+        );
+
+        this.satelliteGroup.add(this.satellite_3);
+
     }
 
     update() {
         this.star.update();
 
     }
+
+    updateSatellites() {
+        let children = this.satelliteGroup.getChildren();
+        for (var i = 0; i < children.length; i++) 
+        {
+            children[i].updateOrbital();
+        }
+    }
+
+    exampleGroupCall() {
+        let children = this.satelliteGroup.getChildren();
+        for (var i = 0; i < children.length; i++) 
+        {
+            children[i].test();
+        }
+    }
+    
 }   

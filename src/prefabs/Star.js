@@ -7,12 +7,18 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         scene.add.existing(this);               // add to existing scene, displayList, updateList
         scene.physics.add.existing(this);
 
-        this.setCircle(100, 0, 0);
-        this.setScale(scale); //scales hitbox and sprite
+        //update this on growth/hit
+        
         this.setDepth(5); //behind bigger satellites, ahead of smaller
-    
+        this.Scale = scale;
+        this.radius = 75;
 
-        this.radius = 100 * scale;
+        this.setCircle(this.radius, 0, 0);
+        this.setScale(scale); //Scales hitbox and sprite
+
+        this.radiusWeighted = this.radius * this.Scale;
+        this.ScaleScaling = 0.05;
+        
         this.x_velocity = 0;
         this.y_velocity = 0;
         this.x_acceleration = 0;
@@ -21,6 +27,8 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         this.lastTrajectory = 0;
 
         this.speedMod = 100;
+
+        this.satellitesCollected = 0;
 
     }
 
@@ -85,5 +93,17 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         if (this.x_velocity >= 0) this.trajectory += Math.PI;
 
         // console.log((this.trajectory * 180 / Math.PI));
+    }
+
+    growUpdate() {
+        this.satellitesCollected++;
+        this.Scale += this.ScaleScaling;
+        this.setScale(this.Scale);
+    }
+
+    shrinkUpdate() {
+        this.satellitesCollected--;
+        this.Scale -= this.ScaleScaling;
+        this.setScale(this.Scale);
     }
 }

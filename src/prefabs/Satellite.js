@@ -7,32 +7,37 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         scene.add.existing(this);               // add to existing scene, displayList, updateList
         scene.physics.add.existing(this);
 
-        //update this later? once when star grows per obstacle
-        if (scale > this.scene.p_scale) this.setDepth(6);
+        //update this on star hitting satellite in scene
+        if (scale > this.scene.star.Scale) this.setDepth(6);
         else this.setDepth(4);
         this.setScale(scale);
 
-        this.radius = 75 * scale;
+        this.Scale = scale;
+        this.radius = 75;
         this.setCircle(this.radius, 0, 0);
+
+        this.orbitalRadiusWeighted = this.radius * this.Scale;
 
         //Orbital
         this.orbital = this.scene.physics.add.sprite(
             this.x, this.y, "Orbital"
         );
-        this.orbital.setScale(scale);
         
         this.orbitalBody = this.orbital.body;
-        this.orbitalRadius = 150 * scale;
+        this.orbitalRadius = 150;
 
         this.orbital.setImmovable(true);
         this.orbital.setDepth(3);
         //we offset the radius by star.radius in order to not let the star ride
         //the outer edge of the orbital
         this.orbital.setCircle(
-            this.orbitalRadius - this.scene.star.radius/2, 
-            this.scene.star.radius/2, this.scene.star.radius/2);
+            this.orbitalRadius - this.scene.star.radius/6, 
+            this.scene.star.radius/6, this.scene.star.radius/6);
+        this.orbital.setScale(scale);
 
-        this.orbitalAccelModDefault = 0.03;
+        this.orbitalRadiusWeighted = this.orbitalRadius * this.Scale;
+
+        this.orbitalAccelModDefault = 0.065;
         this.orbitalAccelModScaling = 1 + 0.0005 * this.scene.star.speedMod;
         this.orbitalAccelMod = this.orbitalAccelModDefault;
         this.orbitalEntered = false;
@@ -45,7 +50,23 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         this.isPreOrbiting = false;
         this.currRotationDuration = 0;
 
+        this.isLargerThanStar = this.scene.star.Scale <= this.Scale ? true : false;
+
+        //mimic starSizeChanged()
+        if (!this.isLargerThanStar) 
+        {
+            this.orbitalBody.setEnable(false);
+            this.orbital.setVisible(false);
+        }
+        else 
+        {
+            this.orbitalBody.setEnable(true);
+            this.orbital.setVisible(true);
+        }
+
         this.scene.physics.add.overlap(this.scene.star, this.orbital, this.orbitalEntry, null, this);
+        this.scene.physics.add.collider(this.scene.star, this, this.handleStarCollision, null, this);
+
     }
 
     update() {
@@ -61,11 +82,42 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
 
     }
 
+    handleStarCollision() {
+        console.log("test");
+        if (this.isLargerThanStar) 
+        {
+            console.log("see this");
+            this.scene.star.shrinkUpdate();
+        }
+        else 
+        {
+            this.scene.star.growUpdate();
+        }
+        //notify other satellites
+        this.scene.updateSatellites();
+    }
+
+    //call when star changes 
+    updateOrbital() {
+
+        this.isLargerThanStar = this.scene.star.Scale <= this.Scale ? true : false;
+
+        if (this.isLargerThanStar) 
+        {
+            this.orbitalBody.setEnable(true);
+            this.orbital.setVisible(true);
+        }
+        else 
+        {
+            this.orbitalBody.setEnable(false);
+            this.orbital.setVisible(false);
+        }
+    }
+
     orbitalEntry() {
         // to make sure this runs once
-        if (!this.orbitalEntered) {
-            console.log("has entered orbit");
-
+        if (this.isLargerThanStar && !this.orbitalEntered) 
+        {
             this.findClockRotation();
             this.isPreOrbiting = true;
             this.orbitalBody.setEnable(false);
@@ -77,7 +129,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
 
     orbitalRotation() {
         if //distance btwn star and satellite < orbital_radius
-        ( this.canReEnterOrbit && keySPACE.isDown && this.distToStar - 2*this.scene.star.radius/4 <= this.orbitalRadius) 
+        ( this.canReEnterOrbit && keySPACE.isDown && this.distToStar - 0.5*this.scene.star.radiusWeighted <= this.orbitalRadiusWeighted) 
         { //&& key is down
                         //This prevents star from spiraling out of orbit, and instead
             //closes in on origin
@@ -116,32 +168,26 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
             
             this.orbitalAccelMod *= this.orbitalAccelModScaling;
             this.scene.star.addAcceleration(addAccelX, addAccelY);
-        
-            //helps the asynchonicity, but might make it lag. 
-            this.scene.star.update();
 
             this.canStopOrbiting = true;
             this.isPreOrbiting = false;
 
         } else if (this.isPreOrbiting) {
-            console.log("can orbit now");
             this.lastDistToStar = this.distToStar;
         }
         //star leaving orbital
         else if (this.canStopOrbiting) {
-            console.log("reset");
             this.lastDistToStar = this.distToStar;
             //balance this later
             this.orbitalAccelMod = this.orbitalAccelModDefault * 10; //not a full reset of accel but a bit better
             this.currRotationDuration = 0;
-            if (this.distToStar - 2*this.scene.star.radius/4 > this.orbitalRadius) {
+            if (this.distToStar - 0.5*this.scene.star.radiusWeighted > this.orbitalRadiusWeighted) {
                 this.canReEnterOrbit = false;       
                 this.orbitalAccelMod = this.orbitalAccelModDefault;
                 this.orbitalEntered = false;
                 this.orbitalBody.setEnable(true);
                 this.canStopOrbiting = false;
                 this.currRotationDuration = 0;
-                console.log("has left orbit");
 
             }
         }
@@ -160,6 +206,8 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         else this.clockRotation = -1;
         
     }
+
+    
 
     
 }

@@ -160,3 +160,21 @@ Falling back to node net library..
 (discord:1575): libnotify-WARNING **: 18:50:51.776: Failed to connect to proxy
 
 (discord:1575): libnotify-WARNING **: 18:50:51.777: Failed to connect to proxy
+[000:000] [1718] (audio_send_stream.cc:285): Failed to set up send codec state.
+[000:017] [1718] (audio_send_stream.cc:285): Failed to set up send codec state.
+[000:049] [1718] (audio_send_stream.cc:285): Failed to set up send codec state.
+[000:049] [1718] (audio_device_generic.cc:31): BuiltInAECIsAvailable: Not supported on this platform
+[000:079] [1718] (audio_send_stream.cc:285): Failed to set up send codec state.
+[000:085] [1718] (audio_device_generic.cc:31): BuiltInAECIsAvailable: Not supported on this platform
+[000:144] [1718] (audio_send_stream.cc:285): Failed to set up send codec state.
+[056:486] [1718] (audio_send_stream.cc:285): Failed to set up send codec state.
+[056:535] [1718] (audio_send_stream.cc:285): Failed to set up send codec state.
+[056:536] [1718] (audio_device_generic.cc:31): BuiltInAECIsAvailable: Not supported on this platform
+[1604:0510/185556.448837:ERROR:buffer_manager.cc(488)] [.DisplayCompositor]GL ERROR :GL_INVALID_OPERATION : glBufferData: <- error from previous GL command
+[1604:0510/185604.497182:ERROR:buffer_manager.cc(488)] [.DisplayCompositor]GL ERROR :GL_INVALID_OPERATION : glBufferData: <- error from previous GL command
+
+(discord:1575): libnotify-WARNING **: 18:58:58.232: Failed to connect to proxy
+
+(discord:1575): libnotify-WARNING **: 18:58:58.236: Failed to connect to proxy
+
+(discord:1575): libnotify-WARNING **: 18:58:58.237: Failed to connect to proxy
