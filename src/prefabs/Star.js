@@ -10,7 +10,9 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         //update this on growth/hit
         
         this.setDepth(5); //behind bigger satellites, ahead of smaller
+        //Scale measures orbital scale
         this.Scale = scale;
+        this.orbitalScale = this.Scale;
         this.radius = 75;
 
         this.setCircle(this.radius, 0, 0);
@@ -19,6 +21,20 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         this.radiusWeighted = this.radius * this.Scale;
         this.ScaleScaling = 0.05;
         
+        this.orbital = this.scene.physics.add.sprite(
+            this.x, this.y, "StarOrbital"
+        );
+
+        this.orbitalBody = this.orbital.body;
+        this.orbitalRadius = 75;
+
+        this.orbital.setImmovable(true);
+        this.orbital.setDepth(2);
+        //we offset the radius by star.radius in order to not let the star ride
+        //the outer edge of the orbital
+        this.orbital.setCircle( this.orbitalRadius, 0, 0);
+        this.orbital.setScale(scale);
+
         this.x_velocity = 0;
         this.y_velocity = 0;
         this.x_acceleration = 0;
@@ -30,10 +46,13 @@ class Star extends Phaser.Physics.Arcade.Sprite {
 
         this.satellitesCollected = 0;
 
+        this.satelliteStack = [];
+        this.satelliteScaleStack = [];   
+
     }
 
     update() {
-
+        
         //error checking, make this better later
         if (this.x_velocity == 0) this.x_velocity = 0.1;
         if (this.y_velocity == 0) this.y_velocity = 1;
@@ -48,10 +67,14 @@ class Star extends Phaser.Physics.Arcade.Sprite {
 
         this.setVelocity(this.x_velocity, this.y_velocity);
 
+        this.orbital.setVelocity(this.x_velocity, this.y_velocity);
+
+
         this.findTrajectory();
         this.rotation += this.trajectory - this.lastTrajectory;
         
         this.resetAcceleration();
+
     }
 
     changeVelocity(x, y) {
@@ -95,15 +118,23 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         // console.log((this.trajectory * 180 / Math.PI));
     }
 
-    growUpdate() {
+    //if original satellite isnt referenced, try pushing into stack in satellite.js
+    growUpdate(satellite, satelliteScale) {
         this.satellitesCollected++;
-        this.Scale += this.ScaleScaling;
-        this.setScale(this.Scale);
+        this.satelliteStack.push(satellite);
+        this.satelliteScaleStack.push(satelliteScale);
+        this.orbitalScale += satelliteScale;
+        this.updateOrbital();
     }
 
     shrinkUpdate() {
         this.satellitesCollected--;
-        this.Scale -= this.ScaleScaling;
-        this.setScale(this.Scale);
+        this.satelliteStack.pop().isOrbitingStar = false;
+        this.orbitalScale -= this.satelliteScaleStack.pop();
     }
+
+    updateOrbital() {
+        this.orbital.setScale(this.orbitalScale);
+    }
+
 }
