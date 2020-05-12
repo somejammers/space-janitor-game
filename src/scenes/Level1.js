@@ -20,17 +20,18 @@ class Level1 extends Phaser.Scene {
         this.star = new Star(
             this, canvas_width/2, canvas_width/2 - 400, this.p_scale, "Star"
         );
+        
 
 
         this.satelliteGroup = this.add.group({
             runChildUpdate: true
         });
 
-        this.satellite = new Satellite(
-            this, canvas_width/1.5, canvas_height/2, 1, "Satellite"
-        );
+        // this.satellite = new Satellite(
+        //     this, canvas_width/1.5, canvas_height/2, 1, "Satellite"
+        // );
 
-        this.satelliteGroup.add(this.satellite);
+        // this.satelliteGroup.add(this.satellite);
 
         this.satellite_2 = new Satellite(
             this, canvas_width/9, canvas_height/2, 1, "Satellite"
@@ -43,6 +44,18 @@ class Level1 extends Phaser.Scene {
         );
 
         this.satelliteGroup.add(this.satellite_3);
+
+        this.satellite_4 = new Satellite(
+            this, canvas_width/2, canvas_height/5, 0.19, "Satellite"
+        );
+
+        this.satelliteGroup.add(this.satellite_4);
+
+        this.satellite_5 = new Satellite(
+            this, canvas_width/2, canvas_height/4, 0.19, "Satellite"
+        );
+
+        this.satelliteGroup.add(this.satellite_5);
 
     }
 

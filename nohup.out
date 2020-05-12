@@ -366,3 +366,152 @@ archiveManager: Data backup successfully saved: 2020-05-10T01-19-21.520Z.txt
 (discord:10552): libnotify-WARNING **: 01:26:12.129: Failed to connect to proxy
 
 (discord:10552): libnotify-WARNING **: 01:26:12.134: Failed to connect to proxy
+Discord 0.0.10
+Starting app.
+Starting updater.
+[Modules] Modules initializing
+[Modules] Distribution: remote
+[Modules] Host updates: enabled
+[Modules] Module updates: enabled
+[Modules] Module install path: /home/a/.config/discord/0.0.10/modules
+[Modules] Module installed file path: /home/a/.config/discord/0.0.10/modules/installed.json
+[Modules] Module download path: /home/a/.config/discord/0.0.10/modules/pending
+[6346:0511/220538.606567:ERROR:buffer_manager.cc(488)] [.DisplayCompositor]GL ERROR :GL_INVALID_OPERATION : glBufferData: <- error from previous GL command
+[Modules] No updates to install
+[Modules] Checking for host updates.
+[Modules] Host is up to date.
+[Modules] Checking for module updates at https://discordapp.com/api/modules/stable/versions.json
+[Modules] No module updates available.
+[6346:0511/220539.134707:ERROR:buffer_manager.cc(488)] [.DisplayCompositor]GL ERROR :GL_INVALID_OPERATION : glBufferData: <- error from previous GL command
+[Modules] Starting to install discord_krisp...
+[Modules] Fetching discord_krisp@0 from https://discordapp.com/api/modules/stable/discord_krisp/0
+[Modules] Streaming discord_krisp@0 to /home/a/.config/discord/0.0.10/modules/pending/discord_krisp-0.zip
+Error downloading with electron net: HTTP Error: Status Code 403
+Falling back to node net library..
+(electron) 'isAccessibilitySupportEnabled function' is deprecated and will be removed. Please use 'accessibilitySupportEnabled property' instead.
+[Modules] Failed fetching module discord_krisp@0: Error: HTTP Error: Status Code 403
+[Modules] Finished module downloads. [success: 0] [failure: 1]
+(electron) 'setBadgeCount function' is deprecated and will be removed. Please use 'badgeCount property' instead.
+
+(discord:6317): libnotify-WARNING **: 23:58:53.207: Failed to connect to proxy
+
+(discord:6317): libnotify-WARNING **: 23:58:53.209: Failed to connect to proxy
+
+(discord:6317): libnotify-WARNING **: 23:58:53.212: Failed to connect to proxy
+Discord 0.0.10
+Starting app.
+Another instance exists. Quitting.
+libpng warning: iCCP: known incorrect sRGB profile
+00:35:12 INFO: Request to cdn.appdynamics.com blocked by host blocker.
+00:35:12 INFO: Request to dpm.demdex.net blocked by host blocker.
+A Parser-blocking, cross-origin script, https://assets.adobedtm.com/850bf62b6b0b4d50cf7dd83d7e6420defa9aee41/mbox-contents-54397e947041f8b4092f714b125ebc1f98864bbd.js, is invoked via document.write. This may be blocked by the browser if the device has poor network connectivity. See https://www.chromestatus.com/feature/5718547946799104 for more details.
+A Parser-blocking, cross-origin script, https://assets.adobedtm.com/850bf62b6b0b4d50cf7dd83d7e6420defa9aee41/mbox-contents-54397e947041f8b4092f714b125ebc1f98864bbd.js, is invoked via document.write. This may be blocked by the browser if the device has poor network connectivity. See https://www.chromestatus.com/feature/5718547946799104 for more details.
+A Parser-blocking, cross-origin script, https://assets.adobedtm.com/850bf62b6b0b4d50cf7dd83d7e6420defa9aee41/scripts/satellite-5be622ad64746d17ce005279.js, is invoked via document.write. This may be blocked by the browser if the device has poor network connectivity. See https://www.chromestatus.com/feature/5718547946799104 for more details.
+00:35:12 INFO: Request to bat.bing.com blocked by host blocker.
+00:35:12 INFO: Request to dpm.demdex.net blocked by host blocker.
+00:35:14 INFO: Request to dpm.demdex.net blocked by host blocker.
+00:35:14 INFO: Request to secure.adnxs.com blocked by host blocker.
+00:35:14 INFO: Request to www.googleadservices.com blocked by host blocker.
+00:35:15 INFO: Request to adservice.google.com blocked by host blocker.
+00:35:22 INFO: Request to cdn.appdynamics.com blocked by host blocker.
+00:35:22 INFO: Request to dpm.demdex.net blocked by host blocker.
+A Parser-blocking, cross-origin script, https://assets.adobedtm.com/850bf62b6b0b4d50cf7dd83d7e6420defa9aee41/mbox-contents-54397e947041f8b4092f714b125ebc1f98864bbd.js, is invoked via document.write. This may be blocked by the browser if the device has poor network connectivity. See https://www.chromestatus.com/feature/5718547946799104 for more details.
+A Parser-blocking, cross-origin script, https://assets.adobedtm.com/850bf62b6b0b4d50cf7dd83d7e6420defa9aee41/mbox-contents-54397e947041f8b4092f714b125ebc1f98864bbd.js, is invoked via document.write. This may be blocked by the browser if the device has poor network connectivity. See https://www.chromestatus.com/feature/5718547946799104 for more details.
+A Parser-blocking, cross-origin script, https://assets.adobedtm.com/850bf62b6b0b4d50cf7dd83d7e6420defa9aee41/scripts/satellite-5be622ad64746d17ce005279.js, is invoked via document.write. This may be blocked by the browser if the device has poor network connectivity. See https://www.chromestatus.com/feature/5718547946799104 for more details.
+00:35:22 INFO: Request to bat.bing.com blocked by host blocker.
+00:35:23 INFO: Request to www.googleadservices.com blocked by host blocker.
+00:35:23 INFO: Request to secure.adnxs.com blocked by host blocker.
+00:35:24 INFO: Request to dpm.demdex.net blocked by host blocker.
+00:35:24 INFO: Request to adservice.google.com blocked by host blocker.
+00:35:27 INFO: Request to dpm.demdex.net blocked by host blocker.
+00:35:27 INFO: Request to dpm.demdex.net blocked by host blocker.
+00:35:43 INFO: Request to dpm.demdex.net blocked by host blocker.
+00:36:06 INFO: Request to dpm.demdex.net blocked by host blocker.
+00:36:21 INFO: Request to dpm.demdex.net blocked by host blocker.
+00:36:25 INFO: Request to cdn.appdynamics.com blocked by host blocker.
+00:36:25 INFO: Request to dpm.demdex.net blocked by host blocker.
+A Parser-blocking, cross-origin script, https://assets.adobedtm.com/850bf62b6b0b4d50cf7dd83d7e6420defa9aee41/mbox-contents-54397e947041f8b4092f714b125ebc1f98864bbd.js, is invoked via document.write. This may be blocked by the browser if the device has poor network connectivity. See https://www.chromestatus.com/feature/5718547946799104 for more details.
+A Parser-blocking, cross-origin script, https://assets.adobedtm.com/850bf62b6b0b4d50cf7dd83d7e6420defa9aee41/mbox-contents-54397e947041f8b4092f714b125ebc1f98864bbd.js, is invoked via document.write. This may be blocked by the browser if the device has poor network connectivity. See https://www.chromestatus.com/feature/5718547946799104 for more details.
+A Parser-blocking, cross-origin script, https://assets.adobedtm.com/850bf62b6b0b4d50cf7dd83d7e6420defa9aee41/scripts/satellite-5be622ad64746d17ce005279.js, is invoked via document.write. This may be blocked by the browser if the device has poor network connectivity. See https://www.chromestatus.com/feature/5718547946799104 for more details.
+00:36:25 INFO: Request to bat.bing.com blocked by host blocker.
+00:36:26 INFO: Request to www.googleadservices.com blocked by host blocker.
+00:36:26 INFO: Request to secure.adnxs.com blocked by host blocker.
+00:36:26 INFO: Request to dpm.demdex.net blocked by host blocker.
+00:36:27 INFO: Request to adservice.google.com blocked by host blocker.
+00:36:29 INFO: Request to dpm.demdex.net blocked by host blocker.
+00:36:48 INFO: Request to www.googletagservices.com blocked by host blocker.
+00:36:48 INFO: Request to beacon.walmart.com blocked by host blocker.
+00:36:55 INFO: Request to beacon.walmart.com blocked by host blocker.
+00:37:16 INFO: Request to beacon.walmart.com blocked by host blocker.
+00:37:16 INFO: Request to www.googletagservices.com blocked by host blocker.
+00:38:58 INFO: Request to pagead2.googlesyndication.com blocked by host blocker.
+00:38:58 INFO: Request to ssl.google-analytics.com blocked by host blocker.
+00:39:07 INFO: Request to pagead2.googlesyndication.com blocked by host blocker.
+00:39:07 INFO: Request to ssl.google-analytics.com blocked by host blocker.
+00:59:21 INFO: Request to pagead2.googlesyndication.com blocked by host blocker.
+00:59:21 INFO: Request to www.google-analytics.com blocked by host blocker.
+01:18:35 INFO: Request to www.google-analytics.com blocked by host blocker.
+01:18:35 INFO: Request to www.googletagservices.com blocked by host blocker.
+[Modules] Checking for host updates.
+[Modules] Host is up to date.
+[Modules] Checking for module updates at https://discordapp.com/api/modules/stable/versions.json
+[Modules] No module updates available.
+01:23:52 INFO: Request to z-na.amazon-adsystem.com blocked by host blocker.
+01:23:52 INFO: Request to securepubads.g.doubleclick.net blocked by host blocker.
+01:23:52 INFO: Request to c.amazon-adsystem.com blocked by host blocker.
+01:23:53 INFO: Request to www.google-analytics.com blocked by host blocker.
+01:23:53 INFO: Request to cdn.viglink.com blocked by host blocker.
+01:23:53 INFO: Request to sb.scorecardresearch.com blocked by host blocker.
+01:23:53 INFO: Request to adservice.google.com blocked by host blocker.
+[6213:15556:0512/012353.803915:ERROR:object_proxy.cc(505)] Rejecting a message from a wrong sender.
+[6213:15556:0512/012353.803984:ERROR:object_proxy.cc(505)] Rejecting a message from a wrong sender.
+01:23:54 INFO: Request to log.pinterest.com blocked by host blocker.
+01:23:54 INFO: Request to www.google-analytics.com blocked by host blocker.
+01:23:54 INFO: Request to sb.scorecardresearch.com blocked by host blocker.
+01:23:54 INFO: Request to tags.bluekai.com blocked by host blocker.
+01:23:54 INFO: Request to loadus.exelator.com blocked by host blocker.
+01:23:54 INFO: Request to aa.agkn.com blocked by host blocker.
+01:23:54 INFO: Request to stags.bluekai.com blocked by host blocker.
+01:23:55 INFO: Request to pubads.g.doubleclick.net blocked by host blocker.
+01:23:55 INFO: Request to pubads.g.doubleclick.net blocked by host blocker.
+01:23:55 INFO: Request to sb.scorecardresearch.com blocked by host blocker.
+01:24:04 INFO: Request to pubads.g.doubleclick.net blocked by host blocker.
+01:24:04 INFO: Request to pubads.g.doubleclick.net blocked by host blocker.
+01:24:04 INFO: Request to sb.scorecardresearch.com blocked by host blocker.
+01:24:13 INFO: Request to pubads.g.doubleclick.net blocked by host blocker.
+01:24:13 INFO: Request to pubads.g.doubleclick.net blocked by host blocker.
+01:24:14 INFO: Request to sb.scorecardresearch.com blocked by host blocker.
+01:24:23 INFO: Request to pubads.g.doubleclick.net blocked by host blocker.
+01:24:23 INFO: Request to pubads.g.doubleclick.net blocked by host blocker.
+01:24:24 INFO: Request to sb.scorecardresearch.com blocked by host blocker.
+01:24:24 INFO: Request to sb.scorecardresearch.com blocked by host blocker.
+01:24:25 INFO: Request to z-na.amazon-adsystem.com blocked by host blocker.
+01:24:25 INFO: Request to securepubads.g.doubleclick.net blocked by host blocker.
+01:24:25 INFO: Request to c.amazon-adsystem.com blocked by host blocker.
+01:24:25 INFO: Request to www.google-analytics.com blocked by host blocker.
+01:24:25 INFO: Request to cdn.viglink.com blocked by host blocker.
+01:24:25 INFO: Request to sb.scorecardresearch.com blocked by host blocker.
+01:24:25 INFO: Request to metrics.brightcove.com blocked by host blocker.
+01:24:25 INFO: Request to metrics.brightcove.com blocked by host blocker.
+01:24:26 INFO: Request to metrics.brightcove.com blocked by host blocker.
+01:24:26 INFO: Request to metrics.brightcove.com blocked by host blocker.
+01:24:26 INFO: Request to metrics.brightcove.com blocked by host blocker.
+01:24:26 INFO: Request to adservice.google.com blocked by host blocker.
+01:24:26 INFO: Request to metrics.brightcove.com blocked by host blocker.
+01:24:26 INFO: Request to metrics.brightcove.com blocked by host blocker.
+01:24:26 INFO: Request to bcp.crwdcntrl.net blocked by host blocker.
+01:24:26 INFO: Request to sb.scorecardresearch.com blocked by host blocker.
+01:24:27 INFO: Request to log.pinterest.com blocked by host blocker.
+01:24:33 INFO: Request to z-na.amazon-adsystem.com blocked by host blocker.
+01:24:33 INFO: Request to securepubads.g.doubleclick.net blocked by host blocker.
+01:24:33 INFO: Request to c.amazon-adsystem.com blocked by host blocker.
+01:24:33 INFO: Request to www.google-analytics.com blocked by host blocker.
+01:24:33 INFO: Request to cdn.viglink.com blocked by host blocker.
+01:24:33 INFO: Request to sb.scorecardresearch.com blocked by host blocker.
+01:24:34 INFO: Request to adservice.google.com blocked by host blocker.
+01:24:34 INFO: Request to sb.scorecardresearch.com blocked by host blocker.
+01:24:34 INFO: Request to www.google-analytics.com blocked by host blocker.
+01:24:34 INFO: Request to sb.scorecardresearch.com blocked by host blocker.
+01:24:34 INFO: Request to log.pinterest.com blocked by host blocker.
+01:24:35 INFO: Request to pubads.g.doubleclick.net blocked by host blocker.
+01:24:35 INFO: Request to pubads.g.doubleclick.net blocked by host blocker.
