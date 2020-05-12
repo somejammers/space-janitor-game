@@ -27,12 +27,13 @@ class Star extends Phaser.Physics.Arcade.Sprite {
 
         this.orbitalBody = this.orbital.body;
         this.orbitalRadius = 75;
+        this.orbitalRadiusWeighted = this.orbitalRadius * this.Scale;
 
         this.orbital.setImmovable(true);
         this.orbital.setDepth(2);
         //we offset the radius by star.radius in order to not let the star ride
         //the outer edge of the orbital
-        this.orbital.setCircle( this.orbitalRadius, 0, 0);
+        this.orbital.setCircle(this.orbitalRadius, 0, 0);
         this.orbital.setScale(scale);
 
         this.x_velocity = 0;
@@ -124,6 +125,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         this.satelliteStack.push(satellite);
         this.satelliteScaleStack.push(satelliteScale);
         this.orbitalScale += satelliteScale;
+        this.orbitalRadiusWeighted = this.orbitalRadius * this.orbitalScale;
         this.updateOrbital();
     }
 

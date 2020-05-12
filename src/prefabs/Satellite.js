@@ -1,3 +1,4 @@
+//check the strata values again , compare them with the orbital rotation.
 class Satellite extends Phaser.Physics.Arcade.Sprite {
     constructor(
         scene, x_pos, y_pos, scale, texture, frame
@@ -55,10 +56,13 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         this.isPreOrbitingStar = false;
         this.isOrbitingStar = false;
         this.isCollidable = true;
+        this.strata;
 
         this.x_velocity = 0;
         this.y_velocity = 0;
 
+        this.trajectory = 0;
+        this.lastTrajectory = 0;
 
         this.isLargerThanStar = this.scene.star.Scale <= this.Scale ? true : false;
 
@@ -75,7 +79,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         }
 
         this.scene.physics.add.overlap(this.scene.star, this.orbital, this.orbitalEntry, null, this);
-        this.scene.physics.add.collider(this.scene.star.orbital, this, this.handleStarCollision, null, this);
+        this.scene.physics.add.overlap(this.scene.star.orbital, this, this.handleStarCollision, null, this);
 
     }
 
@@ -100,15 +104,16 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                 console.log("collided");
             if (this.isLargerThanStar) 
             {
+                //turn this back on when bounce has completed
+                this.isCollidable = false;
                 this.scene.star.shrinkUpdate();
             }
             else 
             {
                 this.isCollidable = false;
-                this.isOrbitingStar = true;
                 this.scene.star.growUpdate(this, this.Scale);
-                let strataInOrbital = this.scene.star.Scale; //
-                this.findStrataInStarOrbital(strataInOrbital); //do this in update
+                this.strata = this.scene.star.orbitalRadiusWeighted;
+                this.isPreOrbitingStar = true;
             }
             //notify other satellites
             this.scene.updateSatellites();
@@ -116,54 +121,140 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
     }
 
     orbitAroundStar() {
+        //find angle of point on circle 
+    
+
         if (this.isOrbitingStar) 
         {
-            //do orbit
+            this.orbitInStrata();
         } 
         else if (this.isPreOrbitingStar)
         {
+            console.log("main orbit");
             this.findStrataInStarOrbital();
         }
 
+        this.findTrajectory();
+        this.rotation += this.trajectory - this.lastTrajectory;
+
+    }
+
+    orbitInStrata() {
+        let angle = Math.atan(
+            (this.scene.star.y - this.y)
+            /
+            (this.scene.star.x - this.x)
+        );
+        let angleOffset = this.clockRotation * (this.scene.star.speedMod / 40) * Math.PI / 180; //tweak this for difficulty scaling
+
+        if (this.scene.star.x - this.x >= 0) angle += Math.PI;
+        //get point on circle
+        
+        let distToStrata = Math.abs(this.distToStar - this.strata);
+
+        let accelTowardsThisX = this.scene.star.x + distToStrata * Math.cos(angle + angleOffset);
+        let accelTowardsThisY = this.scene.star.y + distToStrata * Math.sin(angle + angleOffset);
+        //calculate angle from star to this
+        if (distToStrata > 1)
+        {
+            //angle towards spot in strata
+            if (accelTowardsThisX > 0) angle += Math.PI;
+
+            let addAccelX = (accelTowardsThisX - this.x);
+            let addAccelY = (accelTowardsThisY - this.y);
+
+            let addAccelNorm = this.normalize(addAccelX, addAccelY, this.scene.star.speedMod * 2);
+            this.x_velocity = addAccelNorm[0];
+            this.y_velocity = addAccelNorm[1];
+
+            this.setVelocity(this.x_velocity+this.scene.star.x_velocity, this.y_velocity+this.scene.star.y_velocity);
+        }
     }
 
     findStrataInStarOrbital() {
-    //calculate angle from star to this
-        let distToStarOrbitalStrataX = this.scene.star.x + (this.scene.star.orbitalRadius * this.scene.star.orbitalScale) + (150 * this.Scale) - this.x ;
-        let distToStarOrbitalStrataY = this.scene.star.y + (this.scene.star.orbitalRadius * this.scene.star.orbitalScale) + (150 * this.Scale) - this.y;
-        let distToStarOrbitalStrata = Math.sqrt(
-            distToStarOrbitalStrataX * distToStarOrbitalStrataX
-            +
-            distToStarOrbitalStrataY * distToStarOrbitalStrataY
+        let angle = Math.atan(
+            (this.scene.star.y - this.y)
+            /
+            (this.scene.star.x - this.x)
         );
+        if (this.scene.star.x - this.x >= 0) angle += Math.PI;
+        //get point on circle
         
-        if (distToStarOrbitalStrata > 10)
+        let distToStrata = Math.abs(this.distToStar - this.strata);
+
+        let accelTowardsThisX = this.scene.star.x + distToStrata * Math.cos(angle);
+        let accelTowardsThisY = this.scene.star.y + distToStrata * Math.sin(angle);
+        //calculate angle from star to this
+        if (distToStrata > 1)
         {
-            let angle = Math.atan(
-                (this.scene.star.y - this.y)
-                /
-                (this.scene.star.x - this.x)
-            );
-            if (this.x - this.scene.star.x >= 0) angle += Math.PI;
+            //angle towards spot in strata
+            if (accelTowardsThisX > 0) angle += Math.PI;
 
-            //accelerate to strata on orbital, accounting for satellite size
-            let accelTowardsThisX = this.scene.star.x + distToStarOrbitalStrata * Math.cos(angle);
-            let accelTowardsThisY = this.scene.star.y + distToStarOrbitalStrata * Math.sin(angle);
+            let addAccelX = (accelTowardsThisX - this.x);
+            let addAccelY = (accelTowardsThisY - this.y);
 
-            let addAccelX = this.scene.star.speedMod * 1.5 * (accelTowardsThisX - this.x);
-            let addAccelY = this.scene.star.speedMod * 1.5 * (accelTowardsThisY - this.y);
+            let addAccelNorm = this.normalize(addAccelX, addAccelY, this.scene.star.speedMod * 2);
+            this.x_velocity = addAccelNorm[0];
+            this.y_velocity = addAccelNorm[1];
 
-            this.setVelocity(10, 10);
+            this.setVelocity(this.x_velocity+this.scene.star.x_velocity, this.y_velocity+this.scene.star.y_velocity);
+            // this.setVelocity(addAccelX, addAccelY);
+
         }
         else 
         {
-            this.setVelocity(this.scene.star.x_velocity, this.scene.star.y_velocity);
+            this.setVelocity(0,0);
             this.isPreOrbitingStar = false;
             this.isOrbitingStar = true;
+            this.findOwnClockRotation();
         }
     }
 
+    findOwnClockRotation() {
 
+        let distVecX = this.scene.star.x - this.x;
+        let distVecY = this.scene.star.y - this.y;
+        let crossZ = (this.x * distVecY)
+                     -
+                     (this.y * distVecX);
+
+        if(crossZ >= 0) this.clockRotation = 1;
+        else this.clockRotation = -1;
+        
+    }
+
+    findTrajectory() {
+        if (this.x_velocity != 0)
+        {
+            this.lastTrajectory = this.trajectory;
+            this.trajectory = Math.atan(
+                (this.y_velocity)
+                /
+                (this.x_velocity)
+            );
+            if (this.x_velocity >= 0) this.trajectory += Math.PI;
+        }
+
+        // console.log((this.trajectory * 180 / Math.PI));
+    }
+
+    normalize(x, y, mod) {
+        if (x * y != 0) 
+        {  
+            let length = Math.sqrt(
+                (x * x)
+                +
+                (y * y)
+            );  
+
+            let normX = x / length;
+            let normY = y / length;
+
+            let results = [normX * mod, normY * mod];
+            return results;
+        }
+        return 0;
+    }
     //called from level.js when star changes 
     updateOrbital()
     {
