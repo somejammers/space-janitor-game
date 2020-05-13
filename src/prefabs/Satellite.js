@@ -112,12 +112,12 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
             }
             else 
             {
-                this.test = this.scene.star.pastSatellitesDist;
                 this.isCollidable = false;
                 this.scene.star.growUpdate(this, this.Scale);
                 this.strata = Math.abs(this.scene.star.orbitalRadiusWeighted);
                 this.speedMod = 10000/this.scene.star.speedMod;
-                this.isPreOrbitingStar = true;
+                this.findOwnClockRotation();
+                this.isOrbitingStar = true;
             }
             //notify other satellites
             this.scene.updateSatellites();
@@ -132,10 +132,6 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         {
             this.orbitInStrata();
         } 
-        else if (this.isPreOrbitingStar)
-        {
-            this.findStrataInStarOrbital();
-        }
 
         this.findTrajectory();
         this.rotation += this.trajectory - this.lastTrajectory;
@@ -152,9 +148,6 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         let angleOffset = this.clockRotation * (this.scene.star.speedMod / 40) * Math.PI / 180; //tweak this for difficulty scaling
 
         if (this.scene.star.x - this.x >= 0) angle += Math.PI;
-        //get point on circle
-        
-        let distToStrata = Math.abs(this.radiusWeighted);
 
         let accelTowardsThisX = this.scene.star.x + (this.strata-this.radiusWeighted) * Math.cos(angle + angleOffset);
         let accelTowardsThisY = this.scene.star.y + (this.strata-this.radiusWeighted) * Math.sin(angle + angleOffset);
@@ -175,21 +168,16 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
     
     }
 
-    findStrataInStarOrbital() {
-        this.isPreOrbitingStar = false;
-        this.isOrbitingStar = true;
-        this.findOwnClockRotation();
-    }
-
     findOwnClockRotation() {
 
         let distVecX = this.scene.star.x - this.x;
         let distVecY = this.scene.star.y - this.y;
-        let crossZ = (this.x * distVecY)
+        //use relative velocity: need 
+        let crossZ = (-this.scene.star.x_velocity * distVecY)
                      -
-                     (this.y * distVecX);
+                     (-this.scene.star.y_velocity * distVecX);
 
-        if(crossZ >= 0) this.clockRotation = 1;
+        if(crossZ <= 0) this.clockRotation = 1;
         else this.clockRotation = -1;
         
     }

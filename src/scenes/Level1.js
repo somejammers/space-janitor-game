@@ -46,7 +46,7 @@ class Level1 extends Phaser.Scene {
         // this.satelliteGroup.add(this.satellite_3);
 
         this.satellite_4 = new Satellite(
-            this, canvas_width/2, canvas_height/5, 0.37, "Satellite"
+            this, canvas_width/2+50, canvas_height/5, 0.37, "Satellite"
         );
 
         this.satelliteGroup.add(this.satellite_4);
