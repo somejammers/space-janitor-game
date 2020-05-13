@@ -43,6 +43,8 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         this.trajectory = 0;
         this.lastTrajectory = 0;
 
+        this.pastSatellitesDist = 0;
+
         this.speedMod = 100;
 
         this.satellitesCollected = 0;
@@ -125,6 +127,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         this.satelliteStack.push(satellite);
         this.satelliteScaleStack.push(satelliteScale);
         this.orbitalScale += satelliteScale;
+        this.pastSatellitesDist += satellite.radius * satelliteScale;
         this.orbitalRadiusWeighted = this.orbitalRadius * this.orbitalScale;
         this.updateOrbital();
     }

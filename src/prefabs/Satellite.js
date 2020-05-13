@@ -58,6 +58,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         this.isOrbitingStar = false;
         this.isCollidable = true;
         this.strata;
+        this.speedMod;
 
         this.x_velocity = 0;
         this.y_velocity = 0;
@@ -65,7 +66,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         this.trajectory = 0;
         this.lastTrajectory = 0;
 
-        this.isLargerThanStar = this.scene.star.Scale <= this.Scale ? true : false;
+        this.isLargerThanStar = this.scene.star.orbitalScale <= this.Scale ? true : false;
 
         //mimic starSizeChanged()
         if (!this.isLargerThanStar) 
@@ -111,9 +112,11 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
             }
             else 
             {
+                this.test = this.scene.star.pastSatellitesDist;
                 this.isCollidable = false;
                 this.scene.star.growUpdate(this, this.Scale);
-                this.strata = Math.abs(this.scene.star.orbitalRadiusWeighted + this.radiusWeighted*(this.scene.star.satellitesCollected - 1));
+                this.strata = Math.abs(this.scene.star.orbitalRadiusWeighted);
+                this.speedMod = 10000/this.scene.star.speedMod;
                 this.isPreOrbitingStar = true;
             }
             //notify other satellites
@@ -140,6 +143,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
     }
 
     orbitInStrata() {
+        //thi
         let angle = Math.atan(
             (this.scene.star.y - this.y)
             /
@@ -150,10 +154,10 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         if (this.scene.star.x - this.x >= 0) angle += Math.PI;
         //get point on circle
         
-        let distToStrata = Math.abs(this.distToStar - this.strata);
+        let distToStrata = Math.abs(this.radiusWeighted);
 
-        let accelTowardsThisX = this.scene.star.x + distToStrata * Math.cos(angle + angleOffset);
-        let accelTowardsThisY = this.scene.star.y + distToStrata * Math.sin(angle + angleOffset);
+        let accelTowardsThisX = this.scene.star.x + (this.strata-this.radiusWeighted) * Math.cos(angle + angleOffset);
+        let accelTowardsThisY = this.scene.star.y + (this.strata-this.radiusWeighted) * Math.sin(angle + angleOffset);
         //calculate angle from star to this
     
         //angle towards spot in strata
@@ -162,7 +166,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         let addAccelX = (accelTowardsThisX - this.x);
         let addAccelY = (accelTowardsThisY - this.y);
 
-        let addAccelNorm = this.normalize(addAccelX, addAccelY, this.scene.star.speedMod * 1.2);
+        let addAccelNorm = this.normalize(addAccelX, addAccelY, this.speedMod);
         
         this.x_velocity = addAccelNorm[0] + this.scene.star.x_velocity;
         this.y_velocity = addAccelNorm[1] + this.scene.star.y_velocity;
@@ -172,40 +176,9 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
     }
 
     findStrataInStarOrbital() {
-
-        let angle = Math.atan(
-            (this.scene.star.y - this.y)
-            /
-            (this.scene.star.x - this.x)
-        );
-        if (this.scene.star.x - this.x >= 0) angle += Math.PI;
-        //get point on circle
-        
-        let distToStrata = Math.abs(this.distToStar - this.strata);
-
-        let accelTowardsThisX = this.scene.star.x + distToStrata * Math.cos(angle);
-        let accelTowardsThisY = this.scene.star.y + distToStrata * Math.sin(angle);
-        //calculate angle from star to this
-        if (distToStrata > 30)
-        {
-            //angle towards spot in strata
-            if (accelTowardsThisX > 0) angle += Math.PI;
-
-            let addAccelX = (accelTowardsThisX - this.x);
-            let addAccelY = (accelTowardsThisY - this.y);
-
-            let addAccelNorm = this.normalize(addAccelX, addAccelY, this.scene.star.speedMod * this.strata/20);
-            this.x_velocity = addAccelNorm[0];
-            this.y_velocity = addAccelNorm[1];
-
-            this.setVelocity(this.x_velocity+this.scene.star.x_velocity, this.y_velocity+this.scene.star.y_velocity);
-        }
-        else 
-        {
-            this.isPreOrbitingStar = false;
-            this.isOrbitingStar = true;
-            this.findOwnClockRotation();
-        }
+        this.isPreOrbitingStar = false;
+        this.isOrbitingStar = true;
+        this.findOwnClockRotation();
     }
 
     findOwnClockRotation() {
@@ -256,15 +229,20 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
     //called from level.js when star changes 
     updateOrbital()
     {
-        this.isLargerThanStar = this.scene.star.Scale <= this.Scale ? true : false;
+        this.isLargerThanStar = this.scene.star.orbitalScale <= this.Scale ? true : false;
 
         if (this.isLargerThanStar) 
         {
+            this.setDepth(6);
+            console.log(this.Scale);
+            console.log("is larger");
             this.orbitalBody.setEnable(true);
             this.orbital.setVisible(true);
         }
         else 
         {
+            this.setDepth(4);
+            console.log("is smaller");
             this.orbitalBody.setEnable(false);
             this.orbital.setVisible(false);
         }
