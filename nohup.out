@@ -515,3 +515,95 @@ A Parser-blocking, cross-origin script, https://assets.adobedtm.com/850bf62b6b0b
 01:24:34 INFO: Request to log.pinterest.com blocked by host blocker.
 01:24:35 INFO: Request to pubads.g.doubleclick.net blocked by host blocker.
 01:24:35 INFO: Request to pubads.g.doubleclick.net blocked by host blocker.
+20:46:54 INFO: Request to www.google-analytics.com blocked by host blocker.
+20:46:54 INFO: Request to idsync.rlcdn.com blocked by host blocker.
+20:46:54 INFO: Request to js.adsrvr.org blocked by host blocker.
+20:46:56 INFO: Request to match.adsrvr.org blocked by host blocker.
+20:46:56 INFO: Request to secure-us.imrworldwide.com blocked by host blocker.
+20:46:56 INFO: Request to www.googleadservices.com blocked by host blocker.
+20:46:56 INFO: Request to adservice.google.com blocked by host blocker.
+20:46:56 INFO: Request to s.adroll.com blocked by host blocker.
+20:47:45 INFO: Request to ssl.google-analytics.com blocked by host blocker.
+20:47:45 INFO: Request to secure.quantserve.com blocked by host blocker.
+20:48:24 INFO: Request to www.google-analytics.com blocked by host blocker.
+21:28:33 INFO: Request to www.google-analytics.com blocked by host blocker.
+21:28:33 INFO: Request to www.googletagservices.com blocked by host blocker.
+21:28:33 INFO: Request to c.amazon-adsystem.com blocked by host blocker.
+21:28:33 INFO: Request to vendorlist.consensu.org blocked by host blocker.
+21:30:11 INFO: Request to www.googletagservices.com blocked by host blocker.
+21:30:11 INFO: Request to www.google-analytics.com blocked by host blocker.
+21:30:11 INFO: Request to secure.quantserve.com blocked by host blocker.
+21:30:11 INFO: Request to sb.scorecardresearch.com blocked by host blocker.
+21:30:40 WARNING: Text 'headp' not found on page!
+21:30:40 WARNING: Text 'headph' not found on page!
+21:30:40 WARNING: Text 'headpho' not found on page!
+21:30:40 WARNING: Text 'headphon' not found on page!
+21:30:40 WARNING: Text 'headphone' not found on page!
+21:34:17 INFO: Request to googleads.g.doubleclick.net blocked by host blocker.
+21:34:21 INFO: Request to googleads.g.doubleclick.net blocked by host blocker.
+21:34:22 INFO: Request to tpc.googlesyndication.com blocked by host blocker.
+21:34:22 INFO: Request to ad.doubleclick.net blocked by host blocker.
+21:34:22 INFO: Request to pagead2.googlesyndication.com blocked by host blocker.
+21:34:22 INFO: Request to ade.googlesyndication.com blocked by host blocker.
+21:34:22 INFO: Request to ade.googlesyndication.com blocked by host blocker.
+21:34:24 INFO: Request to static.doubleclick.net blocked by host blocker.
+21:34:24 INFO: Request to ade.googlesyndication.com blocked by host blocker.
+21:34:24 INFO: Request to pagead2.googlesyndication.com blocked by host blocker.
+21:34:24 INFO: Request to ade.googlesyndication.com blocked by host blocker.
+21:34:25 INFO: Request to ade.googlesyndication.com blocked by host blocker.
+21:34:25 INFO: Request to pagead2.googlesyndication.com blocked by host blocker.
+21:34:25 INFO: Request to ade.googlesyndication.com blocked by host blocker.
+21:34:27 INFO: Request to ade.googlesyndication.com blocked by host blocker.
+21:34:28 INFO: Request to tpc.googlesyndication.com blocked by host blocker.
+21:34:28 INFO: Request to ade.googlesyndication.com blocked by host blocker.
+21:34:29 INFO: Request to tpc.googlesyndication.com blocked by host blocker.
+21:36:17 INFO: Request to googleads.g.doubleclick.net blocked by host blocker.
+21:36:21 INFO: Request to googleads.g.doubleclick.net blocked by host blocker.
+21:37:55 INFO: Request to www.google-analytics.com blocked by host blocker.
+21:38:53 INFO: Request to www.googletagservices.com blocked by host blocker.
+21:38:53 INFO: Request to www.google-analytics.com blocked by host blocker.
+21:38:53 INFO: Request to secure.quantserve.com blocked by host blocker.
+21:38:53 INFO: Request to sb.scorecardresearch.com blocked by host blocker.
+21:39:20 INFO: Request to googleads.g.doubleclick.net blocked by host blocker.
+21:39:24 INFO: Request to googleads.g.doubleclick.net blocked by host blocker.
+21:39:24 INFO: Request to tpc.googlesyndication.com blocked by host blocker.
+21:39:25 INFO: Request to tpc.googlesyndication.com blocked by host blocker.
+21:39:26 INFO: Request to static.doubleclick.net blocked by host blocker.
+21:39:35 INFO: Request to www.googleadservices.com blocked by host blocker.
+21:40:56 INFO: Request to googleads.g.doubleclick.net blocked by host blocker.
+21:40:58 INFO: Request to static.doubleclick.net blocked by host blocker.
+21:41:06 INFO: Request to googleads.g.doubleclick.net blocked by host blocker.
+21:41:29 INFO: Request to googleads.g.doubleclick.net blocked by host blocker.
+21:41:29 INFO: Request to googleads.g.doubleclick.net blocked by host blocker.
+21:41:29 INFO: Request to tpc.googlesyndication.com blocked by host blocker.
+21:42:47 INFO: Request to googleads.g.doubleclick.net blocked by host blocker.
+21:42:48 INFO: Request to tpc.googlesyndication.com blocked by host blocker.
+21:42:49 INFO: Request to googleads.g.doubleclick.net blocked by host blocker.
+21:42:49 INFO: Request to ad.doubleclick.net blocked by host blocker.
+21:42:49 INFO: Request to pagead2.googlesyndication.com blocked by host blocker.
+21:42:49 INFO: Request to pagead2.googlesyndication.com blocked by host blocker.
+21:42:49 INFO: Request to ade.googlesyndication.com blocked by host blocker.
+21:42:49 INFO: Request to pagead2.googlesyndication.com blocked by host blocker.
+21:42:49 INFO: Request to pagead2.googlesyndication.com blocked by host blocker.
+21:42:49 INFO: Request to pagead2.googlesyndication.com blocked by host blocker.
+21:42:49 INFO: Request to ade.googlesyndication.com blocked by host blocker.
+21:42:50 INFO: Request to static.doubleclick.net blocked by host blocker.
+21:42:51 INFO: Request to tpc.googlesyndication.com blocked by host blocker.
+21:42:52 INFO: Request to pagead2.googlesyndication.com blocked by host blocker.
+21:42:52 INFO: Request to pagead2.googlesyndication.com blocked by host blocker.
+21:42:52 INFO: Request to ade.googlesyndication.com blocked by host blocker.
+21:42:53 INFO: Request to pagead2.googlesyndication.com blocked by host blocker.
+21:42:53 INFO: Request to ade.googlesyndication.com blocked by host blocker.
+21:42:56 INFO: Request to pagead2.googlesyndication.com blocked by host blocker.
+21:42:56 INFO: Request to ade.googlesyndication.com blocked by host blocker.
+[12982:12982:0512/214357.569983:ERROR:zygote_communication_linux.cc(292)] Failed to send GetTerminationStatus message to zygote
+[12982:12982:0512/214358.572477:ERROR:zygote_communication_linux.cc(292)] Failed to send GetTerminationStatus message to zygote
+[12982:12982:0512/214358.577663:ERROR:zygote_communication_linux.cc(292)] Failed to send GetTerminationStatus message to zygote
+[12982:12982:0512/214404.082166:ERROR:child_process_launcher.cc(522)] Failed to launch child process
+21:44:04 ERROR: Renderer process did not start
+[12982:12982:0512/214404.257797:ERROR:child_process_launcher.cc(522)] Failed to launch child process
+21:44:04 ERROR: Renderer process did not start
+[12982:12982:0512/214404.395475:ERROR:child_process_launcher.cc(522)] Failed to launch child process
+21:44:04 ERROR: Renderer process did not start
+[12982:12982:0512/214404.539660:ERROR:child_process_launcher.cc(522)] Failed to launch child process
+21:44:04 ERROR: Renderer process did not start

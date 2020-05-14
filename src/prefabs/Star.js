@@ -45,7 +45,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
 
         this.pastSatellitesDist = 0;
 
-        this.speedMod = 100;
+        this.speedMod = 30;
 
         this.satellitesCollected = 0;
 
@@ -126,20 +126,27 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         this.satellitesCollected++;
         this.satelliteStack.push(satellite);
         this.satelliteScaleStack.push(satelliteScale);
-        this.orbitalScale += satelliteScale;
-        this.pastSatellitesDist += satellite.radius * satelliteScale;
-        this.orbitalRadiusWeighted = this.orbitalRadius * this.orbitalScale;
-        this.updateOrbital();
+        this.Scale += satelliteScale;
+        this.updateSize();
     }
 
     shrinkUpdate() {
+        console.log("boom");
         this.satellitesCollected--;
-        this.satelliteStack.pop().isOrbitingStar = false;
-        this.orbitalScale -= this.satelliteScaleStack.pop();
+        let lostSatellite = this.satelliteStack.pop();
+        lostSatellite.preScatter();
+        lostSatellite.isOrbitingStar = false;
+        this.Scale -= this.satelliteScaleStack.pop();
+        this.updateSize();
     }
 
     updateOrbital() {
         this.orbital.setScale(this.orbitalScale);
+    }
+
+    updateSize() {
+        this.radiusWeighted = this.radius * this.Scale;
+        this.setScale(this.Scale);
     }
 
 }
