@@ -607,3 +607,4 @@ A Parser-blocking, cross-origin script, https://assets.adobedtm.com/850bf62b6b0b
 21:44:04 ERROR: Renderer process did not start
 [12982:12982:0512/214404.539660:ERROR:child_process_launcher.cc(522)] Failed to launch child process
 21:44:04 ERROR: Renderer process did not start
+00:39:23 WARNING: The X11 connection broke (error 1). Did the X11 server die?

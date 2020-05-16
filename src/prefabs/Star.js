@@ -43,9 +43,13 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         this.trajectory = 0;
         this.lastTrajectory = 0;
 
+        //to prevent star from using overlapping orbitals
+        this.orbitalEntered = false;
+        this.isBouncing = false;
+
         this.pastSatellitesDist = 0;
 
-        this.speedMod = 30;
+        this.speedMod = 50;
 
         this.satellitesCollected = 0;
 
@@ -128,16 +132,44 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         this.satelliteScaleStack.push(satelliteScale);
         this.Scale += satelliteScale;
         this.updateSize();
+        if (!this.orbitalEntered) this.setCameraToStar();
     }
 
-    shrinkUpdate() {
+    shrinkUpdate(satX, satY) {
         console.log("boom");
         this.satellitesCollected--;
-        let lostSatellite = this.satelliteStack.pop();
+        this.bounce(satX, satY);
+        if(this.satelliteStack.length > 0)
+        {
+            let lostSatellite = this.satelliteStack.pop();
         lostSatellite.preScatter();
         lostSatellite.isOrbitingStar = false;
         this.Scale -= this.satelliteScaleStack.pop();
         this.updateSize();
+        this.setCameraToStar();
+        }
+    }
+
+    bounce(satX, satY) {
+        let reflectingLineX = satX - this.x;
+        let reflectingLineY = satY - this.y;
+        let vdotn = this.x_velocity * reflectingLineX +
+            this.y_velocity * reflectingLineY;
+        let ndotn = reflectingLineX * reflectingLineX +
+            reflectingLineY * reflectingLineY;
+        let projX = (vdotn / ndotn) * reflectingLineX;
+        let projY = (vdotn / ndotn) * reflectingLineY;
+
+        let reflectionX = this.x_velocity - 2 * (projX);
+        let reflectionY = this.y_velocity - 2 * (projY);
+
+        this.x_velocity = reflectionX;
+        this.y_velocity = reflectionY;
+
+        this.isBouncing = true;
+
+        this.findTrajectory;
+
     }
 
     updateOrbital() {
@@ -147,6 +179,19 @@ class Star extends Phaser.Physics.Arcade.Sprite {
     updateSize() {
         this.radiusWeighted = this.radius * this.Scale;
         this.setScale(this.Scale);
+    }
+
+    setCameraToStar() {
+        
+        //.pan(x, y, duration, ease)
+        // this.scene.cameras.main.pan(this.x, this.y, 1000, 'Power2');
+
+        if (!this.cameraSetBool) {
+            this.scene.cameras.main.startFollow(this, true, 0.1, 0.1);
+            this.cameraSetBool = true;
+        }
+
+        this.scene.cameras.main.zoomTo(Math.abs(1+(0.1/this.Scale)), 1000, 'Sine.easeInOut');
     }
 
 }

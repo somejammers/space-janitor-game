@@ -69,6 +69,15 @@ class Level1 extends Phaser.Scene {
 
         this.satelliteGroup.add(this.satellite_7);
 
+        //Camera
+        // object, roundPixels, lerpX, lerpY
+        // lerp determines how quickly the camera follows
+        
+        this.star.setCameraToStar();
+
+        //if you want sometihng that is fixed to the camera, like a health bar,
+        //use this.object.setScrollFactor(0); you can also do parallax like this
+
     }
 
     update() {
