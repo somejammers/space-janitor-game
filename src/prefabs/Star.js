@@ -49,7 +49,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
 
         this.pastSatellitesDist = 0;
 
-        this.speedMod = 50;
+        this.speedMod = 35;
 
         this.satellitesCollected = 0;
 
@@ -185,6 +185,11 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         
         //.pan(x, y, duration, ease)
         // this.scene.cameras.main.pan(this.x, this.y, 1000, 'Power2');
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        //ACCESSING SPECIFIC MEMBERS/METHODS FROM A PHASER CLASS, 
+        //https://photonstorm.github.io/phaser3-docs/Phaser.Cameras.Scene2D.Camera.html#shakeEffect__anchor
+        this.scene.cameras.main.panEffect.reset();
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         if (!this.cameraSetBool) {
             this.scene.cameras.main.startFollow(this, true, 0.1, 0.1);
@@ -192,6 +197,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         }
 
         this.scene.cameras.main.zoomTo(Math.abs(1+(0.1/this.Scale)), 1000, 'Sine.easeInOut');
+        
     }
 
 }

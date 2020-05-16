@@ -608,3 +608,238 @@ A Parser-blocking, cross-origin script, https://assets.adobedtm.com/850bf62b6b0b
 [12982:12982:0512/214404.539660:ERROR:child_process_launcher.cc(522)] Failed to launch child process
 21:44:04 ERROR: Renderer process did not start
 00:39:23 WARNING: The X11 connection broke (error 1). Did the X11 server die?
+Discord 0.0.10
+Starting app.
+Starting updater.
+[Modules] Modules initializing
+[Modules] Distribution: remote
+[Modules] Host updates: enabled
+[Modules] Module updates: enabled
+[Modules] Module install path: /home/a/.config/discord/0.0.10/modules
+[Modules] Module installed file path: /home/a/.config/discord/0.0.10/modules/installed.json
+[Modules] Module download path: /home/a/.config/discord/0.0.10/modules/pending
+[8997:0515/170059.889407:ERROR:buffer_manager.cc(488)] [.DisplayCompositor]GL ERROR :GL_INVALID_OPERATION : glBufferData: <- error from previous GL command
+[Modules] No updates to install
+[Modules] Checking for host updates.
+[Modules] Host is up to date.
+[Modules] Checking for module updates at https://discordapp.com/api/modules/stable/versions.json
+[Modules] No module updates available.
+[8997:0515/170100.512858:ERROR:buffer_manager.cc(488)] [.DisplayCompositor]GL ERROR :GL_INVALID_OPERATION : glBufferData: <- error from previous GL command
+[Modules] Starting to install discord_krisp...
+[Modules] Fetching discord_krisp@0 from https://discordapp.com/api/modules/stable/discord_krisp/0
+[Modules] Streaming discord_krisp@0 to /home/a/.config/discord/0.0.10/modules/pending/discord_krisp-0.zip
+Error downloading with electron net: HTTP Error: Status Code 403
+Falling back to node net library..
+(electron) 'isAccessibilitySupportEnabled function' is deprecated and will be removed. Please use 'accessibilitySupportEnabled property' instead.
+[Modules] Failed fetching module discord_krisp@0: Error: HTTP Error: Status Code 403
+[Modules] Finished module downloads. [success: 0] [failure: 1]
+(electron) 'setBadgeCount function' is deprecated and will be removed. Please use 'badgeCount property' instead.
+17:03:10 INFO: Opening in existing instance
+
+(discord:8940): libnotify-WARNING **: 17:14:51.159: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 17:14:51.162: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 17:14:51.165: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 17:15:02.488: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 17:15:02.492: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 17:15:02.496: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 17:15:17.566: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 17:15:17.569: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 17:15:17.572: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 17:23:50.132: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 17:23:50.137: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 17:23:50.141: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 17:37:27.820: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 17:37:27.824: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 17:37:27.825: Failed to connect to proxy
+[000:000] [9118] (audio_send_stream.cc:285): Failed to set up send codec state.
+[000:035] [9118] (audio_send_stream.cc:285): Failed to set up send codec state.
+[000:036] [9118] (audio_device_generic.cc:31): BuiltInAECIsAvailable: Not supported on this platform
+[000:079] [9118] (audio_send_stream.cc:285): Failed to set up send codec state.
+[OpenH264] this = 0x0x315c005debd0, Warning:ParamValidation(), AdaptiveQuant(1) is not supported yet for screen content, auto turned off
+[OpenH264] this = 0x0x315c005debd0, Warning:ParamValidation(), AdaptiveQuant(1) is not supported yet for screen content, auto turned off
+[OpenH264] this = 0x0x315bff916240, Warning:ParamValidation(), AdaptiveQuant(1) is not supported yet for screen content, auto turned off
+[560:814] [9122] (audio_device_pulse_linux.cc:1855): Can't query latency
+
+(discord:8940): libnotify-WARNING **: 17:55:16.969: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 17:55:16.972: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 17:55:16.977: Failed to connect to proxy
+[Modules] Checking for host updates.
+[Modules] Host is up to date.
+[Modules] Checking for module updates at https://discordapp.com/api/modules/stable/versions.json
+[Modules] No module updates available.
+[OpenH264] this = 0x0x315bff916240, Warning:Actual input framerate 22.000000 is different from framerate in setting 30.000000, suggest to use other rate control modes
+[1686:294] [9122] (audio_device_pulse_linux.cc:1855): Can't query latency
+18:12:27 INFO: Opening in existing instance
+18:12:51 INFO: Opening in existing instance
+18:14:34 INFO: Opening in existing instance
+[OpenH264] this = 0x0x315bff916240, Warning:[Rc] iDid = 0,iContinualSkipFrames(3) is large
+[OpenH264] this = 0x0x315bff916240, Warning:[Rc] iDid = 0,iContinualSkipFrames(6) is large
+[OpenH264] this = 0x0x315bff916240, Warning:[Rc] iDid = 0,iContinualSkipFrames(3) is large
+[OpenH264] this = 0x0x315bff916240, Warning:[Rc] iDid = 0,iContinualSkipFrames(6) is large
+[OpenH264] this = 0x0x315bff916240, Warning:[Rc] iDid = 0,iContinualSkipFrames(3) is large
+[OpenH264] this = 0x0x315bff916240, Warning:[Rc] iDid = 0,iContinualSkipFrames(6) is large
+[OpenH264] this = 0x0x315bff916240, Warning:[Rc] iDid = 0,iContinualSkipFrames(3) is large
+[OpenH264] this = 0x0x315bff916240, Warning:Actual input framerate 17.000000 is different from framerate in setting 30.000000, suggest to use other rate control modes
+[OpenH264] this = 0x0x315bff916240, Warning:[Rc] iDid = 0,iContinualSkipFrames(3) is large
+[3532:156] [9122] (audio_device_pulse_linux.cc:1855): Can't query latency
+
+(discord:8940): libnotify-WARNING **: 18:40:34.990: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:40:34.994: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:40:34.997: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:40:55.003: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:40:55.006: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:40:55.008: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:40:59.977: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:40:59.982: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:40:59.985: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:03.033: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:03.036: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:03.038: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:03.049: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:03.051: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:03.055: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:06.956: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:06.959: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:06.960: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:11.939: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:11.941: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:11.944: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:15.033: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:15.039: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:15.042: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:17.981: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:17.984: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:17.987: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:17.998: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:18.001: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:18.003: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:19.998: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:20.001: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:20.005: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:20.010: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:20.012: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:20.016: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:22.978: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:22.981: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:22.985: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:29.972: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:29.974: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:29.975: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:29.981: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:29.983: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:29.984: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:32.975: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:32.980: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:32.991: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:38.975: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:38.979: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:41:38.982: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:46:41.826: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:46:41.829: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:46:41.834: Failed to connect to proxy
+18:46:56 INFO: Opening in existing instance
+
+(discord:8940): libnotify-WARNING **: 18:46:56.648: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:46:56.650: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:46:56.654: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:46:58.048: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:46:58.051: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:46:58.053: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:46:59.681: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:46:59.684: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:46:59.687: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:47:02.373: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:47:02.378: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:47:02.381: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:47:04.658: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:47:04.662: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:47:04.666: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:47:06.524: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:47:06.526: Failed to connect to proxy
+
+(discord:8940): libnotify-WARNING **: 18:47:06.528: Failed to connect to proxy

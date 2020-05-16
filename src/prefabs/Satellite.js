@@ -91,6 +91,8 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         this.scene.physics.add.overlap(this.scene.star, this.orbital, this.orbitalEntry, null, this);
         this.scene.physics.add.overlap(this.scene.star, this, this.handleStarCollision, null, this);
 
+        // this.pan = this.scene.cameras.add(this.x, this.y, 4000, 'Power2');
+        // this.panFX = new PanFX(this.scene.cameras.main);
     }
 
     update() {
@@ -352,7 +354,6 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                     this.scene.star.orbitalEntered = false;
                     this.scene.star.cameraSetBool = false;
                     this.scene.star.setCameraToStar();
-
                 }
             }
         } 
@@ -395,18 +396,21 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
     }
 
     setCameraToSatellite() {
-        console.log("to satellite");
 
         this.cameraSetBool = true;
         this.scene.cameras.main.zoomTo(Math.abs(1+(0.1/this.Scale)), 1000, 'Sine.easeInOut');
+
         let transitionLength = 4000;
         //issue: this pan continues even after bounce()
+
         this.scene.cameras.main.pan(this.x, this.y, transitionLength, 'Power2');
         this.scene.time.delayedCall(transitionLength, () => { 
             if (!this.scene.star.isBouncing && this.orbitalEntered) {
                 this.scene.cameras.main.startFollow(this, false, 0.1, 0.1); }
             }
         );
+
+        
         this.scene.star.cameraSetBool = false;
 
     }

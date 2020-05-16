@@ -74,6 +74,12 @@ class Level1 extends Phaser.Scene {
         // lerp determines how quickly the camera follows
         
         this.star.setCameraToStar();
+        
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // EXAMPLE OF CREATING A NEW PHASER OBJECT
+        // this.panFX = new PanFX(this, this.cameras.main);
+        // this.panFX.start(0,0, 2000, 'Linear', true);
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         //if you want sometihng that is fixed to the camera, like a health bar,
         //use this.object.setScrollFactor(0); you can also do parallax like this
