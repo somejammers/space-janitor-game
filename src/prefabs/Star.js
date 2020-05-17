@@ -49,7 +49,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
 
         this.pastSatellitesDist = 0;
 
-        this.speedMod = 35;
+        this.speedMod = 100;
 
         this.satellitesCollected = 0;
 
@@ -130,9 +130,22 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         this.satellitesCollected++;
         this.satelliteStack.push(satellite);
         this.satelliteScaleStack.push(satelliteScale);
-        this.Scale += satelliteScale;
+
+        if (!this.orbitalEntered) this.setCameraToStar(this.Scale + satelliteScale);
+
+        this.Scale += satelliteScale/3;
         this.updateSize();
-        if (!this.orbitalEntered) this.setCameraToStar();
+
+        this.scene.time.delayedCall(333, () => {
+            this.Scale += satelliteScale/3;
+            this.updateSize();
+        });
+        this.scene.time.delayedCall(666, () => { 
+            this.Scale += satelliteScale/3;
+            this.updateSize();
+        });
+
+        this.scene.updateScaleTier(1);
     }
 
     shrinkUpdate(satX, satY) {
@@ -142,12 +155,14 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         if(this.satelliteStack.length > 0)
         {
             let lostSatellite = this.satelliteStack.pop();
-        lostSatellite.preScatter();
-        lostSatellite.isOrbitingStar = false;
-        this.Scale -= this.satelliteScaleStack.pop();
-        this.updateSize();
-        this.setCameraToStar();
+            lostSatellite.preScatter();
+            lostSatellite.isOrbitingStar = false;
+            this.Scale -= this.satelliteScaleStack.pop();
+            this.updateSize();
+            this.setCameraToStar(this.Scale);
         }
+
+        this.scene.updateScaleTier(-1);
     }
 
     bounce(satX, satY) {
@@ -181,7 +196,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         this.setScale(this.Scale);
     }
 
-    setCameraToStar() {
+    setCameraToStar(postScale) {
         
         //.pan(x, y, duration, ease)
         // this.scene.cameras.main.pan(this.x, this.y, 1000, 'Power2');
@@ -196,8 +211,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
             this.cameraSetBool = true;
         }
 
-        this.scene.cameras.main.zoomTo(Math.abs(1+(0.1/this.Scale)), 1000, 'Sine.easeInOut');
-        
+        this.scene.cameras.main.zoomTo(Math.abs(0.3), 1000, 'Sine.easeInOut');        
     }
 
 }

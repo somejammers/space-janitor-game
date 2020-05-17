@@ -19,9 +19,6 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         this.radius = 75;
         this.radiusWeighted = 75 * this.Scale;
         this.setCircle(this.radius, 0, 0);
-
-        this.orbitalRadiusWeighted = this.radius * this.Scale;
-
         //Orbital
         this.orbital = this.scene.physics.add.sprite(
             this.x, this.y, "Orbital"
@@ -29,6 +26,8 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         
         this.orbitalBody = this.orbital.body;
         this.orbitalRadius = 150;
+        this.orbitalRadiusWeighted = this.radius * this.Scale;
+
 
         this.orbital.setImmovable(true);
         this.orbital.setDepth(2);
@@ -39,7 +38,6 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
             this.scene.star.radius/6, this.scene.star.radius/6);
         this.orbital.setScale(scale);
 
-        this.orbitalRadiusWeighted = this.orbitalRadius * this.Scale;
 
         this.orbitalAccelModDefault = 0.065;
         this.orbitalAccelModScaling = 1 + 0.0005 * this.scene.star.speedMod;
@@ -105,7 +103,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
 
         this.scatter();
 
-        if (this.canStopOrbiting && !this.cameraSetBool) this.setCameraToSatellite();
+        if (!this.cameraSetBool && this.currRotationDuration > 90) this.setCameraToSatellite();
     }
 
     preScatter() {
@@ -146,9 +144,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                     this.isAttachedToStar = false;
                     this.updateOrbital();
             }
-
         }   
-
     }
 
     handleStarCollision() {
@@ -156,14 +152,12 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         {
             if (this.isLargerThanStar) 
             {
-                console.log("collided with larger");
                 //turn this back on when bounce has completed
                 this.isCollidable = false;
                 this.scene.star.shrinkUpdate(this.x, this.y);
             }
             else 
             {
-                console.log("collided with smaller");
                 //this will be the strata that the satellite rotates on
                 this.distToStar = Math.sqrt(
                     (this.x - this.scene.star.x) * (this.x - this.scene.star.x)
@@ -192,7 +186,6 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         if (this.isAttachedToStar) 
         {
 
-            console.log("attached to star");
             if(this.scene.star.trajectory != this.scene.star.lastTrajectory) 
              {
                 let angleChange = this.scene.star.trajectory - this.scene.star.lastTrajectory;
@@ -242,6 +235,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         }
         return 0;
     }
+    
     //called from level.js when star changes 
     updateOrbital()
     {
@@ -254,7 +248,6 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         }
         else 
         {
-            console.log("is smaller");
             this.orbitalBody.setEnable(false);
             this.orbital.setVisible(false);
         }
@@ -271,7 +264,6 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                 (this.y - this.scene.star.y) * (this.y - this.scene.star.y)
             );
 
-            console.log("orbitalentry");
             this.findClockRotation();
             this.isPreOrbiting = true;
             this.orbitalBody.s&& this.canReEnterOrbitetEnable(false);
@@ -339,8 +331,11 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
             }
             //star leaving orbital
             else if (this.canStopOrbiting) {
-                this.lastDistToStar = this.distToStar;
-                this.currRotationDuration = 0;
+                this.distToStar = Math.sqrt(
+                    (this.x - this.scene.star.x) * (this.x - this.scene.star.x)
+                    +
+                    (this.y - this.scene.star.y) * (this.y - this.scene.star.y)
+                );
                 //balance this later
                 // this.orbitalAccelMod = this.orbitalAccelModDefault * 10; //not a full reset of accel but a bit better
                 this.currRotationDuration = 0;
@@ -353,19 +348,20 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                     this.currRotationDuration = 0;
                     this.scene.star.orbitalEntered = false;
                     this.scene.star.cameraSetBool = false;
-                    this.scene.star.setCameraToStar();
+                    this.scene.star.setCameraToStar(this.scene.star.Scale);
                 }
             }
         } 
         else if (this.orbitalEntered)
         {
-            this.scene.star.setCameraToStar();
+            this.scene.star.setCameraToStar(this.scene.star.Scale);
             
             this.distToStar = Math.sqrt(
                 (this.x - this.scene.star.x) * (this.x - this.scene.star.x)
                 +
                 (this.y - this.scene.star.y) * (this.y - this.scene.star.y)
             );
+            this.currRotationDuration = 0;
 
             if (this.distToStar - 0.5*this.scene.star.radiusWeighted > this.orbitalRadiusWeighted) {
                 
@@ -396,9 +392,10 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
     }
 
     setCameraToSatellite() {
+        //use this after star safely in orbit
 
         this.cameraSetBool = true;
-        this.scene.cameras.main.zoomTo(Math.abs(1+(0.1/this.Scale)), 1000, 'Sine.easeInOut');
+        this.scene.cameras.main.zoomTo(Math.abs(1+(0.2/this.Scale)), 1000, 'Sine.easeInOut');
 
         let transitionLength = 4000;
         //issue: this pan continues even after bounce()
@@ -409,12 +406,15 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                 this.scene.cameras.main.startFollow(this, false, 0.1, 0.1); }
             }
         );
-
-        
         this.scene.star.cameraSetBool = false;
 
     }
-    
 
-    
+    getDistFromOrbitalTo(x, y) {
+        return Math.sqrt(
+            (this.x - x) * (this.x - x)
+            +
+            (this.y - y) * (this.y - y)
+        ) - this.orbitalRadiusWeighted;
+    }
 }
