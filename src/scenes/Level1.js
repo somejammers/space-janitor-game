@@ -12,7 +12,6 @@ class Level1 extends Phaser.Scene {
 
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
-        console.log("in level 1");
         
         //Star
         this.p_scale = 0.15;
@@ -32,12 +31,6 @@ class Level1 extends Phaser.Scene {
         // );
 
         // this.satelliteGroup.add(this.satellite);
-
-        this.satellite_2 = new Satellite(
-            this, canvas_width/9, canvas_height/1.5, 1, "Satellite"
-        );
-
-        this.satelliteGroup.add(this.satellite_2);
 
         // this.satellite_3 = new Satellite(
         //     this, canvas_width/2, canvas_height/9, 0.19, "Satellite"
@@ -62,12 +55,6 @@ class Level1 extends Phaser.Scene {
         );
 
         this.satelliteGroup.add(this.satellite_6);
-
-        this.satellite_7 = new Satellite(
-            this, canvas_width/2, canvas_height/1.5, 0.19, "Satellite"
-        );
-
-        this.satelliteGroup.add(this.satellite_7);
 
         //Camera
         // object, roundPixels, lerpX, lerpY
@@ -173,14 +160,14 @@ class Level1 extends Phaser.Scene {
             x1 = this.screenXonLastSatSpawn + (xOffsetSign * this.fullViewportRadius);
             x2 = this.screenXonLastSatSpawn + (xOffsetSign * this.fullViewportRadius) + this.xOffset;
 
-            y1 = this.screenYonLastSatSpawn;
+            y1 = this.screenYonLastSatSpawn + (-yOffsetSign * this.fullViewportRadius); //testing 
             y2 = this.screenYonLastSatSpawn + (yOffsetSign * this.fullViewportRadius);
 
         } 
         //B
         else if (currBox == 1)
         {
-            x1 = this.screenXonLastSatSpawn;
+            x1 = this.screenXonLastSatSpawn + (-xOffsetSign * this.fullViewportRadius); //testing
             x2 = this.screenXonLastSatSpawn + (xOffsetSign * this.fullViewportRadius);
 
             y1 = this.screenYonLastSatSpawn + (yOffsetSign * this.fullViewportRadius);
@@ -201,17 +188,10 @@ class Level1 extends Phaser.Scene {
             xSpawn = Math.floor(Math.random() * (x2 - x1)) + x1;
             ySpawn = Math.floor(Math.random() * (y2 - y1)) + y1;
 
-            console.log(this.volThreshold);
 
             if(this.checkLocationValidity(xSpawn, ySpawn))
             {
                 //add the tier as aVol parameter later, which checks the scaleArray and textureArray
-                console.log("boxA " + this.boxA);
-                console.log("boxB " + this.boxB);
-                console.log("boxC " + this.boxC);
-        
-                console.log(xSpawn+","+ySpawn);
-                console.log(currBox);
                 this.createSatellite(xSpawn, ySpawn);
                 this.screenXonLastSatSpawn = this.screenXcurrent;
                 this.screenYonLastSatSpawn = this.screenYcurrent;
@@ -239,8 +219,6 @@ class Level1 extends Phaser.Scene {
             this, x, y, scale, "Satellite"
         );
 
-        console.log("orbitalRadiusW = "+satellite.orbitalRadiusWeighted);
-
         this.satelliteGroup.add(satellite);
     }
 
@@ -252,27 +230,19 @@ class Level1 extends Phaser.Scene {
         let satellites = this.satelliteGroup.getChildren();
         for (var i = 0; i < satellites.length; i++) 
         {
-            if (satellites[i].getDistFromOrbitalTo(this.star.x, this.star.y) > this.killDist) {
-                satellites[i].destroy();
-                
+            if (!satellites[i].isAttachedToStar) {
+                if (satellites[i].getDistFromOrbitalTo(this.star.x, this.star.y) > this.killDist) {
+                    satellites[i].destroy();
+                }
             }
         }
     }
 
-    updateSatellites() {
-        console.log("updating");
+    updateSatellites(starScale) {
         let satellites = this.satelliteGroup.getChildren();
         for (var i = 0; i < satellites.length; i++) 
         {
-            satellites[i].updateOrbital();
-        }
-    }
-
-    exampleGroupCall() {
-        let children = this.satelliteGroup.getChildren();
-        for (var i = 0; i < children.length; i++) 
-        {
-            children[i].test();
+            satellites[i].updateOrbital(starScale);
         }
     }
     
