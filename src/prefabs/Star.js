@@ -133,6 +133,13 @@ class Star extends Phaser.Physics.Arcade.Sprite {
 
         if (!this.orbitalEntered) this.setCameraToStar(this.Scale + satelliteScale);
 
+        while (this.Scale >= this.scene.satelliteScaleArray[this.scene.satelliteArrayIndex] 
+            && this.scene.satelliteArrayIndex < this.scene.satelliteScaleArray.length - 1) 
+        {
+         this.scene.satelliteArrayIndex ++;
+
+        }
+
         this.scene.updateSatellites(this.Scale + satelliteScale);
         this.Scale += satelliteScale/3;
         this.updateSize();
@@ -163,6 +170,14 @@ class Star extends Phaser.Physics.Arcade.Sprite {
             this.updateSize();
             this.setCameraToStar(this.Scale);
         }
+
+        while (this.Scale < this.scene.satelliteScaleArray[this.satelliteArrayIndex] 
+               && this.satelliteArrayIndex > 1) 
+        {
+            this.satelliteArrayIndex --;
+
+        }
+        //if scale goes lower than the current object scale at index, drop index by 1 and check again
 
         this.scene.updateScaleTier(-1);
         this.scene.updateSatellites(this.Scale);

@@ -190,7 +190,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
              {
                 let angleChange = this.scene.star.trajectory - this.scene.star.lastTrajectory;
                 this.angleToStar += angleChange;
-                this.rotation = this.scene.star.rotation;
+                this.rotation += angleChange;
 
                 let moveToThisX = this.scene.star.x + this.distToStar * Math.cos(this.angleToStar);
                 let moveToThisY = this.scene.star.y + this.distToStar * Math.sin(this.angleToStar);

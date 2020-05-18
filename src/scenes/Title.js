@@ -4,27 +4,26 @@ class Title extends Phaser.Scene {
     }
 
     preload() {
-        
-        this.load.spritesheet('menuBG', './assets/sprites/menuScreenBG.png', {frameWidth: 720, frameHeight: 720, startFrame: 0, endFrame: 9});
-        this.load.spritesheet('playButton', './assets/sprites/playButton.png', {frameWidth: 275, frameHeight: 85, startFrame: 0, endFrame: 1});
-        this.load.spritesheet('rulesButton', './assets/sprites/rulesButton.png', {frameWidth: 275, frameHeight: 85, startFrame: 0, endFrame: 1});
-        this.load.spritesheet('creditsButton', './assets/sprites/creditsButton.png', {frameWidth: 275, frameHeight: 85, startFrame: 0, endFrame: 1});
-
-        this.load.spritesheet('creditsP', './assets/sprites/menuScreenCredits.png', {frameWidth: 720, frameHeight: 720, startFrame: 0, endFrame: 9});
-        this.load.spritesheet('rulesP', './assets/sprites/menuScreenRules.png', {frameWidth: 720, frameHeight: 720, startFrame: 0, endFrame: 9});
 
 
         this.load.audio('button_click', './assets/sfx/ES_Click.wav');
         this.load.audio('menu_bgm', './assets/sfx/The-8-bit-Princess.wav');
 
-
     }
 
     create() {
 
+        ///For Debug
+
+        this.scene.stop("titleScene");
+        this.scene.start("level1Scene");
+
+
         var music = this.sound.add('menu_bgm');
         music.setLoop(true);
-        music.play();
+        //music.play();
+
+        ///
         
 
         this.anims.create({

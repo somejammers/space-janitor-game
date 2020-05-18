@@ -10,18 +10,19 @@ class Level1 extends Phaser.Scene {
 
     create() {
 
+        this.satelliteTextureArray = ["debris_apple.png", "debris_banana.png", "debris_sodacan.png", "debris_shoe.png", "debris_newspaper.png", "debris_fish.png", "debris_toybunny.png", "debris_fish.png", "derbis_kite.png", "debris_computer.png", "debris_couch.png", "debris_dumpster.png", "debris_rocket.png"];
+        this.satelliteScaleArray =   [0.15,                0.2,                0.35,                 0.75,               0.35  ]
+        this.satelliteArrayIndex = 1; //start at size banana but cant go lower, can see apple, banana, soda, and shoe. scaling is adding last two together
+
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
-        
         //Star
-        this.p_scale = 0.15;
+        this.p_scale = 0.20;
 
         this.star = new Star(
             this, canvas_width/2 + 10, canvas_width/2 - 320, this.p_scale, "Star"
         );
         
-
-
         this.satelliteGroup = this.add.group({
             runChildUpdate: true
         });
@@ -39,7 +40,7 @@ class Level1 extends Phaser.Scene {
         // this.satelliteGroup.add(this.satellite_3);
 
         this.satellite_4 = new Satellite(
-            this, canvas_width/2, canvas_height/5, 0.14, "Satellite"
+            this, canvas_width/2, canvas_height/5, 0.14, "debris_banana.png"
         );
 
         this.satelliteGroup.add(this.satellite_4);
@@ -185,18 +186,24 @@ class Level1 extends Phaser.Scene {
 
         }
 
-            xSpawn = Math.floor(Math.random() * (x2 - x1)) + x1;
-            ySpawn = Math.floor(Math.random() * (y2 - y1)) + y1;
+        xSpawn = Math.floor(Math.random() * (x2 - x1)) + x1;
+        ySpawn = Math.floor(Math.random() * (y2 - y1)) + y1;
 
+        //pick the satellite
 
-            if(this.checkLocationValidity(xSpawn, ySpawn))
-            {
-                //add the tier as aVol parameter later, which checks the scaleArray and textureArray
-                this.createSatellite(xSpawn, ySpawn);
-                this.screenXonLastSatSpawn = this.screenXcurrent;
-                this.screenYonLastSatSpawn = this.screenYcurrent;
-                this.checkStraySatellite();
-            }
+        let indexMin = this.satelliteArrayIndex - 1;
+        let indexMax = this.satelliteArrayIndex + 2;
+
+        let satelliteIndex = Phaser.Math.Between(indexMin, indexMax);
+
+        if(this.checkLocationValidity(xSpawn, ySpawn))
+        {
+            //add the tier as aVol parameter later, which checks the scaleArray and textureArray
+            this.createSatellite(xSpawn, ySpawn, satelliteIndex);
+            this.screenXonLastSatSpawn = this.screenXcurrent;
+            this.screenYonLastSatSpawn = this.screenYcurrent;
+            this.checkStraySatellite();
+        }
     }
 
     checkLocationValidity(x, y) {
@@ -210,13 +217,14 @@ class Level1 extends Phaser.Scene {
         return true;
     }
 
-    createSatellite(x, y, tier) {
+    createSatellite(x, y, satelliteIndex) {
         // let scale = scaleArray[tier]; 
         // let texture = textureArray[tier];
-        let scale = 0.14;
 
         let satellite = new Satellite(
-            this, x, y, scale, "Satellite"
+            this, x, y, 
+            this.satelliteScaleArray[satelliteIndex], 
+            this.satelliteTextureArray[satelliteIndex]
         );
 
         this.satelliteGroup.add(satellite);
