@@ -11,14 +11,14 @@ class Level1 extends Phaser.Scene {
     create() {
 
         this.satelliteTextureArray = ["debris_apple.png", "debris_banana.png", "debris_sodacan.png", "debris_shoe.png", "debris_newspaper.png", "debris_fish.png", "debris_toybunny.png", "debris_kite.png", "debris_computer.png", "debris_couch.png", "debris_dumpster.png", "debris_rocket.png"];
-        //I think scaling should be c = 2a + b because when you go up a scale, there's still the old tier's objects that r free to pick up. the good news is that the player has nothing to orbit on
-        this.satelliteScaleArray =   [0.15,                0.2,                0.5,                 0.9,               1.9,                   3.7,                   7.5,                    19.7,              31.9,                  51.6,               115.4,                 218.6]
-        this.satelliteArrayIndex = 1; //start at size banana but cant go lower, can see apple, banana, soda, and shoe. scaling is adding last two together
+        //I think scaling should be d = 2a + b + c and have the largest object in tier be 3 ahead
+        this.satelliteScaleArray =   [0.2,                0.25,                0.5,                 1.15,               2.25,                   4.4,                8.85,                  17.75,              31.9,                  51.6,               115.4,                 218.6]
+        this.satelliteArrayIndex = 1; //start at size banana but cant go lower, can see apple, banana, soda, and shoe. scaling is adding last two together. updated upto kite
 
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
         //Star
-        this.p_scale = 0.20;
+        this.p_scale = 0.25;
 
         this.star = new Star(
             this, canvas_width/2 + 10, canvas_width/2 - 320, this.p_scale, "Star"
@@ -74,17 +74,14 @@ class Level1 extends Phaser.Scene {
         //use this.object.setScrollFactor(0); you can also do parallax like this
 
 
-        this.farthestZoomValue = Math.abs(0.5+(0.05/
-            this.satelliteScaleArray[this.satelliteArrayIndex + 2]
-            )
-        );
+        this.farthestZoomValue = Math.abs(0.2/(this.star.postGrowthScale *1.5)); //was 0.5+(0.05/this.satelliteScaleArray[this.satelliteArrayIndex + 3]
         //this needs to be based on the zoomout of the highest possible object in the current tier of scale
         // canvas_width * 
         this.fullViewportDiameter = 720/this.farthestZoomValue  +
-            (150 * this.satelliteScaleArray[this.satelliteArrayIndex + 2])/2; // this is the radius of the largest possible satellite
+            (150 * this.satelliteScaleArray[this.satelliteArrayIndex + 3])/2; // this is the radius of the largest possible satellite
         this.fullViewportRadius = this.fullViewportDiameter/2;
-        this.killDist = 1020; //make this dist from star to corner of screen
-
+        this.killDist = Math.sqrt(this.fullViewportRadius * this.fullViewportRadius
+            + this.fullViewportRadius * this.fullViewportRadius);
         this.screenXonLastSatSpawn = this.star.x;
         this.screenYonLastSatSpawn = this.star.y;
         //keep track of screen location using star's position every frame
@@ -102,8 +99,6 @@ class Level1 extends Phaser.Scene {
         this.volThreshold = 250 * 250; //needa scale this bc speed inc
         //distance from other satellits required to spawn
         //update the following in generateSatellite() by picking a random valid object and updating tier
-        this.spawnThreshold = 200;//I'm thinking it should be the object that's being placed's orbital radius * 2
-        this.tier = 1;
 
     }
 
@@ -124,12 +119,14 @@ class Level1 extends Phaser.Scene {
     }
 
     updateScreenValues() {
+        this.farthestZoomValue = Math.abs(0.2/(this.star.postGrowthScale *1.5)) //was 0.5+(0.05/this.satelliteScaleArray[this.satelliteArrayIndex + 3]
         this.fullViewportDiameter = 720/this.farthestZoomValue  +
-            (150 * this.satelliteScaleArray[this.satelliteArrayIndex + 2]); // this is the radius of the largest possible satellite
+            (150 * this.satelliteScaleArray[this.satelliteArrayIndex + 3]/2); // this is the radius of the largest possible satellite
         this.fullViewportRadius = this.fullViewportDiameter/2;
         this.killDist = Math.sqrt(this.fullViewportRadius * this.fullViewportRadius
                         + this.fullViewportRadius * this.fullViewportRadius); //make this dist from star to corner of screen
     }
+
 
     calculateScreenOffset() {
         //two problems:
@@ -211,7 +208,7 @@ class Level1 extends Phaser.Scene {
         //pick the satellite
 
         let indexMin = this.satelliteArrayIndex - 1;
-        let indexMax = this.satelliteArrayIndex + 2;
+        let indexMax = this.satelliteArrayIndex + 3;
 
         let satelliteIndex = Phaser.Math.Between(indexMin, indexMax);
 
@@ -230,12 +227,21 @@ class Level1 extends Phaser.Scene {
         let satellites = this.satelliteGroup.getChildren();
         let orbitalRadiusOfNewSat = 
             150 * this.satelliteScaleArray[satelliteIndex] * 1.2;
+        let distFromOrbitalToStar = Math.sqrt(
+            (x - this.star.x) * (x - this.star.x)
+            +
+            (y - this.star.y) * (y - this.star.y)
+        ) - orbitalRadiusOfNewSat;
 
 
         for (var i = 0; i < satellites.length; i++) 
         {
             let distToSatelliteOrbital = satellites[i].getDistFromOrbitalTo(x, y);
-            if (!satellites[i].isAttachedToStar && distToSatelliteOrbital < orbitalRadiusOfNewSat) return false;
+            // console.log(distToSatelliteOrbital+"comp"+orbitalRadiusOfNewSat);
+            if ((!satellites[i].isAttachedToStar) && distToSatelliteOrbital < orbitalRadiusOfNewSat
+                ) {
+                  return false;
+                } 
         }
         return true;
     }
@@ -258,8 +264,8 @@ class Level1 extends Phaser.Scene {
         for (var i = 0; i < satellites.length; i++) 
         {
             if (!satellites[i].isAttachedToStar) {
-                if (satellites[i].getDistFromOrbitalTo(this.star.x, this.star.y) > this.killDist) {
-                    satellites[i].destroy();
+                if (satellites[i].getDistFromSatelliteTo(this.star.x, this.star.y) > this.killDist) {
+                    this.killSatellite(satellites[i]);
                 }
             }
         }
@@ -270,12 +276,21 @@ class Level1 extends Phaser.Scene {
         for (var i = 0; i < satellites.length; i++) 
         {
             if (!satellites[i].isAttachedToStar) {
-                if (satellites[i].getDistFromOrbitalTo(this.star.x, this.star.y) 
-                    > this.fullViewportRadius + satellites[i].radiusWeighted) {
-                    satellites[i].destroy();
+                if ( (satellites[i].getDistFromSatelliteTo(this.star.x, this.star.y) 
+                    > this.fullViewportRadius + satellites[i].radiusWeighted)
+                || (satellites[i].Scale < this.satelliteScaleArray[this.satelliteArrayIndex - 1]) && !satellites[i].hasAttachedToStar)  {
+                    this.killSatellite(satellites[i]);
                 }
             }
         }
+    }
+
+    killSatellite(satellite) {
+        satellite.orbitalBody.setEnable(true);
+        satellite.orbitalBody.destroy();
+        satellite.orbital.destroy();
+        satellite.destroy();
+
     }
 
     updateSatellites(starScale) {
