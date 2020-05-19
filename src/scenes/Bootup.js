@@ -11,6 +11,7 @@ class Bootup extends Phaser.Scene {
         this.load.image("Satellite", "./assets/sprites/Satellite.png");
         this.load.image("Orbital", "./assets/sprites/Orbital.png");
 
+        this.load.image("debris_apple.png", "./assets/sprites/debris_apple.png");
         this.load.image("debris_banana.png", "./assets/sprites/debris_banana.png");
         this.load.image("debris_can.png", "./assets/sprites/debris_can.png");
         this.load.image("debris_computer.png", "./assets/sprites/debris_computer.png");

@@ -323,7 +323,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
 
                 this.canStopOrbiting = true;
                 this.isPreOrbiting = false;
-                //left out                 this.scene.star.cameraSetBool = false;, maybe needa disable it somewhere
+                this.scene.star.cameraSetBool = false; //maybe needa disable it somewhere
 
             } 
             else if (this.isPreOrbiting)
@@ -349,7 +349,6 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                     this.canStopOrbiting = false;
                     this.currRotationDuration = 0;
                     this.scene.star.orbitalEntered = false;
-                    this.scene.star.cameraSetBool = true;
                     this.scene.star.setCameraToStar(this.scene.star.Scale);
                 }
             }
@@ -376,7 +375,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                 this.currRotationDuration = 0;
                 this.scene.star.orbitalEntered = false;
                 this.scene.star.isBouncing = false;
-                this.scene.star.cameraSetBool = true;
+                this.scene.star.setCameraToStar(this.scene.star.Scale);
             }
         }
     }

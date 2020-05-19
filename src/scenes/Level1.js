@@ -10,9 +10,9 @@ class Level1 extends Phaser.Scene {
 
     create() {
 
-        this.satelliteTextureArray = ["debris_apple.png", "debris_banana.png", "debris_sodacan.png", "debris_shoe.png", "debris_newspaper.png", "debris_fish.png", "debris_toybunny.png", "debris_fish.png", "debris_kite.png", "debris_computer.png", "debris_couch.png", "debris_dumpster.png", "debris_rocket.png"];
+        this.satelliteTextureArray = ["debris_apple.png", "debris_banana.png", "debris_sodacan.png", "debris_shoe.png", "debris_newspaper.png", "debris_fish.png", "debris_toybunny.png", "debris_kite.png", "debris_computer.png", "debris_couch.png", "debris_dumpster.png", "debris_rocket.png"];
         //I think scaling should be c = 2a + b because when you go up a scale, there's still the old tier's objects that r free to pick up. the good news is that the player has nothing to orbit on
-        this.satelliteScaleArray =   [0.15,                0.2,                0.5,                 0.9,               1.9,                 3.7,                   7.5,                    12.2,             19.7,              31.9,                  51.6]
+        this.satelliteScaleArray =   [0.15,                0.2,                0.5,                 0.9,               1.9,                   3.7,                   7.5,                    19.7,              31.9,                  51.6,               115.4,                 218.6]
         this.satelliteArrayIndex = 1; //start at size banana but cant go lower, can see apple, banana, soda, and shoe. scaling is adding last two together
 
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
