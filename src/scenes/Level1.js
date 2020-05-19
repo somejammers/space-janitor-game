@@ -10,9 +10,9 @@ class Level1 extends Phaser.Scene {
 
     create() {
 
-        this.satelliteTextureArray = ["debris_apple.png", "debris_banana.png", "debris_sodacan.png", "debris_shoe.png", "debris_newspaper.png", "debris_fish.png", "debris_toybunny.png", "debris_fish.png", "derbis_kite.png", "debris_computer.png", "debris_couch.png", "debris_dumpster.png", "debris_rocket.png"];
+        this.satelliteTextureArray = ["debris_apple.png", "debris_banana.png", "debris_sodacan.png", "debris_shoe.png", "debris_newspaper.png", "debris_fish.png", "debris_toybunny.png", "debris_fish.png", "debris_kite.png", "debris_computer.png", "debris_couch.png", "debris_dumpster.png", "debris_rocket.png"];
         //I think scaling should be c = 2a + b because when you go up a scale, there's still the old tier's objects that r free to pick up. the good news is that the player has nothing to orbit on
-        this.satelliteScaleArray =   [0.15,                0.2,                0.5,                 0.9,               1.9,                 3.7,             7.5,                 0.480, ]
+        this.satelliteScaleArray =   [0.15,                0.2,                0.5,                 0.9,               1.9,                 3.7,                   7.5,                    12.2,             19.7,              31.9,                  51.6]
         this.satelliteArrayIndex = 1; //start at size banana but cant go lower, can see apple, banana, soda, and shoe. scaling is adding last two together
 
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -40,11 +40,11 @@ class Level1 extends Phaser.Scene {
 
         // this.satelliteGroup.add(this.satellite_3);
 
-        this.satellite_4 = new Satellite(
-            this, canvas_width/2, canvas_height/5, 0.14, "debris_banana.png"
-        );
+        // this.satellite_4 = new Satellite(
+        //     this, canvas_width/2, canvas_height/5, 0.14, "debris_banana.png"
+        // );
 
-        this.satelliteGroup.add(this.satellite_4);
+        // this.satelliteGroup.add(this.satellite_4);
 
         // this.satellite_5 = new Satellite(
         //     this, canvas_width/2, canvas_height/3, 0.19, "Satellite"
@@ -125,7 +125,7 @@ class Level1 extends Phaser.Scene {
 
     updateScreenValues() {
         this.fullViewportDiameter = 720/this.farthestZoomValue  +
-            (150 * this.satelliteScaleArray[this.satelliteArrayIndex + 2])/2; // this is the radius of the largest possible satellite
+            (150 * this.satelliteScaleArray[this.satelliteArrayIndex + 2]); // this is the radius of the largest possible satellite
         this.fullViewportRadius = this.fullViewportDiameter/2;
         this.killDist = Math.sqrt(this.fullViewportRadius * this.fullViewportRadius
                         + this.fullViewportRadius * this.fullViewportRadius); //make this dist from star to corner of screen
@@ -259,6 +259,19 @@ class Level1 extends Phaser.Scene {
         {
             if (!satellites[i].isAttachedToStar) {
                 if (satellites[i].getDistFromOrbitalTo(this.star.x, this.star.y) > this.killDist) {
+                    satellites[i].destroy();
+                }
+            }
+        }
+    }
+
+    killOldSatellites() {
+        let satellites = this.satelliteGroup.getChildren();
+        for (var i = 0; i < satellites.length; i++) 
+        {
+            if (!satellites[i].isAttachedToStar) {
+                if (satellites[i].getDistFromOrbitalTo(this.star.x, this.star.y) 
+                    > this.fullViewportRadius + satellites[i].radiusWeighted) {
                     satellites[i].destroy();
                 }
             }

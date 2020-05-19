@@ -12,8 +12,10 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         this.setDepth(5); //behind bigger satellites, ahead of smaller
         //Scale measures orbital scale
         this.Scale = scale;
+        this.defaultScale = 0.2;
         this.orbitalScale = this.Scale;
         this.radius = 75;
+        this.postGrowthScale = this.Scale;
 
         this.setCircle(this.radius, 0, 0);
         this.setScale(scale); //Scales hitbox and sprite
@@ -49,7 +51,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
 
         this.pastSatellitesDist = 0;
 
-        this.speedMod = 50;
+        this.speedMod = 100;
 
         this.satellitesCollected = 0;
 
@@ -133,18 +135,20 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         this.satelliteScaleStack.push(satelliteScale);
 
         if (!this.orbitalEntered) this.setCameraToStar(this.Scale + satelliteScale);
+        this.postGrowthScale = this.Scale + satelliteScale;
 
         while (this.Scale+satelliteScale >= this.scene.satelliteScaleArray[this.scene.satelliteArrayIndex] 
             && this.scene.satelliteArrayIndex < this.scene.satelliteScaleArray.length - 3) 
         {
             console.log("growing index");
-            this.scene.satelliteArrayIndex ++;
+            this.scene.satelliteArrayIndex++;
             this.scene.farthestZoomValue =
                 Math.abs(0.5+(0.05/
                     this.scene.satelliteScaleArray[this.scene.satelliteArrayIndex + 2]
                     )
                 );
             this.scene.updateScreenValues();
+            this.scene.killOldSatellites();
         }
 
         this.scene.updateSatellites(this.Scale + satelliteScale);
@@ -163,23 +167,26 @@ class Star extends Phaser.Physics.Arcade.Sprite {
 
     shrinkUpdate(satX, satY) {
         console.log("boom");
-        this.satellitesCollected--;
+        if (this.satellitesCollected > 0) this.satellitesCollected--;
         this.bounce(satX, satY);
         if(this.satelliteStack.length > 0)
         {
+            console.log("debug 1");
             let lostSatellite = this.satelliteStack.pop();
             lostSatellite.preScatter();
             lostSatellite.isOrbitingStar = false;
             this.Scale -= this.satelliteScaleStack.pop();
+            if (this.Scale < this.defaultScale) this.Scale = this.defaultScale;
+            this.postGrowthScale = this.Scale;
             this.updateSize();
             this.setCameraToStar(this.Scale);
         }
 
-        while (this.Scale < this.scene.satelliteScaleArray[this.satelliteArrayIndex] 
+        while (this.Scale < this.scene.satelliteScaleArray[this.scene.satelliteArrayIndex] 
                && this.scene.satelliteArrayIndex > 1) 
         {
-            console.log("reducing index to  "+this.scene.satelliteArrayIndex());
-            this.satelliteArrayIndex --;
+            console.log("while");
+            this.scene.satelliteArrayIndex--;
             this.scene.farthestZoomValue =
                 Math.abs(0.5+(0.05/
                     this.scene.satelliteScaleArray[this.scene.satelliteArrayIndex + 2]
@@ -189,6 +196,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         }
         //if scale goes lower than the current object scale at index, drop index by 1 and check again
         this.scene.updateSatellites(this.Scale);
+
 
     }
 
@@ -235,8 +243,9 @@ class Star extends Phaser.Physics.Arcade.Sprite {
 
         if (!this.cameraSetBool) {
             this.scene.cameras.main.startFollow(this, true, 0.1, 0.1);
-            this.cameraSetBool = true;
         }
+
+        this.cameraSetBool = true;
 
         this.scene.cameras.main.zoomTo(Math.abs(0.5+(0.05/postScale)), 1000, 'Sine.easeInOut');
 
