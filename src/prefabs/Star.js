@@ -49,12 +49,13 @@ class Star extends Phaser.Physics.Arcade.Sprite {
 
         this.pastSatellitesDist = 0;
 
-        this.speedMod = 30;
+        this.speedMod = 50;
 
         this.satellitesCollected = 0;
 
         this.satelliteStack = [];
         this.satelliteScaleStack = [];   
+        this.cameraSetBool = false;
 
     }
 
@@ -133,11 +134,17 @@ class Star extends Phaser.Physics.Arcade.Sprite {
 
         if (!this.orbitalEntered) this.setCameraToStar(this.Scale + satelliteScale);
 
-        while (this.Scale >= this.scene.satelliteScaleArray[this.scene.satelliteArrayIndex] 
-            && this.scene.satelliteArrayIndex < this.scene.satelliteScaleArray.length - 1) 
+        while (this.Scale+satelliteScale >= this.scene.satelliteScaleArray[this.scene.satelliteArrayIndex] 
+            && this.scene.satelliteArrayIndex < this.scene.satelliteScaleArray.length - 3) 
         {
-         this.scene.satelliteArrayIndex ++;
-
+            console.log("growing index");
+            this.scene.satelliteArrayIndex ++;
+            this.scene.farthestZoomValue =
+                Math.abs(0.5+(0.05/
+                    this.scene.satelliteScaleArray[this.scene.satelliteArrayIndex + 2]
+                    )
+                );
+            this.scene.updateScreenValues();
         }
 
         this.scene.updateSatellites(this.Scale + satelliteScale);
@@ -152,9 +159,6 @@ class Star extends Phaser.Physics.Arcade.Sprite {
             this.Scale += satelliteScale/3;
             this.updateSize();
         });
-
-        this.scene.updateScaleTier(1);
-
     }
 
     shrinkUpdate(satX, satY) {
@@ -172,14 +176,18 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         }
 
         while (this.Scale < this.scene.satelliteScaleArray[this.satelliteArrayIndex] 
-               && this.satelliteArrayIndex > 1) 
+               && this.scene.satelliteArrayIndex > 1) 
         {
+            console.log("reducing index to  "+this.scene.satelliteArrayIndex());
             this.satelliteArrayIndex --;
-
+            this.scene.farthestZoomValue =
+                Math.abs(0.5+(0.05/
+                    this.scene.satelliteScaleArray[this.scene.satelliteArrayIndex + 2]
+                    )
+                );
+            this.scene.updateScreenValues();
         }
         //if scale goes lower than the current object scale at index, drop index by 1 and check again
-
-        this.scene.updateScaleTier(-1);
         this.scene.updateSatellites(this.Scale);
 
     }
@@ -230,7 +238,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
             this.cameraSetBool = true;
         }
 
-        this.scene.cameras.main.zoomTo(Math.abs(1+(0.2/postScale)), 1000, 'Sine.easeInOut');
+        this.scene.cameras.main.zoomTo(Math.abs(0.5+(0.05/postScale)), 1000, 'Sine.easeInOut');
 
     }
 

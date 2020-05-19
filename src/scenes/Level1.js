@@ -11,7 +11,8 @@ class Level1 extends Phaser.Scene {
     create() {
 
         this.satelliteTextureArray = ["debris_apple.png", "debris_banana.png", "debris_sodacan.png", "debris_shoe.png", "debris_newspaper.png", "debris_fish.png", "debris_toybunny.png", "debris_fish.png", "derbis_kite.png", "debris_computer.png", "debris_couch.png", "debris_dumpster.png", "debris_rocket.png"];
-        this.satelliteScaleArray =   [0.15,                0.2,                0.35,                 0.75,               0.35  ]
+        //I think scaling should be c = 2a + b because when you go up a scale, there's still the old tier's objects that r free to pick up. the good news is that the player has nothing to orbit on
+        this.satelliteScaleArray =   [0.15,                0.2,                0.5,                 0.9,               1.9,                 3.7,             7.5,                 0.480, ]
         this.satelliteArrayIndex = 1; //start at size banana but cant go lower, can see apple, banana, soda, and shoe. scaling is adding last two together
 
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -72,8 +73,16 @@ class Level1 extends Phaser.Scene {
         //if you want sometihng that is fixed to the camera, like a health bar,
         //use this.object.setScrollFactor(0); you can also do parallax like this
 
-        this.fullViewportDiameter = 720;//later, set this to be based on the camera zoomout regarding the object 2 tiers higher than the current player's scale tier. Edge case for last 3 objects
-        this.fullViewportRadius = 720/2;
+
+        this.farthestZoomValue = Math.abs(0.5+(0.05/
+            this.satelliteScaleArray[this.satelliteArrayIndex + 2]
+            )
+        );
+        //this needs to be based on the zoomout of the highest possible object in the current tier of scale
+        // canvas_width * 
+        this.fullViewportDiameter = 720/this.farthestZoomValue  +
+            (150 * this.satelliteScaleArray[this.satelliteArrayIndex + 2])/2; // this is the radius of the largest possible satellite
+        this.fullViewportRadius = this.fullViewportDiameter/2;
         this.killDist = 1020; //make this dist from star to corner of screen
 
         this.screenXonLastSatSpawn = this.star.x;
@@ -90,11 +99,12 @@ class Level1 extends Phaser.Scene {
         this.boxC;
         this.offsetVolume;
         //required volume difference to spawn satellite
-        this.volThreshold = 300 * 300;
+        this.volThreshold = 250 * 250; //needa scale this bc speed inc
         //distance from other satellits required to spawn
         //update the following in generateSatellite() by picking a random valid object and updating tier
         this.spawnThreshold = 200;//I'm thinking it should be the object that's being placed's orbital radius * 2
         this.tier = 1;
+
     }
 
 
@@ -107,9 +117,18 @@ class Level1 extends Phaser.Scene {
 
         this.calculateScreenOffset();
 
-        if (this.offsetVolume > this.volThreshold) {
+        if (this.offsetVolume > this.volThreshold && this.star.cameraSetBool) {
             this.generateSatellite();
         }
+
+    }
+
+    updateScreenValues() {
+        this.fullViewportDiameter = 720/this.farthestZoomValue  +
+            (150 * this.satelliteScaleArray[this.satelliteArrayIndex + 2])/2; // this is the radius of the largest possible satellite
+        this.fullViewportRadius = this.fullViewportDiameter/2;
+        this.killDist = Math.sqrt(this.fullViewportRadius * this.fullViewportRadius
+                        + this.fullViewportRadius * this.fullViewportRadius); //make this dist from star to corner of screen
     }
 
     calculateScreenOffset() {
@@ -196,7 +215,7 @@ class Level1 extends Phaser.Scene {
 
         let satelliteIndex = Phaser.Math.Between(indexMin, indexMax);
 
-        if(this.checkLocationValidity(xSpawn, ySpawn))
+        if(this.checkLocationValidity(xSpawn, ySpawn, satelliteIndex))
         {
             //add the tier as aVol parameter later, which checks the scaleArray and textureArray
             this.createSatellite(xSpawn, ySpawn, satelliteIndex);
@@ -206,13 +225,17 @@ class Level1 extends Phaser.Scene {
         }
     }
 
-    checkLocationValidity(x, y) {
+    checkLocationValidity(x, y, satelliteIndex) {
         //if too close to another satellite, return false
         let satellites = this.satelliteGroup.getChildren();
+        let orbitalRadiusOfNewSat = 
+            150 * this.satelliteScaleArray[satelliteIndex] * 1.2;
+
+
         for (var i = 0; i < satellites.length; i++) 
         {
-            let distToSatellite = satellites[i].getDistFromOrbitalTo(x, y);
-            if (!satellites[i].isAttachedToStar && distToSatellite < this.spawnThreshold) return false;
+            let distToSatelliteOrbital = satellites[i].getDistFromOrbitalTo(x, y);
+            if (!satellites[i].isAttachedToStar && distToSatelliteOrbital < orbitalRadiusOfNewSat) return false;
         }
         return true;
     }
@@ -228,10 +251,6 @@ class Level1 extends Phaser.Scene {
         );
 
         this.satelliteGroup.add(satellite);
-    }
-
-    updateScaleTier(sizeMod) {
-        this.tier += sizeMod;
     }
 
     checkStraySatellite() {
