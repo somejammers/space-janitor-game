@@ -306,7 +306,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                 //https://en.wikipedia.org/wiki/Circle#Equations
                 //parametric form: x = origin.x + radius * cos(0~2pi)
                 // positive angleOffset for counter clockwise
-                let angleOffset = this.clockRotation * (5 ) * Math.PI / 180; //tweak this for difficulty scaling
+                let angleOffset = this.clockRotation * (this.scene.star.speedMod / 40) * Math.PI / 180; //tweak this for difficulty scaling
                 let angle = Math.atan(
                     (this.y - this.scene.star.y)
                     /
