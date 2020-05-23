@@ -12,7 +12,7 @@ class Level1 extends Phaser.Scene {
 
         this.satelliteTextureArray = ["debris_apple.png", "debris_banana.png", "debris_sodacan.png", "debris_shoe.png", "debris_newspaper.png", "debris_fish.png", "debris_toybunny.png", "debris_kite.png", "debris_computer.png", "debris_couch.png", "debris_dumpster.png", "debris_rocket.png"];
         //I think scaling should be d = 2a + b + c and have the largest object in tier be 3 ahead
-        this.satelliteScaleArray =   [0.2,                0.25,                0.5,                 1.15,               2.25,                   4.4,                8.85,                  17.75,              31.9,                  51.6,               115.4,                 218.6]
+        this.satelliteScaleArray =   [0.2,                0.25,                0.5,                 0.75,               1.25,                   2,                3.25,                  5.25,              31.9,                  51.6,               115.4,                 218.6]
         this.satelliteArrayIndex = 1; //start at size banana but cant go lower, can see apple, banana, soda, and shoe. scaling is adding last two together. updated upto kite
 
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -99,6 +99,9 @@ class Level1 extends Phaser.Scene {
         this.volThreshold = 250 * 250; //needa scale this bc speed inc
         //distance from other satellits required to spawn
         //update the following in generateSatellite() by picking a random valid object and updating tier
+        this.strandedTimer = 0;
+        this.strandedEventTime = 180; //3 seconds
+        this.resetEventTime = 360; //emergency bug bypass
 
     }
 
@@ -116,10 +119,95 @@ class Level1 extends Phaser.Scene {
             this.generateSatellite();
         }
 
+        this.resetTimer++;
+        if (this.isStrandedTicking) this.strandedTimer ++;
+        if (this.strandedTimer > this.strandedEventTime) {
+            this.strandedTimer = 0;
+            this.resetTimer = 0;
+            this.saveStrandedStar();
+            this.star.orbitalEntered = false;
+        }
+
+        if (this.resetTimer > this.resetEventTime) 
+        {
+            console.log("bug");
+            this.resetTimer = 0;
+            this.star.orbitalEntered = false;
+            this.star.isBouncing = false;
+            this.isStrandedTicking = true;
+            this.star.cameraSetBool = true;
+        }
+    }
+
+    normalize(x, y, mod) {
+        if (x * y != 0) 
+        {  
+            let length = Math.sqrt(
+                (x * x)
+                +
+                (y * y)
+            );  
+
+            let normX = x / length;
+            let normY = y / length;
+
+            let results = [normX * mod, normY * mod];
+            return results;
+        }
+        return 0;
+    }
+    
+    saveStrandedStar() {
+        console.log("saving");
+
+        // let the final in normalize() params denote how far the satellite is from the star
+        let normVel =  this.normalize(this.star.x_velocity, this.star.y_velocity, this.killDist-1);
+        let savingSatelliteX = this.star.x + normVel[0];
+        let savingSatelliteY = this.star.y + normVel[1];
+
+        //now offset it on either side of the star
+        let scale = this.satelliteScaleArray[this.satelliteArrayIndex + 2];
+        let orbitalRadius = 150 * scale * 1.6;
+
+        let signPicker = Math.random();
+        let sign;
+        if (signPicker > 0.5) sign = 1;
+        else sign = -1;
+        //perpendicular
+        let landingSpotX = savingSatelliteX;
+        let landingSpotY = savingSatelliteY;
+        let normOffset = this.normalize(-this.star.x_velocity, -this.star.y_velocity, orbitalRadius / 1.5);
+        
+        savingSatelliteX += -sign * normOffset[0];
+        savingSatelliteY += sign * normOffset[1];
+
+        if (this.killOverlappingSatellites(savingSatelliteX, savingSatelliteY, orbitalRadius) )
+        {
+            this.createSatellite(savingSatelliteX, savingSatelliteY, this.satelliteArrayIndex + 2, landingSpotX, landingSpotY);
+        }
+
+    }
+
+    killOverlappingSatellites(x, y, orbitalRadius, landingX, landingY) {
+        //doesn't kill larger satellites
+        let satellites = this.satelliteGroup.getChildren();
+
+        for (var i = 0; i < satellites.length; i++) 
+        {
+            let distToSatelliteOrbital = satellites[i].getDistFromOrbitalTo(x, y);
+            let distFromLandingToSatellite = satellites[i].getDistFromSatelliteTo(landingX, landingY);
+            if (distFromLandingToSatellite < satellites[i].orbitalRadiusWeighted) return false;
+            // console.log(distToSatelliteOrbital+"comp"+orbitalRadiusOfNewSat);
+            if ((!satellites[i].isAttachedToStar) && distToSatelliteOrbital < orbitalRadius
+                ) {
+                  this.killSatellite(satellites[i]);
+                } 
+        }
+        return true;
     }
 
     updateScreenValues() {
-        this.farthestZoomValue = Math.abs(0.2/(this.star.postGrowthScale *1.5)) //was 0.5+(0.05/this.satelliteScaleArray[this.satelliteArrayIndex + 3]
+        this.farthestZoomValue = Math.abs(0.2/(this.star.postGrowthScale *1.5)); //was 0.5+(0.05/this.satelliteScaleArray[this.satelliteArrayIndex + 3]
         this.fullViewportDiameter = 720/this.farthestZoomValue  +
             (150 * this.satelliteScaleArray[this.satelliteArrayIndex + 3]/2); // this is the radius of the largest possible satellite
         this.fullViewportRadius = this.fullViewportDiameter/2;
@@ -226,12 +314,7 @@ class Level1 extends Phaser.Scene {
         //if too close to another satellite, return false
         let satellites = this.satelliteGroup.getChildren();
         let orbitalRadiusOfNewSat = 
-            150 * this.satelliteScaleArray[satelliteIndex] * 1.2;
-        let distFromOrbitalToStar = Math.sqrt(
-            (x - this.star.x) * (x - this.star.x)
-            +
-            (y - this.star.y) * (y - this.star.y)
-        ) - orbitalRadiusOfNewSat;
+            150 * this.satelliteScaleArray[satelliteIndex] * 1.6;
 
 
         for (var i = 0; i < satellites.length; i++) 
@@ -256,7 +339,6 @@ class Level1 extends Phaser.Scene {
             this.satelliteTextureArray[satelliteIndex]
         );
 
-        this.satelliteGroup.add(satellite);
     }
 
     checkStraySatellite() {
@@ -271,7 +353,28 @@ class Level1 extends Phaser.Scene {
         }
     }
 
+    killAllSatellites() {
+        let satellites = this.satelliteGroup.getChildren();
+        for (var i = 0; i < satellites.length; i++) 
+        {
+            if (!satellites[i].hasAttachedToStar) {
+                this.killSatellite(satellites[i]);
+            }
+        }
+    }
+
+    killHigherTierSatellites() {
+        let satellites = this.satelliteGroup.getChildren();
+        for (var i = 0; i < satellites.length; i++) 
+        {
+            if (!satellites[i].hasAttachedToStar) {
+                this.killSatellite(satellites[i]);
+            }
+        }
+    }
+
     killOldSatellites() {
+        //use this with pre-update screen sizes
         let satellites = this.satelliteGroup.getChildren();
         for (var i = 0; i < satellites.length; i++) 
         {
@@ -286,10 +389,13 @@ class Level1 extends Phaser.Scene {
     }
 
     killSatellite(satellite) {
-        satellite.orbitalBody.setEnable(true);
-        satellite.orbitalBody.destroy();
-        satellite.orbital.destroy();
-        satellite.destroy();
+        if (satellite.okayToKill);
+            satellite.orbitalBody.setEnable(true);
+            satellite.orbitalBody.setEnable(false);
+            satellite.isAlive = false;
+            satellite.orbitalBody.destroy();
+            satellite.orbital.destroy();
+            satellite.destroy();
 
     }
 
