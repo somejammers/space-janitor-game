@@ -1,5 +1,7 @@
 SOUND EFFECTS LAYOUT
 
+Sound effects and Music are from EpidemicSound.com
+
 Possile Background Music:
 - ES_Charcoal_Stream_Curved_Mirror.wav
 - ES_Microscope_Gridded.wav
