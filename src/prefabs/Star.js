@@ -213,8 +213,9 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         while (this.Scale < this.scene.satelliteScaleArray[this.scene.satelliteArrayIndex] 
                && this.scene.satelliteArrayIndex > 1) 
         {
-            console.log("shrinking index");
             this.scene.satelliteArrayIndex--;
+            console.log("shrinking index to "+this.scene.satelliteArrayIndex);
+
             this.scene.farthestZoomValue =
                 Math.abs(0.5+(0.05/
                     this.scene.satelliteScaleArray[this.scene.satelliteArrayIndex + 3]

@@ -254,6 +254,12 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                 this.stickingSpotY = this.scene.star.y + this.strata * Math.sin(this.stickingAngle);
                 this.stickingOffsetX = (this.x - this.stickingSpotX) / this.stickingTime;
                 this.stickingOffsetY = (this.y - this.stickingSpotY) / this.stickingTime;
+                if(this.timeAfterStick > this.stickingTime) {
+                    console.log("here");
+                    this.x = this.stickingSpotX;
+                    this.y = this.stickingSpotY;
+    
+                }
             }   
 
 
@@ -264,11 +270,9 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                 console.log("moving");
                 this.x -= this.stickingOffsetX;
                 this.y -= this.stickingOffsetY;
-                // this.x = this.stickingOffsetX;
-                // this.y = this.stickingOffsetY;
 
                 this.timeAfterStick++;
-            }
+            } 
             this.setVelocity(this.x_velocity, this.y_velocity);
         }
     }
@@ -358,7 +362,6 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
             if //distance btwn star and satellite < orbital_radius
             ( this.canReEnterOrbit && keySPACE.isDown && this.distToStar - this.scene.star.radiusWeighted <= this.orbitalRadiusWeighted) 
             { 
-                console.log("rotating");
                 this.distToStar = Math.sqrt(
                     (this.x - this.scene.star.x) * (this.x - this.scene.star.x)
                     +

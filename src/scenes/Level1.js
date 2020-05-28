@@ -211,7 +211,7 @@ class Level1 extends Phaser.Scene {
         this.fullViewportDiameter = 720/this.farthestZoomValue  +
             (150 * this.satelliteScaleArray[this.satelliteArrayIndex + 3]/2); // this is the radius of the largest possible satellite
         this.fullViewportRadius = this.fullViewportDiameter/2;
-        this.killDist = Math.sqrt(this.fullViewportRadius * this.fullViewportRadius
+        this.killDist = 1.5 * Math.sqrt(this.fullViewportRadius * this.fullViewportRadius
                         + this.fullViewportRadius * this.fullViewportRadius); //make this dist from star to corner of screen
     }
 
@@ -259,11 +259,21 @@ class Level1 extends Phaser.Scene {
         let yOffsetSign = this.yOffset >= 0 ? 1 : -1;
         let x1, x2, y1, y2, xSpawn, ySpawn;
 
+
+        //pick the satellite
+
+        let indexMin = this.satelliteArrayIndex - 1;
+        let indexMax = this.satelliteArrayIndex + 3;
+
+        let satelliteIndex = Phaser.Math.Between(indexMin, indexMax);
+
+        let radiusOfChosen = 150 * 1.6 * this.satelliteScaleArray[satelliteIndex];
+        
         //A
         if (currBox == 0) {
             //pick a random spot in the box
-            x1 = this.screenXonLastSatSpawn + (xOffsetSign * this.fullViewportRadius);
-            x2 = this.screenXonLastSatSpawn + (xOffsetSign * this.fullViewportRadius) + this.xOffset;
+            x1 = this.screenXonLastSatSpawn + (xOffsetSign * this.fullViewportRadius) + (xOffsetSign * radiusOfChosen);
+            x2 = this.screenXonLastSatSpawn + (xOffsetSign * this.fullViewportRadius) + (xOffsetSign * radiusOfChosen) + this.xOffset;
 
             y1 = this.screenYonLastSatSpawn + (-yOffsetSign * this.fullViewportRadius); //testing 
             y2 = this.screenYonLastSatSpawn + (yOffsetSign * this.fullViewportRadius);
@@ -275,30 +285,23 @@ class Level1 extends Phaser.Scene {
             x1 = this.screenXonLastSatSpawn + (-xOffsetSign * this.fullViewportRadius); //testing
             x2 = this.screenXonLastSatSpawn + (xOffsetSign * this.fullViewportRadius);
 
-            y1 = this.screenYonLastSatSpawn + (yOffsetSign * this.fullViewportRadius);
-            y2 = this.screenYonLastSatSpawn + (yOffsetSign * this.fullViewportRadius) + this.yOffset;
+            y1 = this.screenYonLastSatSpawn + (yOffsetSign * this.fullViewportRadius) + (yOffsetSign * radiusOfChosen);
+            y2 = this.screenYonLastSatSpawn + (yOffsetSign * this.fullViewportRadius) + (yOffsetSign * radiusOfChosen) + this.yOffset;
 
         }
         //C
         else
         {
-            x1 = this.screenXonLastSatSpawn + (xOffsetSign * this.fullViewportRadius);
-            x2 = this.screenXonLastSatSpawn + (xOffsetSign * this.fullViewportRadius) + this.xOffset;
+            x1 = this.screenXonLastSatSpawn + (xOffsetSign * this.fullViewportRadius) + (xOffsetSign * radiusOfChosen);
+            x2 = this.screenXonLastSatSpawn + (xOffsetSign * this.fullViewportRadius) + (xOffsetSign * radiusOfChosen) + this.xOffset;
 
-            y1 = this.screenYonLastSatSpawn + (yOffsetSign * this.fullViewportRadius);
-            y2 = this.screenYonLastSatSpawn + (yOffsetSign * this.fullViewportRadius) + this.yOffset;
+            y1 = this.screenYonLastSatSpawn + (yOffsetSign * this.fullViewportRadius) + (yOffsetSign * radiusOfChosen);
+            y2 = this.screenYonLastSatSpawn + (yOffsetSign * this.fullViewportRadius) + (yOffsetSign * radiusOfChosen) + this.yOffset;
 
         }
 
         xSpawn = Math.floor(Math.random() * (x2 - x1)) + x1;
         ySpawn = Math.floor(Math.random() * (y2 - y1)) + y1;
-
-        //pick the satellite
-
-        let indexMin = this.satelliteArrayIndex - 1;
-        let indexMax = this.satelliteArrayIndex + 3;
-
-        let satelliteIndex = Phaser.Math.Between(indexMin, indexMax);
 
         if(this.checkLocationValidity(xSpawn, ySpawn, satelliteIndex))
         {

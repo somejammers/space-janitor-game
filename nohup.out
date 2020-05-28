@@ -1164,3 +1164,7 @@ Falling back to node net library..
 [Modules] Host is up to date.
 [Modules] Checking for module updates at https://discordapp.com/api/modules/stable/versions.json
 [Modules] No module updates available.
+
+(evince:464): GVFS-RemoteVolumeMonitor-WARNING **: 02:45:40.443: Owner of volume monitor org.gtk.vfs.MTPVolumeMonitor disconnected from the bus; removing drives/volumes/mounts
+
+(evince:464): GVFS-RemoteVolumeMonitor-WARNING **: 02:45:40.446: Owner of volume monitor org.gtk.vfs.GPhoto2VolumeMonitor disconnected from the bus; removing drives/volumes/mounts
