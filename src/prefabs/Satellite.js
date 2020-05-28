@@ -254,25 +254,23 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                 this.stickingSpotY = this.scene.star.y + this.strata * Math.sin(this.stickingAngle);
                 this.stickingOffsetX = (this.x - this.stickingSpotX) / this.stickingTime;
                 this.stickingOffsetY = (this.y - this.stickingSpotY) / this.stickingTime;
-                if(this.timeAfterStick > this.stickingTime) {
-                    console.log("here");
+
+                if ( !(this.timeAfterStick < this.stickingTime) )
+                {
                     this.x = this.stickingSpotX;
                     this.y = this.stickingSpotY;
-    
                 }
-            }   
-
-
-
+            }  
+            
             if (this.timeAfterStick < this.stickingTime) 
-            {
-                //angle
-                console.log("moving");
-                this.x -= this.stickingOffsetX;
-                this.y -= this.stickingOffsetY;
+                {
+                    //angle
+                    console.log("moving");
+                    this.x -= this.stickingOffsetX;
+                    this.y -= this.stickingOffsetY;
 
-                this.timeAfterStick++;
-            } 
+                    this.timeAfterStick++;
+                } 
             this.setVelocity(this.x_velocity, this.y_velocity);
         }
     }
@@ -427,6 +425,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                     this.canStopOrbiting = false;
                     this.currRotationDuration = 0;
                     this.scene.star.orbitalEntered = false;
+                    this.canReEnterOrbit = false;
                     this.scene.star.setCameraToStar(this.scene.star.Scale);
                     this.scene.strandedTimer = 0;
                     this.scene.isStrandedTicking = true;
@@ -457,6 +456,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                 this.currRotationDuration = 0;
                 this.scene.star.orbitalEntered = false;
                 this.scene.star.isBouncing = false;
+                this.canReEnterOrbit = false;
                 this.scene.star.setCameraToStar(this.scene.star.Scale);
                 this.scene.strandedTimer = 0;
                 this.scene.isStrandedTicking = true;
