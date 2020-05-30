@@ -1,7 +1,7 @@
 //check the strata values again , compare them with the orbital rotation.
 class Satellite extends Phaser.Physics.Arcade.Sprite {
     constructor(
-        scene, x_pos, y_pos, scale, texture, frame
+        scene, x_pos, y_pos, scale, texture, satelliteIndex, frame
         ) {
         super(scene, x_pos, y_pos, texture, frame);
 
@@ -29,7 +29,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         this.orbitalBody = this.orbital.body;
         this.orbitalRadius = 150;
         //update this in the checkLocationValidity()
-        this.orbitalRadiusWeighted = this.orbitalRadius * this.Scale * 1.6;
+        this.orbitalRadiusWeighted = this.orbitalRadius * this.Scale * 1.8;
 
 
         this.orbital.setImmovable(true);
@@ -37,13 +37,15 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         //we offset the radius by star.radius in order to not let the star ride
         //the outer edge of the orbital
         this.orbital.setCircle(
-            this.orbitalRadius - this.scene.star.radius/6, 
-            this.scene.star.radius/6, this.scene.star.radius/6);
-        this.orbital.setScale(scale * 1.6);
+            this.orbitalRadius - this.scene.star.radius/8, 
+            this.scene.star.radius/8, this.scene.star.radius/8);
+        this.orbital.setScale(scale * 1.8);
 
 
-        this.orbitalAccelModDefault = 0.065;
-        this.orbitalAccelModScaling = 1 + 0.0005 * this.scene.star.speedMod;
+        this.satelliteIndex = satelliteIndex;
+        // CHANGE BOTH BASED ON STAR INDEX
+        this.orbitalAccelModDefault = this.satelliteIndex >= this.scene.satelliteArrayIndex ? 0.070 : 0.08 + (0.01 * -(this.scene.satelliteArrayIndex - this.satelliteIndex));//i wanna make this higher but lower scaling. started at 0.065. this should start higher w smaller satellites
+        this.orbitalAccelModScaling = 1 + 0.0005 * 100 + 0.005 * this.scene.satelliteArrayIndex; //this needs to scale with. started at 1 + 0.0005 * 125.
         this.orbitalAccelMod = this.orbitalAccelModDefault;
         this.orbitalEntered = false;
         this.canStopOrbiting = false;
@@ -354,6 +356,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
     }
 
     orbitalRotation() {
+        // console.log(this.scene.star.speedMod);
 
         if(!this.scene.star.isBouncing && !this.isAttachedToStar && this.isLargerThanStar)
         {   
@@ -367,9 +370,10 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                 );
                 //The currRotationDuration check is required for smooth orbitting, since the acceleration to
                 //  lastDistStar makes going backwards really jumpy
-                this.lastDistToStar = 
-                    this.lastDistToStar <= this.distToStar && this.currRotationDuration > 90 ? 
-                    this.lastDistToStar : this.distToStar;
+                if (this.lastDistToStar <= this.distToStar && this.currRotationDuration > 90) 
+                    this.scene.star.canLoseSatellite = true;
+                else
+                    this.lastDistToStar = this.distToStar;
 
                 this.currRotationDuration ++;
                 //accelerate towards next point on parametric equation on circumference
@@ -377,7 +381,8 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                 //https://en.wikipedia.org/wiki/Circle#Equations
                 //parametric form: x = origin.x + radius * cos(0~2pi)
                 // positive angleOffset for counter clockwise
-                let angleOffset = this.clockRotation * (this.scene.star.speedMod / 40) * Math.PI / 180; //tweak this for difficulty scaling
+                let degrees = (15265 / Math.pow(this.scene.star.speedMod, 2)); //start at 3 for 0.25 star scale. if this spirals, increase the base and the exponent. an initial 3/1 basis
+                let angleOffset = this.clockRotation * degrees * Math.PI / 180; //tweak this for difficulty scaling
                 let angle = Math.atan(
                     (this.y - this.scene.star.y)
                     /
@@ -399,6 +404,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                 this.scene.star.cameraSetBool = false; //maybe needa disable it somewhere
                 this.scene.strandedTimer = 0;
                 this.scene.resetTimer = 0;
+                
 
             } 
             else if (this.isPreOrbiting)

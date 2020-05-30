@@ -64,6 +64,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         this.minSpeedingMod = 1.5;
         this.currSpeedingMod = 1.9;
         this.currSpeedingDeacceleration = 0.02; //per frame
+        this.canLoseSatellite = true;
 
     }
 
@@ -153,6 +154,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
 
     //if original satellite isnt referenced, try pushing into stack in satellite.js
     growUpdate(satellite, satelliteScale) {
+        this.scene.star.canLoseSatellite = true;
         this.satellitesCollected++;
         this.satelliteStack.push(satellite);
         this.satelliteScaleStack.push(satelliteScale);
@@ -194,10 +196,10 @@ class Star extends Phaser.Physics.Arcade.Sprite {
     }
 
     shrinkUpdate(satX, satY) {
-        console.log("boom");
+        
         if (this.satellitesCollected > 0) this.satellitesCollected--;
         this.bounce(satX, satY);
-        if(this.satelliteStack.length > 0)
+        if(this.canLoseSatellite && this.satelliteStack.length > 0)
         {
             console.log("debug 1");
             let lostSatellite = this.satelliteStack.pop();
@@ -208,26 +210,30 @@ class Star extends Phaser.Physics.Arcade.Sprite {
             this.postGrowthScale = this.Scale;
             this.updateSize();
             this.setCameraToStar(this.Scale);
-        }
 
-        while (this.Scale < this.scene.satelliteScaleArray[this.scene.satelliteArrayIndex] 
-               && this.scene.satelliteArrayIndex > 1) 
-        {
-            this.scene.satelliteArrayIndex--;
-            console.log("shrinking index to "+this.scene.satelliteArrayIndex);
-
-            this.scene.farthestZoomValue =
-                Math.abs(0.5+(0.05/
-                    this.scene.satelliteScaleArray[this.scene.satelliteArrayIndex + 3]
-                    )
-                );
-            this.scene.updateScreenValues();
-            this.updateSpeed();
-            //do anim here and delay kill
-            this.scene.time.delayedCall(1000, () => { 
-                this.scene.killAllSatellites(); 
-            });
+            //this while loop was outside of this if before, if it crashes put i tback
+            while (this.Scale < this.scene.satelliteScaleArray[this.scene.satelliteArrayIndex] 
+                && this.scene.satelliteArrayIndex > 1) 
+            {  
+             this.scene.satelliteArrayIndex--;
+             console.log("shrinking index to "+this.scene.satelliteArrayIndex);
+ 
+             this.scene.farthestZoomValue =
+                 Math.abs(0.5+(0.05/
+                     this.scene.satelliteScaleArray[this.scene.satelliteArrayIndex + 3]
+                     )
+                 );
+             this.scene.updateScreenValues();
+             this.updateSpeed();
+             //do anim here and delay kill
+             this.scene.time.delayedCall(1000, () => { 
+                 this.scene.killAllSatellites(); 
+             });
+            }
         }
+        this.canLoseSatellite = false;
+
+        
         //if scale goes lower than the current object scale at index, drop index by 1 and check again
         this.scene.updateSatellites(this.Scale);
         

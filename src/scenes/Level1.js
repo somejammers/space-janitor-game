@@ -52,11 +52,11 @@ class Level1 extends Phaser.Scene {
 
         // this.satelliteGroup.add(this.satellite_5);
 
-        this.satellite_6 = new Satellite(
-            this, canvas_width/2, canvas_height/2, 0.90, "Satellite"
-        );
+        // this.satellite_6 = new Satellite(
+        //     this, canvas_width/2, canvas_height/2, 0.90, "Satellite"
+        // );
 
-        this.satelliteGroup.add(this.satellite_6);
+        // this.satelliteGroup.add(this.satellite_6);
 
         //Camera
         // object, roundPixels, lerpX, lerpY
@@ -103,6 +103,7 @@ class Level1 extends Phaser.Scene {
         this.strandedEventTime = 180; //3 seconds
         this.resetEventTime = 360; //emergency bug bypass
 
+        // this.saveStrandedStar();
     }
 
 
@@ -159,6 +160,7 @@ class Level1 extends Phaser.Scene {
     
     saveStrandedStar() {
         console.log("saving");
+        if (!this.star.orbitalEntered) this.star.cameraSetBool = true;
 
         // let the final in normalize() params denote how far the satellite is from the star
         let normVel =  this.normalize(this.star.x_velocity, this.star.y_velocity, this.killDist-1);
@@ -167,7 +169,7 @@ class Level1 extends Phaser.Scene {
 
         //now offset it on either side of the star
         let scale = this.satelliteScaleArray[this.satelliteArrayIndex + 2];
-        let orbitalRadius = 150 * scale * 1.6;
+        let orbitalRadius = 150 * scale * 1.8;
 
         let signPicker = Math.random();
         let sign;
@@ -267,7 +269,7 @@ class Level1 extends Phaser.Scene {
 
         let satelliteIndex = Phaser.Math.Between(indexMin, indexMax);
 
-        let radiusOfChosen = 150 * 1.6 * this.satelliteScaleArray[satelliteIndex];
+        let radiusOfChosen = 150 * 1.8 * this.satelliteScaleArray[satelliteIndex];
         
         //A
         if (currBox == 0) {
@@ -317,14 +319,14 @@ class Level1 extends Phaser.Scene {
         //if too close to another satellite, return false
         let satellites = this.satelliteGroup.getChildren();
         let orbitalRadiusOfNewSat = 
-            150 * this.satelliteScaleArray[satelliteIndex] * 1.6;
+            150 * this.satelliteScaleArray[satelliteIndex] * 1.8;
 
 
         for (var i = 0; i < satellites.length; i++) 
         {
             let distToSatelliteOrbital = satellites[i].getDistFromOrbitalTo(x, y);
             // console.log(distToSatelliteOrbital+"comp"+orbitalRadiusOfNewSat);
-            if ((!satellites[i].isAttachedToStar) && distToSatelliteOrbital < orbitalRadiusOfNewSat
+            if ((!satellites[i].isAttachedToStar) && distToSatelliteOrbital < orbitalRadiusOfNewSat * 1.25
                 ) {
                   return false;
                 } 
@@ -339,7 +341,8 @@ class Level1 extends Phaser.Scene {
         let satellite = new Satellite(
             this, x, y, 
             this.satelliteScaleArray[satelliteIndex], 
-            this.satelliteTextureArray[satelliteIndex]
+            this.satelliteTextureArray[satelliteIndex],
+            satelliteIndex
         );
 
     }
