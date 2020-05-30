@@ -65,6 +65,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         this.hasAttachedToStar = false;
         this.timeAfterStick = 0;
         this.stickingTime = 30; //seconds that it takes for satellite to migrate to stuck spot
+        this.lastAngle = 0;
         
         this.x_velocity = 0;
         this.y_velocity = 0;
@@ -250,7 +251,6 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                 // this.stickingOffsetY = (this.y - this.stickingSpotY) / 120; 
 
                 //rotate object normally
-                console.log("changed sticking traj");
                 this.stickingAngle += angleChange;
                 this.stickingSpotX = this.scene.star.x + this.strata * Math.cos(this.stickingAngle);
                 this.stickingSpotY = this.scene.star.y + this.strata * Math.sin(this.stickingAngle);
@@ -267,7 +267,6 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
             if (this.timeAfterStick < this.stickingTime) 
                 {
                     //angle
-                    console.log("moving");
                     this.x -= this.stickingOffsetX;
                     this.y -= this.stickingOffsetY;
 
@@ -370,7 +369,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                 );
                 //The currRotationDuration check is required for smooth orbitting, since the acceleration to
                 //  lastDistStar makes going backwards really jumpy
-                if (this.lastDistToStar <= this.distToStar && this.currRotationDuration > 90) 
+                if (this.currRotationDuration > 90) 
                     this.scene.star.canLoseSatellite = true;
                 else
                     this.lastDistToStar = this.distToStar;
@@ -381,7 +380,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                 //https://en.wikipedia.org/wiki/Circle#Equations
                 //parametric form: x = origin.x + radius * cos(0~2pi)
                 // positive angleOffset for counter clockwise
-                let degrees = (15265 / Math.pow(this.scene.star.speedMod, 2)); //start at 3 for 0.25 star scale. if this spirals, increase the base and the exponent. an initial 3/1 basis
+                let degrees = (Math.pow(125, 1.4) / Math.pow(this.scene.star.speedMod, 1.4)); //start at 3 for 0.25 star scale. if this spirals, increase the base and the exponent. an initial 3/1 basis
                 let angleOffset = this.clockRotation * degrees * Math.PI / 180; //tweak this for difficulty scaling
                 let angle = Math.atan(
                     (this.y - this.scene.star.y)
@@ -389,15 +388,35 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                     (this.x - this.scene.star.x)
                 );
                 if (this.x - this.scene.star.x >= 0) angle += Math.PI;
-                
+                                
                 let accelTowardsThisX = this.x + this.lastDistToStar * Math.cos(angle + angleOffset);
                 let accelTowardsThisY = this.y + this.lastDistToStar * Math.sin(angle + angleOffset);
 
                 let addAccelX = this.orbitalAccelMod * (accelTowardsThisX - this.scene.star.x);
                 let addAccelY = this.orbitalAccelMod * (accelTowardsThisY - this.scene.star.y);
                 
-                this.orbitalAccelMod *= this.orbitalAccelModScaling;
-                this.scene.star.addAcceleration(addAccelX, addAccelY);
+                if ( !(this.currRotationDuration > 90)) {
+                    this.scene.star.isSmoothOrbiting = false;
+                    if (Math.abs(angle - this.lastAngle) < 90)
+                        this.angleDiff = angle - this.lastAngle;
+                    this.lastAngle = angle;
+                    this.orbitalAccelMod *= this.orbitalAccelModScaling;
+                    this.scene.star.addAcceleration(addAccelX, addAccelY);
+                }
+                else
+                {
+                    this.scene.star.isSmoothOrbiting = true;
+                    // this.scene.star.speedMod = 0.1;
+                    this.scene.star.addAcceleration(addAccelX, addAccelY);
+                    let nextAngle = angle + this.angleDiff;
+                    // if (nextAngle > Math.PI * 2) nextAngle = 0 + (nextAngle - 360);
+                    // if (nextAngle < 0) nextAngle = 360 - (360 + nextAngle);
+
+                    let diffX = this.x + this.lastDistToStar * Math.cos(nextAngle);
+                    let diffY = this.y + this.lastDistToStar * Math.sin(nextAngle);
+                    this.scene.star.x = diffX;
+                    this.scene.star.y = diffY;
+                }
 
                 this.canStopOrbiting = true;
                 this.isPreOrbiting = false;
@@ -414,6 +433,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
             //star leaving orbital
             else if (this.canStopOrbiting) 
             {
+                this.scene.star.isSmoothOrbiting = false;
                 this.distToStar = Math.sqrt(
                     (this.x - this.scene.star.x) * (this.x - this.scene.star.x)
                     +
@@ -459,6 +479,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                 this.orbitalEntered = false;
                 this.orbitalBody.setEnable(true);
                 this.canStopOrbiting = false;
+                this.scene.star.isSmoothOrbiting = false;
                 this.currRotationDuration = 0;
                 this.scene.star.orbitalEntered = false;
                 this.scene.star.isBouncing = false;

@@ -100,7 +100,8 @@ class Level1 extends Phaser.Scene {
         //distance from other satellits required to spawn
         //update the following in generateSatellite() by picking a random valid object and updating tier
         this.strandedTimer = 0;
-        this.strandedEventTime = 180; //3 seconds
+        this.strandedEventTime = 120; //3 seconds
+        this.strandedEventTimeLoop = 120 + 30 * this.satelliteArrayIndex;
         this.resetEventTime = 360; //emergency bug bypass
 
         // this.saveStrandedStar();
@@ -125,6 +126,8 @@ class Level1 extends Phaser.Scene {
         if (this.strandedTimer > this.strandedEventTime) {
             this.strandedTimer = 0;
             this.resetTimer = 0;
+            this.strandedEventTimeLoop = 120 + 30 * this.satelliteArrayIndex;
+            this.strandedEventTime = this.strandedEventTimeLoop;
             this.saveStrandedStar();
             this.star.orbitalEntered = false;
         }

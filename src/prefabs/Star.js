@@ -22,21 +22,6 @@ class Star extends Phaser.Physics.Arcade.Sprite {
 
         this.radiusWeighted = this.radius * this.Scale;
         this.ScaleScaling = 0.05;
-        
-        this.orbital = this.scene.physics.add.sprite(
-            this.x, this.y, "StarOrbital"
-        );
-
-        this.orbitalBody = this.orbital.body;
-        this.orbitalRadius = 75;
-        this.orbitalRadiusWeighted = this.orbitalRadius * this.Scale;
-
-        this.orbital.setImmovable(true);
-        this.orbital.setDepth(2);
-        //we offset the radius by star.radius in order to not let the star ride
-        //the outer edge of the orbital
-        this.orbital.setCircle(this.orbitalRadius, 0, 0);
-        this.orbital.setScale(scale);
 
         this.x_velocity = 0;
         this.y_velocity = 0;
@@ -66,42 +51,67 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         this.currSpeedingDeacceleration = 0.02; //per frame
         this.canLoseSatellite = true;
 
+        this.isSmoothOrbiting = false;
     }
 
     update() {
         
         //error checking, make this better later
-        if (this.x_velocity == 0) this.x_velocity = 0.1;
-        if (this.y_velocity == 0) this.y_velocity = 1;
-
-        this.x_velocity += this.x_acceleration;
-        this.y_velocity += this.y_acceleration;
-
-        this.normalizeVelocity();
-
-        if (this.isSpeeding) 
+        if (!this.isSmoothOrbiting)
         {
-            if (this.currSpeedingMod > this.minSpeedingMod) 
-                this.currSpeedingMod -= this.currSpeedingDeacceleration;
-            this.x_velocity *= this.speedMod * this.currSpeedingMod;
-            this.y_velocity *= this.speedMod * this.currSpeedingMod;
-        } 
-        else 
+            console.log("norm");
+            if (this.x_velocity == 0) this.x_velocity = 0.1;
+            if (this.y_velocity == 0) this.y_velocity = 1;
+
+            this.x_velocity += this.x_acceleration;
+            this.y_velocity += this.y_acceleration;
+
+            this.normalizeVelocity();
+
+            if (this.isSpeeding) 
+            {
+                if (this.currSpeedingMod > this.minSpeedingMod) 
+                    this.currSpeedingMod -= this.currSpeedingDeacceleration;
+                this.x_velocity *= this.speedMod * this.currSpeedingMod;
+                this.y_velocity *= this.speedMod * this.currSpeedingMod;
+            } 
+            else 
+            {
+
+                this.x_velocity *= this.speedMod;
+                this.y_velocity *= this.speedMod; 
+            }
+
+            this.setVelocity(this.x_velocity, this.y_velocity);
+
+            this.findTrajectory();
+            this.rotation += this.trajectory - this.lastTrajectory;
+            
+            this.resetAcceleration();
+        }
+        else
         {
+            console.log("smooth");
+
+            this.setVelocity(0,0);
+            this.x_velocity += this.x_acceleration;
+            this.y_velocity += this.y_acceleration; 
+
+            this.normalizeVelocity();
 
             this.x_velocity *= this.speedMod;
-            this.y_velocity *= this.speedMod; 
+            this.y_velocity *= this.speedMod;
+
+            this.findTrajectory();
+            this.rotation += this.trajectory - this.lastTrajectory;
+
+            this.resetAcceleration();
+
         }
 
-        this.setVelocity(this.x_velocity, this.y_velocity);
+    }
 
-        this.orbital.setVelocity(this.x_velocity, this.y_velocity);
-
-
-        this.findTrajectory();
-        this.rotation += this.trajectory - this.lastTrajectory;
-        
-        this.resetAcceleration();
+    handleSmoothOrbit() {
 
     }
 
@@ -257,6 +267,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         this.y_velocity = reflectionY;
 
         this.isBouncing = true;
+        this.scene.strandedEventTime = 120;
 
         this.findTrajectory();
 
