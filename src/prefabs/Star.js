@@ -320,6 +320,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
 
     setCameraToStar(postScale) {
         
+        console.log("to star");
         //.pan(x, y, duration, ease)
         // this.scene.cameras.main.pan(this.x, this.y, 1000, 'Power2');
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -329,7 +330,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         if (!this.cameraSetBool) {
-            this.scene.cameras.main.startFollow(this, true, 0.1, 0.1);
+            this.scene.cameras.main.startFollow(this, true, 1, 1);
         }
 
         this.cameraSetBool = true;
