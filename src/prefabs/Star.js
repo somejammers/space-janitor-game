@@ -22,21 +22,6 @@ class Star extends Phaser.Physics.Arcade.Sprite {
 
         this.radiusWeighted = this.radius * this.Scale;
         this.ScaleScaling = 0.05;
-        
-        this.orbital = this.scene.physics.add.sprite(
-            this.x, this.y, "StarOrbital"
-        );
-
-        this.orbitalBody = this.orbital.body;
-        this.orbitalRadius = 75;
-        this.orbitalRadiusWeighted = this.orbitalRadius * this.Scale;
-
-        this.orbital.setImmovable(true);
-        this.orbital.setDepth(2);
-        //we offset the radius by star.radius in order to not let the star ride
-        //the outer edge of the orbital
-        this.orbital.setCircle(this.orbitalRadius, 0, 0);
-        this.orbital.setScale(scale);
 
         this.x_velocity = 0;
         this.y_velocity = 0;
@@ -51,40 +36,107 @@ class Star extends Phaser.Physics.Arcade.Sprite {
 
         this.pastSatellitesDist = 0;
 
-        this.speedMod = 100 * (1+this.Scale);
+        this.speedMod = 170 * Math.pow(1+this.postGrowthScale,1.2);
+
+
 
         this.satellitesCollected = 0;
 
         this.satelliteStack = [];
         this.satelliteScaleStack = [];   
         this.cameraSetBool = false;
+        this.isSpeeding = true;
+        this.justStartedSpeeding = false; //when true, the speedingMod will decrease to miniumum, to simulate a burst of speed
+        this.maxSpeedingMod = 2;
+        this.minSpeedingMod = 1.2;
+        this.currSpeedingMod = 2;
+        this.currSpeedingDeacceleration = 0.01; //per frame
+        this.canLoseSatellite = true;
 
+        this.isSmoothOrbiting = false;
+
+        // this.pointerLineLength = 1100;
+        // this.pointerLineWidth = 100;
+        // this.pointerLine = this.scene.physics.add.sprite(this.x - this.pointerlineWidth, this.y + this.pointerlineLength, 'pointerLine').setOrigin(0.5, 0);
+        // this.pointerLine.scale = 1/Math.abs(0.2/(this.postGrowthScale * 1.5));
+        // this.pointerLine.setDepth(4);
     }
 
     update() {
         
         //error checking, make this better later
-        if (this.x_velocity == 0) this.x_velocity = 0.1;
-        if (this.y_velocity == 0) this.y_velocity = 1;
+        if (!this.isSmoothOrbiting)
+        {
+            if (this.x_velocity == 0) this.x_velocity = 0.1;
+            if (this.y_velocity == 0) this.y_velocity = 1;
 
-        this.x_velocity += this.x_acceleration;
-        this.y_velocity += this.y_acceleration;
+            this.x_velocity += this.x_acceleration;
+            this.y_velocity += this.y_acceleration;
 
-        this.normalizeVelocity();
+            this.normalizeVelocity();
 
-        this.x_velocity *= this.speedMod;
-        this.y_velocity *= this.speedMod; 
+            if (this.isSpeeding) 
+            {
+                if (this.currSpeedingMod > this.minSpeedingMod) 
+                    this.currSpeedingMod -= this.currSpeedingDeacceleration;
+                this.x_velocity *= this.speedMod * this.currSpeedingMod;
+                this.y_velocity *= this.speedMod * this.currSpeedingMod;
+            } 
+            else 
+            {
 
-        this.setVelocity(this.x_velocity, this.y_velocity);
+                this.x_velocity *= this.speedMod;
+                this.y_velocity *= this.speedMod; 
+            }
 
-        this.orbital.setVelocity(this.x_velocity, this.y_velocity);
+            this.setVelocity(this.x_velocity, this.y_velocity);
+
+            this.findTrajectory();
+            this.rotation += this.trajectory - this.lastTrajectory;
+            
+            this.resetAcceleration();
+        }
+        else
+        {
+
+            this.setVelocity(0,0);
+            this.x_velocity += this.x_acceleration;
+            this.y_velocity += this.y_acceleration; 
+
+            this.normalizeVelocity();
+
+            this.x_velocity *= this.speedMod;
+            this.y_velocity *= this.speedMod;
+
+            this.findTrajectory();
+            this.rotation += this.trajectory - this.lastTrajectory;
 
 
-        this.findTrajectory();
-        this.rotation += this.trajectory - this.lastTrajectory;
-        
-        this.resetAcceleration();
+            this.resetAcceleration();
 
+        }
+
+        // this.updatePointerLine();
+
+
+    }
+
+    updatePointerLine() 
+    {
+        // this.pointerLine.rotation = this.trajectory + Math.PI/2;
+        // this.pointerLine.x = this.x;
+        // this.pointerLine.y = this.y;
+    }
+
+    updatePointerLineSize() 
+    {
+        // this.pointerLine.scale = 1/Math.abs(0.2/(this.postGrowthScale * 1.5));
+    }
+
+    startSpeeding() {
+        this.isSpeeding = true;
+        this.justStartedSpeeding = true;
+        this.currSpeedingMod = this.maxSpeedingMod;
     }
 
     changeVelocity(x, y) {
@@ -130,12 +182,13 @@ class Star extends Phaser.Physics.Arcade.Sprite {
 
     //if original satellite isnt referenced, try pushing into stack in satellite.js
     growUpdate(satellite, satelliteScale) {
+        this.scene.star.canLoseSatellite = true;
         this.satellitesCollected++;
         this.satelliteStack.push(satellite);
         this.satelliteScaleStack.push(satelliteScale);
+        this.postGrowthScale = this.Scale + satelliteScale;
 
         if (!this.orbitalEntered) this.setCameraToStar(this.Scale + satelliteScale);
-        this.postGrowthScale = this.Scale + satelliteScale;
 
         this.updateSpeed();
         while (this.Scale+satelliteScale >= this.scene.satelliteScaleArray[this.scene.satelliteArrayIndex] 
@@ -148,34 +201,37 @@ class Star extends Phaser.Physics.Arcade.Sprite {
                     this.scene.satelliteScaleArray[this.scene.satelliteArrayIndex + 3]
                     )
                 );
-            this.scene.updateScreenValues();
         }
+        this.scene.updateScreenValues();
 
         this.scene.updateSatellites(this.Scale + satelliteScale);
         this.Scale += satelliteScale/3;
         this.updateSize();
         this.updateSpeed();
-
+        this.updatePointerLineSize();
 
         this.scene.time.delayedCall(333, () => {
             this.Scale += satelliteScale/3;
             this.updateSize();
             this.updateSpeed();
             this.scene.killOldSatellites();
+            this.updatePointerLineSize();
+
         });
         this.scene.time.delayedCall(666, () => { 
             this.Scale += satelliteScale/3;
             this.updateSize();
             this.updateSpeed();
+            this.updatePointerLineSize();
 
         });
     }
 
     shrinkUpdate(satX, satY) {
-        console.log("boom");
+        
         if (this.satellitesCollected > 0) this.satellitesCollected--;
         this.bounce(satX, satY);
-        if(this.satelliteStack.length > 0)
+        if(this.canLoseSatellite && this.satelliteStack.length > 0)
         {
             console.log("debug 1");
             let lostSatellite = this.satelliteStack.pop();
@@ -186,23 +242,36 @@ class Star extends Phaser.Physics.Arcade.Sprite {
             this.postGrowthScale = this.Scale;
             this.updateSize();
             this.setCameraToStar(this.Scale);
-        }
 
-        while (this.Scale < this.scene.satelliteScaleArray[this.scene.satelliteArrayIndex] 
-               && this.scene.satelliteArrayIndex > 1) 
-        {
-            console.log("while");
-            this.scene.satelliteArrayIndex--;
-            this.scene.farthestZoomValue =
-                Math.abs(0.5+(0.05/
-                    this.scene.satelliteScaleArray[this.scene.satelliteArrayIndex + 3]
-                    )
-                );
+            //this while loop was outside of this if before, if it crashes put i tback
+            while (this.Scale < this.scene.satelliteScaleArray[this.scene.satelliteArrayIndex] 
+                && this.scene.satelliteArrayIndex > 1) 
+            {  
+             this.scene.satelliteArrayIndex--;
+             console.log("shrinking index to "+this.scene.satelliteArrayIndex);
+ 
+             this.scene.farthestZoomValue =
+                 Math.abs(0.5+(0.05/
+                     this.scene.satelliteScaleArray[this.scene.satelliteArrayIndex + 3]
+                     )
+                 );
+             this.updateSpeed();
+             //do anim here and delay kill
+             this.scene.time.delayedCall(1000, () => { 
+                 this.scene.killAllSatellites(); 
+             });
+            }
             this.scene.updateScreenValues();
+
         }
+        this.canLoseSatellite = false;
+
+        
         //if scale goes lower than the current object scale at index, drop index by 1 and check again
         this.scene.updateSatellites(this.Scale);
+        this.updatePointerLineSize();
 
+        
 
     }
 
@@ -223,6 +292,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         this.y_velocity = reflectionY;
 
         this.isBouncing = true;
+        this.scene.strandedEventTime = 120;
 
         this.findTrajectory();
 
@@ -233,7 +303,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
     }
 
     updateSpeed() {
-        this.speedMod = 100 * (1+this.postGrowthScale) * (1+this.postGrowthScale);
+        this.speedMod = 170 * Math.pow(1+this.postGrowthScale,1.4);
     }
 
     updateSize() {
@@ -257,7 +327,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
 
         this.cameraSetBool = true;
 
-        this.scene.cameras.main.zoomTo(Math.abs(0.2/postScale), 1000, 'Sine.easeInOut');
+        this.scene.cameras.main.zoomTo(Math.abs(0.2/(postScale*0.9)), 1000, 'Sine.easeInOut');
 
     }
 
