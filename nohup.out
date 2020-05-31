@@ -1226,3 +1226,101 @@ Falling back to node net library..
 (discord:32297): libnotify-WARNING **: 20:22:40.943: Failed to connect to proxy
 
 (discord:32297): libnotify-WARNING **: 20:22:40.946: Failed to connect to proxy
+20:38:19 INFO: Request to googleads.g.doubleclick.net blocked by host blocker.
+20:38:20 INFO: Request to securepubads.g.doubleclick.net blocked by host blocker.
+20:38:22 INFO: Request to googleads.g.doubleclick.net blocked by host blocker.
+20:38:22 INFO: Request to static.doubleclick.net blocked by host blocker.
+20:38:22 INFO: Request to pagead2.googlesyndication.com blocked by host blocker.
+20:38:23 INFO: Request to static.doubleclick.net blocked by host blocker.
+20:38:37 INFO: Request to googleads.g.doubleclick.net blocked by host blocker.
+20:38:38 INFO: Request to securepubads.g.doubleclick.net blocked by host blocker.
+20:38:38 INFO: Request to pagead2.googlesyndication.com blocked by host blocker.
+20:38:38 INFO: Request to pubads.g.doubleclick.net blocked by host blocker.
+20:38:38 INFO: Request to pagead2.googlesyndication.com blocked by host blocker.
+20:38:38 INFO: Request to pubads.g.doubleclick.net blocked by host blocker.
+20:38:38 INFO: Request to ad.doubleclick.net blocked by host blocker.
+20:38:38 INFO: Request to pixel.adsafeprotected.com blocked by host blocker.
+20:38:38 INFO: Request to tag.researchnow.com blocked by host blocker.
+20:38:38 INFO: Request to pagead2.googlesyndication.com blocked by host blocker.
+20:38:38 INFO: Request to pubads.g.doubleclick.net blocked by host blocker.
+20:38:38 INFO: Request to pagead2.googlesyndication.com blocked by host blocker.
+20:38:38 INFO: Request to pagead2.googlesyndication.com blocked by host blocker.
+20:38:40 INFO: Request to pubads.g.doubleclick.net blocked by host blocker.
+20:38:40 INFO: Request to pagead2.googlesyndication.com blocked by host blocker.
+20:38:40 INFO: Request to pagead2.googlesyndication.com blocked by host blocker.
+20:38:42 INFO: Request to pubads.g.doubleclick.net blocked by host blocker.
+20:38:42 INFO: Request to pagead2.googlesyndication.com blocked by host blocker.
+20:38:46 INFO: Request to pagead2.googlesyndication.com blocked by host blocker.
+20:38:46 INFO: Request to pubads.g.doubleclick.net blocked by host blocker.
+20:38:46 INFO: Request to pagead2.googlesyndication.com blocked by host blocker.
+20:38:46 INFO: Request to pubads.g.doubleclick.net blocked by host blocker.
+20:38:46 INFO: Request to pagead2.googlesyndication.com blocked by host blocker.
+20:38:49 INFO: Request to pubads.g.doubleclick.net blocked by host blocker.
+20:38:49 INFO: Request to pagead2.googlesyndication.com blocked by host blocker.
+20:38:52 INFO: Request to googleads.g.doubleclick.net blocked by host blocker.
+20:38:53 INFO: Request to pubads.g.doubleclick.net blocked by host blocker.
+20:38:53 INFO: Request to pagead2.googlesyndication.com blocked by host blocker.
+20:38:53 INFO: Request to googleads.g.doubleclick.net blocked by host blocker.
+20:38:55 INFO: Request to static.doubleclick.net blocked by host blocker.
+20:40:19 INFO: Request to googleads.g.doubleclick.net blocked by host blocker.
+20:40:37 INFO: Request to googleads.g.doubleclick.net blocked by host blocker.
+20:40:53 INFO: Request to googleads.g.doubleclick.net blocked by host blocker.
+20:42:19 INFO: Request to googleads.g.doubleclick.net blocked by host blocker.
+20:42:37 INFO: Request to googleads.g.doubleclick.net blocked by host blocker.
+20:42:54 INFO: Request to googleads.g.doubleclick.net blocked by host blocker.
+20:44:15 INFO: Request to pagead2.googlesyndication.com blocked by host blocker.
+22:25:17 INFO: Yanked URL to clipboard: https://www.youtube.com/watch?v=7ZDr7abYGfg&list=PLbtzT1TYeoMjNOGEiaRmm_vMIwUAidnQz&index=51
+22:25:33 INFO: Yanked URL to clipboard: https://www.youtube.com/watch?v=l4Ikg3ZKojo&list=PLbtzT1TYeoMjNOGEiaRmm_vMIwUAidnQz&index=50
+Discord 0.0.10
+Starting app.
+Starting updater.
+[Modules] Modules initializing
+[Modules] Distribution: remote
+[Modules] Host updates: enabled
+[Modules] Module updates: enabled
+[Modules] Module install path: /home/a/.config/discord/0.0.10/modules
+[Modules] Module installed file path: /home/a/.config/discord/0.0.10/modules/installed.json
+[Modules] Module download path: /home/a/.config/discord/0.0.10/modules/pending
+[6982:0531/123417.727941:ERROR:buffer_manager.cc(488)] [.DisplayCompositor]GL ERROR :GL_INVALID_OPERATION : glBufferData: <- error from previous GL command
+[Modules] No updates to install
+[Modules] Checking for host updates.
+[Modules] Host is up to date.
+[Modules] Checking for module updates at https://discordapp.com/api/modules/stable/versions.json
+[Modules] No module updates available.
+[6982:0531/123418.608004:ERROR:buffer_manager.cc(488)] [.DisplayCompositor]GL ERROR :GL_INVALID_OPERATION : glBufferData: <- error from previous GL command
+[000:000] [7095] (audio_device_pulse_linux.cc:1604): failed to connect context, error=-1
+[000:001] [7095] (audio_device_pulse_linux.cc:145): failed to initialize PulseAudio
+[000:006] [7095] (audio_device_impl.cc:377): Audio device initialization failed.
+[Modules] Starting to install discord_krisp...
+[Modules] Fetching discord_krisp@0 from https://discordapp.com/api/modules/stable/discord_krisp/0
+[Modules] Streaming discord_krisp@0 to /home/a/.config/discord/0.0.10/modules/pending/discord_krisp-0.zip
+Error downloading with electron net: HTTP Error: Status Code 403
+Falling back to node net library..
+(electron) 'isAccessibilitySupportEnabled function' is deprecated and will be removed. Please use 'accessibilitySupportEnabled property' instead.
+(electron) 'setBadgeCount function' is deprecated and will be removed. Please use 'badgeCount property' instead.
+[Modules] Failed fetching module discord_krisp@0: Error: HTTP Error: Status Code 403
+[Modules] Finished module downloads. [success: 0] [failure: 1]
+
+(discord:6898): libnotify-WARNING **: 12:34:28.093: Failed to connect to proxy
+
+(discord:6898): libnotify-WARNING **: 12:34:28.095: Failed to connect to proxy
+
+(discord:6898): libnotify-WARNING **: 12:34:28.097: Failed to connect to proxy
+[Modules] Checking for host updates.
+[Modules] Host is up to date.
+[Modules] Checking for module updates at https://discordapp.com/api/modules/stable/versions.json
+[Modules] No module updates available.
+
+(discord:6898): libnotify-WARNING **: 14:33:16.699: Failed to connect to proxy
+
+(discord:6898): libnotify-WARNING **: 14:33:16.702: Failed to connect to proxy
+
+(discord:6898): libnotify-WARNING **: 14:33:16.703: Failed to connect to proxy
+[Modules] Checking for host updates.
+[Modules] Host is up to date.
+[Modules] Checking for module updates at https://discordapp.com/api/modules/stable/versions.json
+[Modules] No module updates available.
+[Modules] Checking for host updates.
+[Modules] Host is up to date.
+[Modules] Checking for module updates at https://discordapp.com/api/modules/stable/versions.json
+[Modules] No module updates available.

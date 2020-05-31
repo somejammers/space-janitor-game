@@ -5,6 +5,8 @@ class Bootup extends Phaser.Scene {
 
     preload() {
 
+        this.load.image("bg", "./assets/sprites/bg.png");
+
         /////SPRITES/////////////
         this.load.image("Star", "./assets/sprites/Star.png");
         this.load.image("StarOrbital", "./assets/sprites/StarOrbital.png");
@@ -25,6 +27,22 @@ class Bootup extends Phaser.Scene {
         this.load.image("debris_sodacan.png", "./assets/sprites/debris_sodacan.png");
         this.load.image("debris_toybunny.png", "./assets/sprites/debris_toybunny.png");
         this.load.image("debris_kite.png", "./assets/sprites/debris_kite.png");
+        this.load.image("debris_ring.png", "./assets/sprites/debris_ring.png");
+        this.load.image("debris_pillbottle.png", "./assets/sprites/debris_pillbottle.png");
+        this.load.image("debris_donut.png", "./assets/sprites/debris_donut.png");
+        this.load.image("debris_tp.png", "./assets/sprites/debris_tp.png");
+        this.load.image("debris_yarnball.png", "./assets/sprites/debris_yarnball.png");
+        this.load.image("debris_rubberduck.png", "./assets/sprites/debris_rubberduck.png");
+        this.load.image("debris_hotdog.png", "./assets/sprites/debris_hotdog.png");
+        this.load.image("debris_hat.png", "./assets/sprites/debris_hat.png.png");
+        this.load.image("debris_meat.png", "./assets/sprites/debris_meat.png");
+        this.load.image("debris_balloon.png", "./assets/sprites/debris_balloon.png");
+        this.load.image("debris_beachball.png", "./assets/sprites/debris_beachball.png");
+        this.load.image("debris_fishbowl.png", "./assets/sprites/debris_fishbowl.png");
+        this.load.image("debris_umbrella.png", "./assets/sprites/debris_umbrella.png");
+        this.load.image("debris_couch.png", "./assets/sprites/debris_couch.png");
+
+
         this.load.image("pointerLine", "./assets/sprites/pointer_line.png");
 
 

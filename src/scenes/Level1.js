@@ -10,10 +10,11 @@ class Level1 extends Phaser.Scene {
 
     create() {
 
-        this.satelliteTextureArray = ["debris_apple.png", "debris_banana.png", "debris_sodacan.png", "debris_shoe.png", "debris_newspaper.png", "debris_fish.png", "debris_toybunny.png", "debris_kite.png", "debris_computer.png", "debris_couch.png", "debris_dumpster.png", "debris_rocket.png"];
-        //I think scaling should be d = 2a + b + c and have the largest object in tier be 3 ahead
-        this.satelliteScaleArray =   [0.2,                0.25,                0.5,                 0.75,               1.25,                   2,                3.25,                  5.25,              31.9,                  51.6,               115.4,                 218.6]
-        this.satelliteArrayIndex = 1; //start at size banana but cant go lower, can see apple, banana, soda, and shoe. scaling is adding last two together. updated upto kite
+        this.satelliteTextureArray = [
+        "debris_apple.png", "debris_ring.png", "debris_pillbottle.png", "debris_banana.png", "debris_donut.png", "debris_tp.png", "debris_sodacan.png", "debris_yarnball.png","debris_rubberduck.png","debris_shoe.png","debris_newspaper.png","debris_fish.png","debris_hotdog.png","debris_hat.png","debris_meat.png","debris_toybunny.png","debris_balloon.png","debris_basketball.png","debris_beachball.png","debris_fishbowl.png","debris_kite.png","debris_computer.png","debris_umbrella.png","debris_couch.png","debris_dumpster.png","debris_rocket.png" ];
+        //I think scaling should be d = a + c and have the largest object in tier be 3 ahead. from newspaper i manually balance it
+        this.satelliteScaleArray =   [0.15,     0.25,                    0.4,                 0.55,               0.80,            1.2,                 1.75,                  2.55,                  4.3,               6.0,                8.0,                10.3];
+        this.satelliteArrayIndex = 2; //start at size banana but cant go lower, can see apple, banana, soda, and shoe. scaling is adding last two together. updated upto kite
 
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
@@ -104,11 +105,35 @@ class Level1 extends Phaser.Scene {
         this.strandedEventTimeLoop = 120 + 30 * this.satelliteArrayIndex;
         this.resetEventTime = 360; //emergency bug bypass
 
+        this.bg = this.add.tileSprite(this.star.x, this.star.y, 1020, 1020, 'bg').setScrollFactor(0); //this fixes it to the camera
+        this.bgScale = (1/(0.2/(this.star.postGrowthScale *1.5)));
+        this.bg.setScale(this.bgScale);
+
+        this.xOffset = (720/2) * this.bgScale; 
+        this.yOffset = (720/2) * this.bgScale; 
+
+        this.bg.setSize(this.killDist, this.killDist);
+
+        this.updateBackground = false;
+        this.backgroundScrollX = 0;
+        this.backgroundScrollY = 0;
+
         // this.saveStrandedStar();
     }
 
 
     update() {
+        //dont do a hard calc every frame
+        // if (!this.updateBackground) 
+        // {
+        //     this.bg.tilePositionX += this.backgroundScrollX;
+        //     this.bg.tilePositionY += this.backgroundScrollY;
+        // }
+
+        // this.bg.x = this.star.x;
+        // this.bg.y = this.star.y;
+
+
         this.star.update();
 
         //procedural generation of satellites
@@ -162,7 +187,6 @@ class Level1 extends Phaser.Scene {
     }
     
     saveStrandedStar() {
-        console.log("saving");
         if (!this.star.orbitalEntered) this.star.cameraSetBool = true;
 
         // let the final in normalize() params denote how far the satellite is from the star
@@ -267,8 +291,8 @@ class Level1 extends Phaser.Scene {
 
         //pick the satellite
 
-        let indexMin = this.satelliteArrayIndex - 1;
-        let indexMax = this.satelliteArrayIndex + 3;
+        let indexMin = this.satelliteArrayIndex - 2;
+        let indexMax = this.satelliteArrayIndex + 4;
 
         let satelliteIndex = Phaser.Math.Between(indexMin, indexMax);
 

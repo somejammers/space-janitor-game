@@ -36,7 +36,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
 
         this.pastSatellitesDist = 0;
 
-        this.speedMod = 170 * Math.pow(1+this.postGrowthScale,1.2);
+        this.speedMod = 170 * Math.pow(1+this.postGrowthScale,1.4);
 
 
 
@@ -63,6 +63,8 @@ class Star extends Phaser.Physics.Arcade.Sprite {
     }
 
     update() {
+
+        
         
         //error checking, make this better later
         if (!this.isSmoothOrbiting)
@@ -79,6 +81,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
             {
                 if (this.currSpeedingMod > this.minSpeedingMod) 
                     this.currSpeedingMod -= this.currSpeedingDeacceleration;
+                
                 this.x_velocity *= this.speedMod * this.currSpeedingMod;
                 this.y_velocity *= this.speedMod * this.currSpeedingMod;
             } 
@@ -119,6 +122,11 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         // this.updatePointerLine();
 
 
+    }
+
+    updateBackgroundScroll() {
+        this.scene.backgroundScrollX = this.x_velocity / 500;
+        this.scene.backgroundScrollY = this.y_velocity / 500;
     }
 
     updatePointerLine() 
@@ -192,7 +200,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
 
         this.updateSpeed();
         while (this.Scale+satelliteScale >= this.scene.satelliteScaleArray[this.scene.satelliteArrayIndex] 
-            && this.scene.satelliteArrayIndex < this.scene.satelliteScaleArray.length - 4) 
+            && this.scene.satelliteArrayIndex < this.scene.satelliteScaleArray.length - 5) 
         {
             console.log("growing index");
             this.scene.satelliteArrayIndex++;
@@ -271,7 +279,6 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         this.scene.updateSatellites(this.Scale);
         this.updatePointerLineSize();
 
-        
 
     }
 
