@@ -87,7 +87,6 @@ class Star extends Phaser.Physics.Arcade.Sprite {
             } 
             else 
             {
-
                 this.x_velocity *= this.speedMod;
                 this.y_velocity *= this.speedMod; 
             }
@@ -102,7 +101,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         else
         {
 
-            this.setVelocity(0,0);
+            // this.setVelocity(0,0); //this is on for x,  y
             this.x_velocity += this.x_acceleration;
             this.y_velocity += this.y_acceleration; 
 
@@ -278,8 +277,6 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         //if scale goes lower than the current object scale at index, drop index by 1 and check again
         this.scene.updateSatellites(this.Scale);
         this.updatePointerLineSize();
-
-
     }
 
     bounce(satX, satY) {
@@ -330,7 +327,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
         if (!this.cameraSetBool) {
-            this.scene.cameras.main.startFollow(this, true, 1, 1);
+            this.scene.cameras.main.startFollow(this, true, 1, 1); //https://rexrainbow.github.io/phaser3-rex-notes/docs/site/camera/
         }
 
         this.cameraSetBool = true;

@@ -118,7 +118,6 @@ class Level1 extends Phaser.Scene {
         this.backgroundScrollX = 0;
         this.backgroundScrollY = 0;
 
-        // this.saveStrandedStar();
     }
 
 

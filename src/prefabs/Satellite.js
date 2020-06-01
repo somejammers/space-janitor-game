@@ -66,6 +66,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         this.timeAfterStick = 0;
         this.stickingTime = 30; //seconds that it takes for satellite to migrate to stuck spot
         this.lastAngle = 0;
+        this.distByVelocity;
         
         this.x_velocity = 0;
         this.y_velocity = 0;
@@ -404,20 +405,31 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                     this.lastAngle = angle;
                     this.orbitalAccelMod *= this.orbitalAccelModScaling;
                     this.scene.star.addAcceleration(addAccelX, addAccelY);
+
+                    // let distTravelledByVelX = this.scene.star.body.deltaX();
+                    // let distTravelledByVelY = this.scene.star.body.deltaY();
+                    this.distByVelocity = Math.sqrt(
+                        (this.scene.star.x_velocity * this.scene.star.x_velocity) +
+                        (this.scene.star.y_velocity * this.scene.star.y_velocity)
+                    );
+                    
                 }
                 else
                 {
                     this.scene.star.isSmoothOrbiting = true;
                     this.scene.starSmoothlyOrbiting = true;
-                    // this.scene.star.speedMod = 0.1;
-                    let nextAngle = angle + this.angleDiff;
-                    // if (nextAngle > Math.PI * 2) nextAngle = 0 + (nextAngle - 360);
-                    // if (nextAngle < 0) nextAngle = 360 - (360 + nextAngle);
 
+                    let nextAngle = angle + this.angleDiff;
                     let diffX = this.x + this.lastDistToStar * Math.cos(nextAngle);
                     let diffY = this.y + this.lastDistToStar * Math.sin(nextAngle);
-                    this.scene.star.x = diffX;
-                    this.scene.star.y = diffY;
+                    let distVecX = diffX - this.scene.star.x;
+                    let distVecY = diffY - this.scene.star.y;
+                    let distVecNormalized = this.normalize(distVecX, distVecY, 1);
+
+                    this.scene.star.setVelocity(distVecNormalized[0] * this.distByVelocity,
+                                                distVecNormalized[1] * this.distByVelocity);
+                    // this.scene.star.x = diffX;
+                    // this.scene.star.y = diffY;
                     this.scene.star.addAcceleration(addAccelX, addAccelY);
                     this.scene.updateBackground = false;
 
