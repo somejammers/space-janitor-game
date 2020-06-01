@@ -66,7 +66,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         this.timeAfterStick = 0;
         this.stickingTime = 30; //seconds that it takes for satellite to migrate to stuck spot
         this.lastAngle = 0;
-        this.distByVelocity;
+        this.distByVelocity = 0;
         
         this.x_velocity = 0;
         this.y_velocity = 0;
