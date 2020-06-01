@@ -377,7 +377,6 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                 else
                     this.lastDistToStar = this.distToStar;
 
-                this.currRotationDuration ++;
                 //accelerate towards next point on parametric equation on circumference
                 // next point is taken every frame, based on the current distToStar as radius
                 //https://en.wikipedia.org/wiki/Circle#Equations
@@ -413,11 +412,12 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                         (this.scene.star.y_velocity * this.scene.star.y_velocity)
                     );
                     
+                    this.currRotationDuration ++;
+
                 }
                 else
                 {
                     this.scene.star.isSmoothOrbiting = true;
-                    this.scene.starSmoothlyOrbiting = true;
 
                     let nextAngle = angle + this.angleDiff;
                     let diffX = this.x + this.lastDistToStar * Math.cos(nextAngle);
@@ -454,6 +454,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
             } 
             else if (this.isPreOrbiting)
             {
+                this.currRotationDuration = 0;
                 this.distToStar = Math.sqrt(
                     (this.x - this.scene.star.x) * (this.x - this.scene.star.x)
                     +

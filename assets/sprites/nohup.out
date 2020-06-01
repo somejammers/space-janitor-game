@@ -293,3 +293,19 @@ Falling back to node net library..
 [Modules] Finished module downloads. [success: 0] [failure: 1]
 (electron) 'isAccessibilitySupportEnabled function' is deprecated and will be removed. Please use 'accessibilitySupportEnabled property' instead.
 (electron) 'setBadgeCount function' is deprecated and will be removed. Please use 'badgeCount property' instead.
+
+(discord:15668): libnotify-WARNING **: 18:04:22.962: Failed to connect to proxy
+
+(discord:15668): libnotify-WARNING **: 18:04:22.971: Failed to connect to proxy
+
+(discord:15668): libnotify-WARNING **: 18:04:22.976: Failed to connect to proxy
+[Modules] Checking for host updates.
+[Modules] Host is up to date.
+[Modules] Checking for module updates at https://discordapp.com/api/modules/stable/versions.json
+[Modules] No module updates available.
+
+(discord:15668): libnotify-WARNING **: 18:58:13.306: Failed to connect to proxy
+
+(discord:15668): libnotify-WARNING **: 18:58:13.309: Failed to connect to proxy
+
+(discord:15668): libnotify-WARNING **: 18:58:13.312: Failed to connect to proxy

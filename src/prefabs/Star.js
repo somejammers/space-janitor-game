@@ -38,8 +38,6 @@ class Star extends Phaser.Physics.Arcade.Sprite {
 
         this.speedMod = 170 * Math.pow(1+this.postGrowthScale,1.4);
 
-
-
         this.satellitesCollected = 0;
 
         this.satelliteStack = [];
