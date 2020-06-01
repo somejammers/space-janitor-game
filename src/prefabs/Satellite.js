@@ -426,8 +426,9 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                     let distVecY = diffY - this.scene.star.y;
                     let distVecNormalized = this.normalize(distVecX, distVecY, 1);
 
-                    console.log("diffX is "+ diffX);
-                    console.log("diffY is "+ diffY);
+                    
+                    console.log("diffX is "+ diffX + " " + (diffX == this.scene.star.x ? true : false));
+                    console.log("diffY is "+ diffY + " " + (diffY == this.scene.star.y ? true : false));
 
                     console.log("distVec is "+distVecX+" & "+distVecY);
 
