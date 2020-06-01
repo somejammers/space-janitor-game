@@ -34,7 +34,7 @@ class Bootup extends Phaser.Scene {
         this.load.image("debris_yarnball.png", "./assets/sprites/debris_yarnball.png");
         this.load.image("debris_rubberduck.png", "./assets/sprites/debris_rubberduck.png");
         this.load.image("debris_hotdog.png", "./assets/sprites/debris_hotdog.png");
-        this.load.image("debris_hat.png", "./assets/sprites/debris_hat.png.png");
+        this.load.image("debris_hat.png", "./assets/sprites/debris_hat.png");
         this.load.image("debris_meat.png", "./assets/sprites/debris_meat.png");
         this.load.image("debris_balloon.png", "./assets/sprites/debris_balloon.png");
         this.load.image("debris_beachball.png", "./assets/sprites/debris_beachball.png");
