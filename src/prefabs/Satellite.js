@@ -417,6 +417,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                 }
                 else
                 {
+                    //maybe next angle isn't far enough
                     this.scene.star.isSmoothOrbiting = true;
 
                     let nextAngle = angle + this.angleDiff;

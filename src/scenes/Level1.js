@@ -10,6 +10,8 @@ class Level1 extends Phaser.Scene {
 
     create() {
 
+        this.physics.world.setFPS(60);
+
         this.satelliteTextureArray = [
         "debris_apple.png", "debris_ring.png", "debris_pillbottle.png", "debris_banana.png", "debris_donut.png", "debris_tp.png", "debris_sodacan.png", "debris_yarnball.png","debris_rubberduck.png","debris_shoe.png","debris_newspaper.png","debris_fish.png","debris_hotdog.png","debris_hat.png","debris_meat.png","debris_toybunny.png","debris_balloon.png","debris_basketball.png","debris_beachball.png","debris_fishbowl.png","debris_kite.png","debris_computer.png","debris_umbrella.png","debris_couch.png","debris_dumpster.png","debris_rocket.png" ];
         //I think scaling should be d = a + c and have the largest object in tier be 3 ahead. from newspaper i manually balance it
