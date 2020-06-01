@@ -18,7 +18,6 @@ let config = {
     width: canvas_width,
     height: canvas_height,
     physics: physicsConfig,
-    fps: 60,
     transparent: true, //removes black background at start
     scale: {
         mode: Phaser.Scale.FIT,
