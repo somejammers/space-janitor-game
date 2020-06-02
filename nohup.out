@@ -1389,3 +1389,22 @@ Falling back to node net library..
 [Child 4237, MediaDecoderStateMachine #1] WARNING: Decoder=7f8413e03800 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-4NVViI/firefox-76.0.1+build1/dom/media/MediaDecoderStateMachine.cpp, line 3367
 [Child 4237, MediaDecoderStateMachine #1] WARNING: Decoder=7f8413e0b000 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-4NVViI/firefox-76.0.1+build1/dom/media/MediaDecoderStateMachine.cpp, line 3367
 19:45:20 INFO: Opening in existing instance
+[Child 466, MediaDecoderStateMachine #1] WARNING: Decoder=7fd2109dfc00 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-4NVViI/firefox-76.0.1+build1/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 466, MediaDecoderStateMachine #1] WARNING: Decoder=7fd2109dfc00 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-4NVViI/firefox-76.0.1+build1/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 466, MediaDecoderStateMachine #1] WARNING: Decoder=7fd2110ee000 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-4NVViI/firefox-76.0.1+build1/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 466, MediaDecoderStateMachine #1] WARNING: Decoder=7fd2110ee000 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-4NVViI/firefox-76.0.1+build1/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 466, MediaDecoderStateMachine #1] WARNING: Decoder=7fd1f417b400 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-4NVViI/firefox-76.0.1+build1/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 466, MediaDecoderStateMachine #1] WARNING: Decoder=7fd1f417b400 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-4NVViI/firefox-76.0.1+build1/dom/media/MediaDecoderStateMachine.cpp, line 3367
+IPDL protocol error: Handler returned error code!
+
+###!!! [Parent][DispatchAsyncMessage] Error: PMessagePort::Msg_PostMessages Processing error: message was deserialized, but the handler returned false (indicating failure)
+
+
+###!!! [Child][MessageChannel] Error: (msgtype=0x6B0029,name=PNecko::Msg_RemoveRequestContext) Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Child][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+

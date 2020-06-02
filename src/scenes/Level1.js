@@ -106,24 +106,67 @@ class Level1 extends Phaser.Scene {
         this.strandedEventTime = 120; //3 seconds
         this.strandedEventTimeLoop = 120 + 30 * this.satelliteArrayIndex;
         this.resetEventTime = 360; //emergency bug bypass
+////////////////////BACKGROUND
+        // this.bgSize = Math.abs(1020 / (0.2/(this.star.postGrowthScale * 1.5)));
+        // this.bg = this.add.tileSprite(0, 0, this.bgSize, this.bgSize, 'bg').setScrollFactor(0); //this fixes it to the camera
+        // // this.bg.setOrigin(0.5,0);9 this.star.x-this.star.radiusWeighted/2
+        // this.bg.setOrigin(0.3,0.3);
+        // // this.bgScale = (1/(0.2/(this.star.postGrowthScale *1.5)));
+        // // this.bg.setScale(this.bgScale);
 
-        this.bg = this.add.tileSprite(this.star.x, this.star.y, 1020, 1020, 'bg').setScrollFactor(0); //this fixes it to the camera
-        this.bgScale = (1/(0.2/(this.star.postGrowthScale *1.5)));
-        this.bg.setScale(this.bgScale);
+        // // this.bgX = this.star.x/2-this.star.radiusWeighted;
+        // console.log(this.bgSize);
+        // // console.log(bgsize)
+        // // this.bg.setSize(1020,1020);//(this.killDist, this.killDist);
+        // // change size after updating screen values in the grow and shrink update, and then adjust the position. what should the size actually be?
 
-        this.xOffset = (720/2) * this.bgScale; 
-        this.yOffset = (720/2) * this.bgScale; 
-
-        this.bg.setSize(this.killDist, this.killDist);
-
-        this.updateBackground = false;
-        this.backgroundScrollX = 0;
-        this.backgroundScrollY = 0;
-
+        // this.updateBackground = false;
+        // this.backgroundScrollX = 0;
+        // this.backgroundScrollY = 0;
+        // this.counter = 1;
+        // //for position of bg: offset by subbing x each growth by the diff in x growth, do same for y
+        // this.lastBgX = this.bgX;
+        // this.lastBgSize = this.bgSize;
+        // this.bgSizeDiff = 1;
+/////////////////////////////////
+// https://rexrainbow.github.io/phaser3-rex-notes/docs/site/color/
+        this.colorIndex = 1;
+        this.isColorIndexIncreasing = true;
+        this.backgroundColorArray = ['#172347', '#025385', '#0ef3c5', '#04e2b7', '#FF8298', '#FF5268'];
+        this.color1Value = this.backgroundColorArray[0];
+        this.color2Value = this.backgroundColorArray[3];
+        this.color1Object = Phaser.Display.Color.HexStringToColor(this.color1Value);
+        this.color2Object = Phaser.Display.Color.HexStringToColor(this.color2Value);
     }
 
 
     update() {
+
+
+        let hexColor = Phaser.Display.Color.Interpolate.ColorWithColor(this.color1Object, this.color2Object, 100, this.colorIndex);
+        this.cameras.main.setBackgroundColor(hexColor);
+        console.log(hexColor);
+        this.changeBackgroundColor();
+
+        // if(keySPACE.isDown) this.cameras.main.zoomTo( 0.3, 1000, 'Sine.easeInOut');
+        //update bg size
+        // this.bg.setSize(this.bgSize+this.counter, this.bgSize);
+
+        //readjust position
+        // this.bgSizeDiff = this.bgSize - this.lastBgSize;
+        // this.lastBgSize = this.bgSize;
+        // this.bg.x -= this.bgSizeDiff/2;
+        // this.bg.y -= this.bgSizeDiff;
+
+        // this.bgSize = (this.counter);
+        // this.counter += 0.1;
+        // this.bg.setSize(this.bgSize, 200+this.bgScale);
+
+        // this.sizeDiff = this.bgSize - this.lastBgSize;
+        // this.lastBgSize = this.bgSize; 
+        // this.bg.x -= this.sizeDiffX/2;
+        // this.lastBgX = this.bg.x;
+        // console.log(this.game.loop.actualFps);
         //dont do a hard calc every frame
         // if (!this.updateBackground) 
         // {
@@ -133,7 +176,6 @@ class Level1 extends Phaser.Scene {
 
         // this.bg.x = this.star.x;
         // this.bg.y = this.star.y;
-
 
         this.star.update();
 
@@ -167,6 +209,47 @@ class Level1 extends Phaser.Scene {
             this.isStrandedTicking = true;
             this.star.cameraSetBool = true;
         }
+    }
+
+    changeBackgroundColor() {
+        if (this.isColorIndexIncreasing) 
+        {
+            this.colorIndex += 0.5;
+            
+            if (this.colorIndex >= 103 ) {
+                this.isColorIndexIncreasing = false;
+                this.setBackgroundColor1();
+            }
+        }
+        else
+        {
+            this.colorIndex -= 0.5;
+            
+            if (this.colorIndex <= -3 ) {
+                this.isColorIndexIncreasing = true;
+                this.setBackgroundColor2();
+            }
+        }
+    }
+
+    setBackgroundColor1() {
+        let picker = Math.floor(Math.random() * this.backgroundColorArray.length);
+
+        while (this.color1Value == this.backgroundColorArray[picker]) {
+            picker = Math.floor(Math.random() * this.backgroundColorArray.length);
+        }
+        
+        this.color1Object = Phaser.Display.Color.HexStringToColor(this.backgroundColorArray[picker]);
+    }
+
+    setBackgroundColor2() {
+        let picker = Math.floor(Math.random() * this.backgroundColorArray.length);
+
+        while (this.color2Value == this.backgroundColorArray[picker]) {
+            picker = Math.floor(Math.random() * this.backgroundColorArray.length);
+        }
+        
+        this.color2Object = Phaser.Display.Color.HexStringToColor(this.backgroundColorArray[picker]);
     }
 
     normalize(x, y, mod) {
@@ -241,8 +324,22 @@ class Level1 extends Phaser.Scene {
         this.fullViewportDiameter = 720/this.farthestZoomValue  +
             (150 * this.satelliteScaleArray[this.satelliteArrayIndex + 3]/2); // this is the radius of the largest possible satellite
         this.fullViewportRadius = this.fullViewportDiameter/2;
-        this.killDist = 1.5 * Math.sqrt(this.fullViewportRadius * this.fullViewportRadius
-                        + this.fullViewportRadius * this.fullViewportRadius); //make this dist from star to corner of screen
+        this.killDist = 1.5 * Math.sqrt((this.fullViewportRadius * this.fullViewportRadius)
+                        + (this.fullViewportRadius * this.fullViewportRadius)); //make this dist from star to corner of screen
+
+        // //update bg size
+        // this.bgSize = 1020/this.farthestZoomValue;
+        // this.bg.setSize(this.bgSize, this.bgSize);
+
+        // //readjust position
+        // this.bgSizeDiff = this.bgSize - this.lastBgSize;
+        // let bgOffset = this.bgSizeDiff/2;
+        // this.bg.x -= bgOffset;
+        // this.bg.y -= bgOffset;
+        // this.bg.tilePositionX -= bgOffset;
+        // this.bg.tilePositionY -= bgOffset;
+        console.log("here");
+        
     }
 
 

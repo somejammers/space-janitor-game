@@ -327,3 +327,18 @@ Falling back to node net library..
 (discord:15668): libnotify-WARNING **: 19:48:26.909: Failed to connect to proxy
 
 (discord:15668): libnotify-WARNING **: 19:48:26.912: Failed to connect to proxy
+
+(discord:15668): libnotify-WARNING **: 20:23:38.906: Failed to connect to proxy
+
+(discord:15668): libnotify-WARNING **: 20:23:38.910: Failed to connect to proxy
+
+(discord:15668): libnotify-WARNING **: 20:23:38.915: Failed to connect to proxy
+[Modules] Checking for host updates.
+[Modules] Host is up to date.
+[Modules] Checking for module updates at https://discordapp.com/api/modules/stable/versions.json
+[Modules] No module updates available.
+[Modules] Checking for host updates.
+[Modules] Host is up to date.
+[Modules] Checking for module updates at https://discordapp.com/api/modules/stable/versions.json
+[Modules] No module updates available.
+22:15:18 INFO: Request to www.google-analytics.com blocked by host blocker.
