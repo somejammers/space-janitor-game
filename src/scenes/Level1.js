@@ -31,6 +31,10 @@ class Level1 extends Phaser.Scene {
             runChildUpdate: true
         });
 
+        this.backgroundStarGroup = this.add.group({
+            runChildUpdate: true
+        });
+
         // this.satellite = new Satellite(
         //     this, canvas_width/1.5, canvas_height/2, 1, "Satellite"
         // );
@@ -132,7 +136,7 @@ class Level1 extends Phaser.Scene {
 // https://rexrainbow.github.io/phaser3-rex-notes/docs/site/color/
         this.colorIndex = 1;
         this.isColorIndexIncreasing = true;
-        this.backgroundColorArray = ['#172347', '#025385', '#0ef3c5', '#04e2b7', '#FF8298', '#FF5268'];
+        this.backgroundColorArray = ['#4E007A', '#4F2593', '#3A3CBB', '#2C73C9', '#21AAD4', '#34D5D5'];
         this.color1Value = this.backgroundColorArray[0];
         this.color2Value = this.backgroundColorArray[3];
         this.color1Object = Phaser.Display.Color.HexStringToColor(this.color1Value);
@@ -145,7 +149,7 @@ class Level1 extends Phaser.Scene {
 
         let hexColor = Phaser.Display.Color.Interpolate.ColorWithColor(this.color1Object, this.color2Object, 100, this.colorIndex);
         this.cameras.main.setBackgroundColor(hexColor);
-        console.log(hexColor);
+        // console.log(hexColor);
         this.changeBackgroundColor();
 
         // if(keySPACE.isDown) this.cameras.main.zoomTo( 0.3, 1000, 'Sine.easeInOut');
@@ -216,7 +220,7 @@ class Level1 extends Phaser.Scene {
         {
             this.colorIndex += 0.5;
             
-            if (this.colorIndex >= 103 ) {
+            if (this.colorIndex >= 100 ) {
                 this.isColorIndexIncreasing = false;
                 this.setBackgroundColor1();
             }
@@ -225,7 +229,7 @@ class Level1 extends Phaser.Scene {
         {
             this.colorIndex -= 0.5;
             
-            if (this.colorIndex <= -3 ) {
+            if (this.colorIndex <= 0 ) {
                 this.isColorIndexIncreasing = true;
                 this.setBackgroundColor2();
             }
@@ -430,14 +434,39 @@ class Level1 extends Phaser.Scene {
         xSpawn = Math.floor(Math.random() * (x2 - x1)) + x1;
         ySpawn = Math.floor(Math.random() * (y2 - y1)) + y1;
 
+        
+
         if(this.checkLocationValidity(xSpawn, ySpawn, satelliteIndex))
         {
             //add the tier as aVol parameter later, which checks the scaleArray and textureArray
             this.createSatellite(xSpawn, ySpawn, satelliteIndex);
+
+            let backgroundStarX = Math.floor(Math.random() * (x2 - x1)) + x1;
+            let backgroundStarY = Math.floor(Math.random() * (y2 - y1)) + y1;
+
+            let backgroundStarScale = Math.random() * this.star.Scale + this.star.Scale/2;
+
+            this.createBackgroundStar(backgroundStarX, backgroundStarY, "BackgroundStar", backgroundStarScale);
+
+            backgroundStarX = Math.floor(Math.random() * (x2 - x1)) + x1;
+            backgroundStarY = Math.floor(Math.random() * (y2 - y1)) + y1;
+
+            backgroundStarScale = Math.random() * this.star.Scale + this.star.Scale/2;
+
+            this.createBackgroundStar(backgroundStarX, backgroundStarY, "BackgroundStar", backgroundStarScale);
+
             this.screenXonLastSatSpawn = this.screenXcurrent;
             this.screenYonLastSatSpawn = this.screenYcurrent;
+
             this.checkStraySatellite();
         }
+    }
+
+    createBackgroundStar(backgroundStarX, backgroundStarY, texture, scale) {
+        let backgroundStar = new BackgroundStar(
+            this, backgroundStarX, backgroundStarY, "BackgroundStar", scale
+        );
+
     }
 
     checkLocationValidity(x, y, satelliteIndex) {
@@ -479,6 +508,18 @@ class Level1 extends Phaser.Scene {
             if (!satellites[i].isAttachedToStar) {
                 if (satellites[i].getDistFromSatelliteTo(this.star.x, this.star.y) > this.killDist) {
                     this.killSatellite(satellites[i]);
+                }
+            }
+        }
+    }
+
+    checkStrayBackgroundStars() {
+        let backgroundStar = this.backgroundStarGroup.getChildren();
+        for (var i = 0; i < backgroundStars.length; i++) 
+        {
+            if (!backgroundStars[i].isAttachedToStar) {
+                if (backgroundStars[i].getDistFromSatelliteTo(this.star.x, this.star.y) > this.killDist) {
+                    this.killSatellite(backgroundStars[i]);
                 }
             }
         }

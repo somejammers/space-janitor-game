@@ -1,4 +1,4 @@
-//check the strata values again , compare them with the orbital rotation.
+ //check the strata values again , compare them with the orbital rotation.
 class Satellite extends Phaser.Physics.Arcade.Sprite {
     constructor(
         scene, x_pos, y_pos, scale, texture, satelliteIndex, frame
@@ -524,7 +524,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
             );
             this.currRotationDuration = 0;
 
-            if (this.distToStar - this.scene.star.radiusWeighted > this.orbitalRadiusWeighted) {
+            if (this.distToStar - this.scene.star.radiusWeighted*1.1 > this.orbitalRadiusWeighted) {
                 this.orbitalAccelMod = this.orbitalAccelModDefault;
                 this.orbitalEntered = false;
                 this.orbitalBody.setEnable(true);
