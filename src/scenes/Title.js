@@ -21,9 +21,9 @@ class Title extends Phaser.Scene {
 
         var music = this.sound.add('menu_bgm');
         music.setLoop(true);
-        // music.play();
+        //music.play();
 
-        ///
+        
         
 
         this.anims.create({
@@ -43,7 +43,7 @@ class Title extends Phaser.Scene {
 
         this.anims.create({
             key: 'rulesPlay',
-            frames: this.anims.generateFrameNumbers('rulesP', {start: 0, end: 15, first: 0}), 
+            frames: this.anims.generateFrameNumbers('rulesP', {start: 0, end: 8, first: 0}), 
             frameRate: 10,
             repeat: -1
             
