@@ -36,17 +36,18 @@ class Star extends Phaser.Physics.Arcade.Sprite {
 
         this.pastSatellitesDist = 0;
 
-        this.speedMod = 170 * Math.pow(1+this.postGrowthScale,1.4);
+        this.speedMod = 160 * Math.pow(1+this.postGrowthScale,1.4);
 
         this.satellitesCollected = 0;
 
         this.satelliteStack = [];
         this.satelliteScaleStack = [];   
-        this.cameraSetBool = false;
+        this.cameraSetBool = true;
         this.isSpeeding = true;
         this.justStartedSpeeding = false; //when true, the speedingMod will decrease to miniumum, to simulate a burst of speed
-        this.maxSpeedingMod = 2;
-        this.minSpeedingMod = 1.2;
+        this.justLeftOrbit = false; //when true, the speedingMod will decrease to miniumum, to simulate a burst of speed
+        this.maxSpeedingMod = 2.1;
+        this.minSpeedingMod = 1.0;
         this.currSpeedingMod = 2;
         this.currSpeedingDeacceleration = 0.01; //per frame
         this.canLoseSatellite = true;
@@ -57,6 +58,8 @@ class Star extends Phaser.Physics.Arcade.Sprite {
 
         this.scene.backgroundStarSpdX = this.x_velocity/500;
         this.scene.backgroundStarSpdY = this.y_velocity/500;
+        this.rotation = 1.5*Math.PI + 0.01;
+        this.lastCamWasZoomedIn = true;
 
         // this.pointerLineLength = 1100;
         // this.pointerLineWidth = 100;
@@ -66,9 +69,6 @@ class Star extends Phaser.Physics.Arcade.Sprite {
     }
 
     update() {
-
-        
-        
         //error checking, make this better later
         if (!this.isSmoothOrbiting)
         {
@@ -82,9 +82,15 @@ class Star extends Phaser.Physics.Arcade.Sprite {
 
             if (this.isSpeeding) 
             {
-                if (this.currSpeedingMod > this.minSpeedingMod) 
+                if (this.currSpeedingMod > this.minSpeedingMod) {
                     this.currSpeedingMod -= this.currSpeedingDeacceleration;
-                
+                } 
+                else {
+                    this.isSpeeding = false;
+                    this.justStartedSpeeding = false;
+                    // this.anims.play(this.scene.a_starPC_wink);
+                }
+
                 this.x_velocity *= this.speedMod * this.currSpeedingMod;
                 this.y_velocity *= this.speedMod * this.currSpeedingMod;
             } 
@@ -127,9 +133,21 @@ class Star extends Phaser.Physics.Arcade.Sprite {
 
         }
 
+        if (this.cameraSetBool) this.setCameraToStar();
+
         // this.updatePointerLine();
 
 
+    }
+
+    chooseBaseAnim() {
+        let picker = Math.random();
+        if (picker > 0.66)
+            this.anims.chain(this.scene.a_starPC_normal);
+        else if (picker > 0.33)
+            this.anims.chain(this.scene.a_starPC_happy);
+        else 
+            this.anims.chain(this.scene.a_starPC_wink);
     }
 
     updateBackgroundScroll() {
@@ -212,7 +230,6 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         while (this.Scale+satelliteScale >= this.scene.satelliteScaleArray[this.scene.satelliteArrayIndex] 
             && this.scene.satelliteArrayIndex < this.scene.satelliteScaleArray.length - 5) 
         {
-            console.log("growing index");
             this.scene.satelliteArrayIndex++;
             this.scene.farthestZoomValue =
                 Math.abs(0.5+(0.05/
@@ -220,28 +237,9 @@ class Star extends Phaser.Physics.Arcade.Sprite {
                     )
                 );
         }
+        this.anims.play(this.scene.a_starPC_powerUp);
         this.scene.updateScreenValues();
-
-        // this.Scale += satelliteScale/3;
-        // this.updateSize();
         this.updateSpeed();
-        // this.updatePointerLineSize();
-
-        this.scene.time.delayedCall(333, () => {
-            // this.Scale += satelliteScale/3;
-            // this.updateSize();
-            this.updateSpeed();
-            // this.scene.killOldSatellites();
-            // this.updatePointerLineSize();
-
-        });
-        this.scene.time.delayedCall(666, () => { 
-            // this.Scale += satelliteScale/3;
-            // this.updateSize();
-            this.updateSpeed();
-            // this.updatePointerLineSize();
-
-        });
         this.scene.updateSatellites(this.Scale, 1); //is it + satelliteScale
     }
 
@@ -251,7 +249,6 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         this.bounce(satX, satY);
         if(this.canLoseSatellite && this.satelliteStack.length > 0)
         {
-            console.log("debug 1");
             let lostSatellite = this.satelliteStack.pop();
             lostSatellite.preScatter();
             lostSatellite.isOrbitingStar = false;
@@ -263,8 +260,6 @@ class Star extends Phaser.Physics.Arcade.Sprite {
             this.totalScaleGained -= this.satelliteScaleStack.pop();
             
             this.scene.updateUniversalScalar();
-
-            this.setCameraToStar(this.Scale);
 
             //this while loop was outside of this if before, if it crashes put i tback
             while (this.Scale < this.scene.satelliteScaleArray[this.scene.satelliteArrayIndex] 
@@ -295,8 +290,14 @@ class Star extends Phaser.Physics.Arcade.Sprite {
 
             this.scene.updateSatellites(this.Scale, 0);
         }
+        this.anims.play(this.scene.a_starPC_hit);
+        this.scene.star.chooseBaseAnim();
         this.canLoseSatellite = false;
         this.scene.killAllSatellites();
+        this.orbitalEntered = false;
+        this.isBouncing = false;
+        this.setCameraToStar(this.Scale);
+        this.startSpeeding();
 
         console.log("index is now " + this.scene.satelliteArrayIndex);
         
@@ -324,7 +325,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         this.isBouncing = true;
         this.scene.strandedEventTime = 120;
 
-        this.findTrajectory();
+        // this.findTrajectory();
 
     }
 
@@ -342,23 +343,49 @@ class Star extends Phaser.Physics.Arcade.Sprite {
     }
 
     setCameraToStar(postScale) {
+        //do this every frame, when camerasetbool is true
         
+        if ((keySPACE.isDown && !this.lastCamWasZoomedIn) || this.justLeftOrbit) {
+
+            this.scene.cameras.main.panEffect.reset(); //this doesn't work apparently
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
+            this.scene.cameras.main.startFollow(this, true, 1, 1); 
+    
+            this.cameraSetBool = true;
+    
+            this.scene.cameras.main.zoomEffect.reset();
+            this.scene.cameras.main.zoomTo(Math.abs(0.2/(0.4*0.9-(this.scene.satelliteArrayIndex * 0.01))), 1000, 'Sine.easeInOut');
+
+
+            this.lastCamWasZoomedIn = true;
+            this.zoomTimer = 0;
+            this.justLeftOrbit = false;
+        }
+        else if (!keySPACE.isDown && this.lastCamWasZoomedIn ) {
+                
+            this.zoomTimer ++;
+            // this.justLeftOrbit = false;
+
+            if (this.zoomTimer > 60 && this.lastCamWasZoomedIn)  {
+                this.scene.cameras.main.panEffect.reset(); //this doesn't work apparently
+                ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        
+                this.scene.cameras.main.startFollow(this, true, 1, 1); //https://rexrainbow.github.io/phaser3-rex-notes/docs/site/camera/
+        
+                this.cameraSetBool = true;
+                
+                this.scene.cameras.main.zoomEffect.reset();
+                this.scene.cameras.main.zoomTo(Math.abs(0.2/(0.15*0.9-(this.scene.satelliteArrayIndex * 0.01))), 1500, 'Sine.easeInOut');
+
+                this.lastCamWasZoomedIn = false;
+            }
+
         //.pan(x, y, duration, ease)
         // this.scene.cameras.main.pan(this.x, this.y, 1000, 'Power2');
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //ACCESSING SPECIFIC MEMBERS/METHODS FROM A PHASER CLASS, 
         //https://photonstorm.github.io/phaser3-docs/Phaser.Cameras.Scene2D.Camera.html#shakeEffect__anchor
-        this.scene.cameras.main.panEffect.reset();
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-        if (!this.cameraSetBool) {
-            this.scene.cameras.main.startFollow(this, true, 1, 1); //https://rexrainbow.github.io/phaser3-rex-notes/docs/site/camera/
         }
-
-        this.cameraSetBool = true;
-
-        this.scene.cameras.main.zoomTo(Math.abs(0.2/(0.4*0.9-(this.scene.satelliteArrayIndex * 0.02))), 1000, 'Sine.easeInOut');
-
     }
-
 }

@@ -9,7 +9,46 @@ class Level1 extends Phaser.Scene {
     }
 
     create() {
-        
+
+        //anims
+        this.a_starPC_hit = this.anims.create({
+            key: 'starPC_hit',
+            frames: this.anims.generateFrameNumbers('starPC_hit'),
+            frameRate: 2,
+            repeat: 999
+        });
+        this.a_starPC_twirl = this.anims.create({
+            key: 'starPC_twirl',
+            frames: this.anims.generateFrameNumbers('starPC_twirl'),
+            frameRate: 13,
+            repeat: 0
+        });
+        this.a_starPC_wink = this.anims.create({
+            key: 'starPC_wink',
+            frames: this.anims.generateFrameNumbers('starPC_wink'),
+            frameRate: 2,
+            repeat: 999
+        });
+        this.a_starPC_normal = this.anims.create({
+            key: 'starPC_normal',
+            frames: this.anims.generateFrameNumbers('starPC_normal'),
+            frameRate: 2,
+            repeat: 999
+        });
+        this.a_starPC_powerUp = this.anims.create({
+            key: 'starPC_powerUp',
+            frames: this.anims.generateFrameNumbers('starPC_powerUp'),
+            frameRate: 2,
+            repeat: 3
+        });
+        this.a_starPC_happy = this.anims.create({
+            key: 'starPC_happy',
+            frames: this.anims.generateFrameNumbers('starPC_happy'),
+            frameRate: 2,
+            repeat: 999
+        });
+
+
         this.physics.world.setFPS(60);
 
         this.satelliteTextureArray = [
@@ -23,9 +62,15 @@ class Level1 extends Phaser.Scene {
         //Star
         this.p_scale = 0.25;
 
+        let starSpawnX = canvas_width/2 + 10;
+        let starSpawnY = canvas_width/2 - 320;
         this.star = new Star(
-            this, canvas_width/2 + 10, canvas_width/2 - 320, this.p_scale, "Star"
+            this, starSpawnX, starSpawnY, this.p_scale, "Star"
         );
+        
+        this.star.anims.play(this.a_starPC_normal);
+        this.star.startSpeeding();
+        this.star.zoomTimer = 60;
         
         this.satelliteGroup = this.add.group({
             runChildUpdate: true
@@ -71,7 +116,7 @@ class Level1 extends Phaser.Scene {
         
         this.universalScalar = this.star.Scale / (this.star.Scale + (this.star.totalScaleGained)/2); //this affects the satellites and backgroundstars. decreases as the star grows "bigger"
 
-        this.star.setCameraToStar(this.star.Scale);
+        // this.star.setCameraToStar(this.star.Scale);
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
         // EXAMPLE OF CREATING A NEW PHASER OBJECT
@@ -149,7 +194,7 @@ class Level1 extends Phaser.Scene {
         this.lowestOrbitalRadius = 0;
         this.killingSatellites = false;
 
-        this.flashBox = this.add.rectangle(250, 250, 2000, 2000, 0xFFFFFF).setScrollFactor(0);
+        this.flashBox = this.add.rectangle(this.cameras.main.width/2, this.cameras.main.height/2, 2000, 2000, 0xFFFFFF).setScrollFactor(0);
         this.flashBox.setDepth(10);
         this.flashBox.setVisible(false);
     }
@@ -613,7 +658,7 @@ class Level1 extends Phaser.Scene {
 
         for (var i = 0; i < satellites.length; i++) 
         {
-            this.findLowestOrbitalRadius();
+            // this.findLowestOrbitalRadius();
             satellites[i].preChangeSizeGradually(sizeDir);
         }
         
@@ -625,11 +670,11 @@ class Level1 extends Phaser.Scene {
         }
     }
 
-    findLowestOrbitalRadius() {
-        let scale = this.satelliteScaleArray[this.satelliteArrayIndex + 4] * this.universalScalar;
-        let orbitalRadius = 300;
-        this.lowestOrbitalRadius = orbitalRadius * scale * 1.8 * 0.5;
-    }
+    // findLowestOrbitalRadius() {
+    //     let scale = this.satelliteScaleArray[this.satelliteArrayIndex + 4] * this.universalScalar;
+    //     let orbitalRadius = 300;
+    //     this.lowestOrbitalRadius = orbitalRadius * scale * 1.8 * 0.5;
+    // }
     
     
 }   

@@ -1434,3 +1434,9 @@ Falling back to node net library..
 [Modules] Failed fetching module discord_krisp@0: Error: HTTP Error: Status Code 403
 [Modules] Finished module downloads. [success: 0] [failure: 1]
 (electron) 'setBadgeCount function' is deprecated and will be removed. Please use 'badgeCount property' instead.
+[Modules] Checking for host updates.
+[Modules] Host is up to date.
+[Modules] Checking for module updates at https://discordapp.com/api/modules/stable/versions.json
+[Modules] No module updates available.
+XIO:  fatal IO error 11 (Resource temporarily unavailable) on X server ":0"
+      after 16 requests (16 known processed) with 0 events remaining.

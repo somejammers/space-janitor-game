@@ -46,6 +46,14 @@ class Bootup extends Phaser.Scene {
 
         this.load.image("pointerLine", "./assets/sprites/pointer_line.png");
 
+        this.load.spritesheet('starPC_twirl', './assets/sprites/starPC_twirl.png', {frameWidth: 150, frameHeight: 150});
+        this.load.spritesheet('starPC_hit', './assets/sprites/starPC_hit.png', {frameWidth: 150, frameHeight: 150});
+        this.load.spritesheet('starPC_wink', './assets/sprites/starPC_wink.png', {frameWidth: 150, frameHeight: 150});
+        this.load.spritesheet('starPC_normal', './assets/sprites/starPC_normal.png', {frameWidth: 150, frameHeight: 150});
+        this.load.spritesheet('starPC_powerUp', './assets/sprites/starPC_powerUp.png', {frameWidth: 150, frameHeight: 150});
+        this.load.spritesheet('starPC_happy', './assets/sprites/starPC_happy.png', {frameWidth: 150, frameHeight: 150});
+
+
 
         //////MENU////////
         this.load.spritesheet('menuBG', './assets/sprites/menuScreenBG.png', {frameWidth: 720, frameHeight: 720, startFrame: 0, endFrame: 9});
