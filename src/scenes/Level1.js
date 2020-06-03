@@ -69,6 +69,8 @@ class Level1 extends Phaser.Scene {
         // object, roundPixels, lerpX, lerpY
         // lerp determines how quickly the camera follows
         
+        this.universalScalar = this.star.Scale / (this.star.Scale + (this.star.totalScaleGained)/2); //this affects the satellites and backgroundstars. decreases as the star grows "bigger"
+
         this.star.setCameraToStar(this.star.Scale);
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -84,8 +86,7 @@ class Level1 extends Phaser.Scene {
         this.farthestZoomValue = Math.abs(0.2/(this.star.postGrowthScale *1.5)); //was 0.5+(0.05/this.satelliteScaleArray[this.satelliteArrayIndex + 3]
         //this needs to be based on the zoomout of the highest possible object in the current tier of scale
         // canvas_width * 
-        this.fullViewportDiameter = 720/this.farthestZoomValue  +
-            (150 * this.satelliteScaleArray[this.satelliteArrayIndex + 3])/2; // this is the radius of the largest possible satellite
+        this.fullViewportDiameter = 1020 + (600 * this.satelliteScaleArray[this.satelliteArrayIndex + 5] * this.universalScalar * 1.8 * 0.5);// this is the radius of the largest possible satellite
         this.fullViewportRadius = this.fullViewportDiameter/2;
         this.killDist = Math.sqrt(this.fullViewportRadius * this.fullViewportRadius
             + this.fullViewportRadius * this.fullViewportRadius);
@@ -141,10 +142,22 @@ class Level1 extends Phaser.Scene {
         this.color2Value = this.backgroundColorArray[3];
         this.color1Object = Phaser.Display.Color.HexStringToColor(this.color1Value);
         this.color2Object = Phaser.Display.Color.HexStringToColor(this.color2Value);
+        this.backgroundStarSpdX = 0;
+        this.backgroundStarSpdY = 0;
+
+//////SIZE///
+        this.lowestOrbitalRadius = 0;
+        this.killingSatellites = false;
+
+        this.flashBox = this.add.rectangle(250, 250, 2000, 2000, 0xFFFFFF).setScrollFactor(0);
+        this.flashBox.setDepth(10);
+        this.flashBox.setVisible(false);
     }
 
 
+
     update() {
+        // console.log(this.star.satelliteScaleStack.length);
 
 
         let hexColor = Phaser.Display.Color.Interpolate.ColorWithColor(this.color1Object, this.color2Object, 100, this.colorIndex);
@@ -213,6 +226,17 @@ class Level1 extends Phaser.Scene {
             this.isStrandedTicking = true;
             this.star.cameraSetBool = true;
         }
+    }
+
+    updateUniversalScalar() {
+        this.universalScalar = this.star.Scale / (this.star.Scale + (this.star.totalScaleGained)/2); //this affects the satellites and backgroundstars. decreases as the star grows "bigger"
+    }
+
+    triggerFlash() {
+        this.time.delayedCall(333, () => {
+            this.flashBox.setVisible(false);
+            this.cameras.main.flash(500);
+        });
     }
 
     changeBackgroundColor() {
@@ -300,7 +324,9 @@ class Level1 extends Phaser.Scene {
 
         if (this.killOverlappingSatellites(savingSatelliteX, savingSatelliteY, orbitalRadius) )
         {
+            
             this.createSatellite(savingSatelliteX, savingSatelliteY, this.satelliteArrayIndex + 2, landingSpotX, landingSpotY);
+
         }
 
     }
@@ -325,8 +351,7 @@ class Level1 extends Phaser.Scene {
 
     updateScreenValues() {
         this.farthestZoomValue = Math.abs(0.2/(this.star.postGrowthScale * 1.5)); //was 0.5+(0.05/this.satelliteScaleArray[this.satelliteArrayIndex + 3]
-        this.fullViewportDiameter = 720/this.farthestZoomValue  +
-            (150 * this.satelliteScaleArray[this.satelliteArrayIndex + 3]/2); // this is the radius of the largest possible satellite
+        this.fullViewportDiameter = 1020 + (600 * this.satelliteScaleArray[this.satelliteArrayIndex + 5] * this.universalScalar * 1.8 * 0.5); // this is the radius of the largest possible satellite
         this.fullViewportRadius = this.fullViewportDiameter/2;
         this.killDist = 1.5 * Math.sqrt((this.fullViewportRadius * this.fullViewportRadius)
                         + (this.fullViewportRadius * this.fullViewportRadius)); //make this dist from star to corner of screen
@@ -444,35 +469,39 @@ class Level1 extends Phaser.Scene {
             let backgroundStarX = Math.floor(Math.random() * (x2 - x1)) + x1;
             let backgroundStarY = Math.floor(Math.random() * (y2 - y1)) + y1;
 
-            let backgroundStarScale = Math.random() * this.star.Scale + this.star.Scale/2;
+            let backgroundStarScale = (Math.random() * this.star.Scale + this.star.Scale/2 + 0.01) * (1 - 0.02 * this.satelliteArrayIndex);
 
-            this.createBackgroundStar(backgroundStarX, backgroundStarY, "BackgroundStar", backgroundStarScale);
+            if(backgroundStarX != undefined && backgroundStarY != undefined )
+                this.createBackgroundStar(backgroundStarX, backgroundStarY, "BackgroundStar", backgroundStarScale);
 
-            backgroundStarX = Math.floor(Math.random() * (x2 - x1)) + x1;
-            backgroundStarY = Math.floor(Math.random() * (y2 - y1)) + y1;
+            // backgroundStarX = Math.floor(Math.random() * (x2 - x1)) + x1;
+            // backgroundStarY = Math.floor(Math.random() * (y2 - y1)) + y1;
 
-            backgroundStarScale = Math.random() * this.star.Scale + this.star.Scale/2;
+            // backgroundStarScale = Math.random() * this.star.Scale + this.star.Scale/2 + 0.01;
 
-            this.createBackgroundStar(backgroundStarX, backgroundStarY, "BackgroundStar", backgroundStarScale);
+            // this.createBackgroundStar(backgroundStarX, backgroundStarY, "BackgroundStar", backgroundStarScale);
 
-            backgroundStarX = Math.floor(Math.random() * (x2 - x1)) + x1;
-            backgroundStarY = Math.floor(Math.random() * (y2 - y1)) + y1;
+            // backgroundStarX = Math.floor(Math.random() * (x2 - x1)) + x1;
+            // backgroundStarY = Math.floor(Math.random() * (y2 - y1)) + y1;
 
-            backgroundStarScale = Math.random() * this.star.Scale + this.star.Scale/2;
+            // backgroundStarScale = Math.random() * this.star.Scale + this.star.Scale/2 + 0.01;
 
-            this.createBackgroundStar(backgroundStarX, backgroundStarY, "BackgroundStar", backgroundStarScale);
+            // this.createBackgroundStar(backgroundStarX, backgroundStarY, "BackgroundStar", backgroundStarScale);
 
             this.screenXonLastSatSpawn = this.screenXcurrent;
             this.screenYonLastSatSpawn = this.screenYcurrent;
 
             this.checkStraySatellite();
+            // this.checkStrayBackgroundStars();
         }
     }
 
     createBackgroundStar(backgroundStarX, backgroundStarY, texture, scale) {
         let backgroundStar = new BackgroundStar(
-            this, backgroundStarX, backgroundStarY, "BackgroundStar", scale
+            this, backgroundStarX, backgroundStarY, texture, scale
         );
+
+        this.backgroundStarGroup.add(backgroundStar);
 
     }
 
@@ -506,6 +535,8 @@ class Level1 extends Phaser.Scene {
             satelliteIndex
         );
 
+        this.satelliteGroup.add(satellite);
+
     }
 
     checkStraySatellite() {
@@ -520,26 +551,18 @@ class Level1 extends Phaser.Scene {
         }
     }
 
-    checkStrayBackgroundStars() {
-        let backgroundStar = this.backgroundStarGroup.getChildren();
-        for (var i = 0; i < backgroundStars.length; i++) 
-        {
-            if (!backgroundStars[i].isAttachedToStar) {
-                if (backgroundStars[i].getDistFromSatelliteTo(this.star.x, this.star.y) > this.killDist) {
-                    this.killSatellite(backgroundStars[i]);
-                }
-            }
-        }
-    }
-
     killAllSatellites() {
-        let satellites = this.satelliteGroup.getChildren();
-        for (var i = 0; i < satellites.length; i++) 
-        {
-            if (!satellites[i].hasAttachedToStar) {
-                this.killSatellite(satellites[i]);
-            }
-        }
+        // let satellites = this.satelliteGroup.getChildren();
+        // for (var i = 0; i < satellites.length; i++) 
+        // {
+        //     if (!satellites[i].hasAttachedToStar) {
+        //         this.killSatellite(satellites[i]);
+        //     }
+        // }
+        this.killingSatellites = true;
+        this.time.delayedCall(200, () => {
+            this.killingSatellites = false;
+        });
     }
 
     killHigherTierSatellites() {
@@ -565,25 +588,48 @@ class Level1 extends Phaser.Scene {
                 }
             }
         }
+        satellites = this.satelliteGroup.getChildren();
+        for (var i = 0; i < satellites.length; i++) 
+        {
+           console.log(satellites[i].hasAttachedToStar);
+            
+        }
     }
 
     killSatellite(satellite) {
-        if (satellite.okayToKill);
+        if (satellite.okayToKill) {
             satellite.orbitalBody.setEnable(true);
             satellite.orbitalBody.setEnable(false);
             satellite.isAlive = false;
             satellite.orbitalBody.destroy();
             satellite.orbital.destroy();
             satellite.destroy();
+        }
 
     }
 
-    updateSatellites(starScale) {
+    updateSatellites(starScale, sizeDir) {
         let satellites = this.satelliteGroup.getChildren();
+
         for (var i = 0; i < satellites.length; i++) 
         {
-            satellites[i].updateOrbital(starScale);
+            this.findLowestOrbitalRadius();
+            satellites[i].preChangeSizeGradually(sizeDir);
+        }
+        
+        let backgroundStars = this.backgroundStarGroup.getChildren();
+    
+        for (var i = 0; i < backgroundStars.length; i++) 
+        {
+            backgroundStars[i].preChangeSizeGradually(sizeDir);
         }
     }
+
+    findLowestOrbitalRadius() {
+        let scale = this.satelliteScaleArray[this.satelliteArrayIndex + 4] * this.universalScalar;
+        let orbitalRadius = 300;
+        this.lowestOrbitalRadius = orbitalRadius * scale * 1.8 * 0.5;
+    }
+    
     
 }   

@@ -7,7 +7,6 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
 
         scene.add.existing(this);               // add to existing scene, displayList, updateList
         scene.physics.add.existing(this);
-        this.scene.satelliteGroup.add(this);
 
 
         //update this on star hitting satellite in scene
@@ -15,9 +14,12 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
 
         this.satelliteBody = this.body;
 
-        this.setScale(scale);
 
-        this.Scale = scale;
+        this.origScale = scale;
+        this.Scale = this.scene.universalScalar * this.origScale;
+
+        this.setScale(this.Scale);
+
         this.radius = 75;
         this.radiusWeighted = 75 * this.Scale;
         this.setCircle(this.radius, 0, 0);
@@ -39,12 +41,12 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         this.orbital.setCircle(
             this.orbitalRadius - this.scene.star.radius/8, 
             this.scene.star.radius/8, this.scene.star.radius/8);
-        this.orbital.setScale(scale * 1.8 * 0.5); //note: the * 2 is because the orbital sprite is 4 times the size of the satellite sprite
+        this.orbital.setScale(this.Scale * 1.8 * 0.5); //note: the * 2 is because the orbital sprite is 4 times the size of the satellite sprite
 
 
         this.satelliteIndex = satelliteIndex;
         // CHANGE BOTH BASED ON STAR INDEX
-        this.orbitalAccelModDefault =  0.55 + (0.3 * ( 2 - ( this.satelliteIndex - this.scene.satelliteArrayIndex)) * this.scene.satelliteArrayIndex) + 
+        this.orbitalAccelModDefault =  3 + (0.3 * ( 2 - ( this.satelliteIndex - this.scene.satelliteArrayIndex)) * this.scene.satelliteArrayIndex) + 
             (0.5 * this.scene.satelliteArrayIndex);//i wanna make this higher but lower scaling. started at 0.065. this should start higher w smaller satellites
         this.orbitalAccelModScaling = 1 + 0.0005 * 100 + 0.005 * this.scene.satelliteArrayIndex; //this needs to scale with. started at 1 + 0.0005 * 125.
         this.orbitalAccelMod = this.orbitalAccelModDefault;
@@ -67,6 +69,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         this.stickingTime = 30; //seconds that it takes for satellite to migrate to stuck spot
         this.lastAngle = 0;
         this.distByVelocity = 0;
+        this.okayToKill = true;
         
         this.x_velocity = 0;
         this.y_velocity = 0;
@@ -87,6 +90,10 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         this.strata;
         this.isAlive = true;
 
+        this.targetSize = this.Scale;
+        this.isDecreasingSize = 0;
+        this.isIncreasingSize = 0;
+
         this.cameraSetBool = false;
         this.orbitalLeft = true;
 
@@ -101,6 +108,9 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
             this.orbitalBody.setEnable(true);
             this.orbital.setVisible(true);
         }
+
+        this.backgroundStarSpdX = 0;
+        this.backgroundStarSpdY = 0;
 
         this.scene.physics.add.overlap(this.scene.star, this.orbital, this.orbitalEntry, null, this);
         this.scene.physics.add.overlap(this.scene.star, this, this.handleStarCollision, null, this);
@@ -120,6 +130,90 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         this.scatter();
 
         if (!this.scene.star.cameraSetBool && this.currRotationDuration > 90) this.setCameraToSatellite();
+
+        if  (!this.scene.killingSatellites)
+            this.changeSizeGradually(); 
+        else  if(!this.isAttachedToStar)//I got rid of isokaytokill check
+            this.boom();
+
+
+    }
+
+    boom() {
+
+        //if (this.scene.killingSatellites && this.okayToKill)// {
+            this.orbitalBody.setEnable(false);
+            this.isAlive = false;
+            this.orbitalBody.destroy();
+            this.orbital.destroy();
+            this.destroy();
+        //}
+    }
+
+    preChangeSizeGradually(sizeDir) {
+        //run this fater you update the universalScalar
+        this.targetSize = this.scene.universalScalar * this.origScale;
+        // sizeDir 1 means star increasing, 0 is decreasing
+        if (sizeDir == 1) 
+        {
+            this.isDecreasingSize = 1;
+            this.isIncreasingSize = 0;
+        }
+        else 
+        {
+            this.isIncreasingSize = 1;
+            this.isDecreasingSize = 0;
+        }
+
+        //get direction to star
+        this.dirToStarX = this.scene.star.x - this.x;
+        this.dirToStarY = this.scene.star.y - this.y;
+
+        this.sizeRate = Math.abs(this.targetSize - this.Scale) / 50;
+
+        this.perspectiveMovementRate = this.sizeRate * this.scene.lowestOrbitalRadius;
+        console.log(this.scene.lowestOrbitalRadius);
+
+        this.dirToStarVec = this.normalize(this.dirToStarX, this.dirToStarY, this.perspectiveMovementRate);
+
+    }
+
+    changeSizeGradually() {
+        if (this.isIncreasingSize == 1) {
+            //star is "decreasing" size
+            if (this.targetSize >= this.Scale) {
+                this.Scale += this.sizeRate;
+                this.updateSize();
+                // this.x += this.dirToStarVec[0];
+                // this.y += this.dirToStarVec[1];
+                // this.orbital.x += this.dirToStarVec[0];
+                // this.orbital.y += this.dirToStarVec[1];
+            }
+            else 
+            {
+                this.isIncreasingSize = 0;
+            }
+        }
+        if (this.isDecreasingSize == 1) {
+            this.dirToStarX = this.scene.star.x - this.x;
+            this.dirToStarY = this.scene.star.y - this.y;
+            this.dirToStarVec = this.normalize(this.dirToStarX, this.dirToStarY, this.perspectiveMovementRate);
+
+            if (this.targetSize <= this.Scale) {
+                this.Scale -= this.sizeRate;
+                this.updateSize();
+                this.x += this.dirToStarVec[0];
+                this.y += this.dirToStarVec[1];
+                this.orbital.x += this.dirToStarVec[0];
+                this.orbital.y += this.dirToStarVec[1];
+            }
+            else
+            {
+                //can disable a satellite disabler here
+                this.isDecreasingSize = 0;
+            }
+        }
+        
     }
 
     preScatter() {
@@ -170,8 +264,8 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                     this.isScattering = false;
                     this.isCollidable = true;
                     this.isAttachedToStar = false;
-                    this.scene.star.cameraSetBool = false;
-                    this.updateOrbital();
+                    this.scene.star.cameraSetBool = true;
+                    // this.updateSize();
             }
         }   
     }
@@ -181,12 +275,15 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         {
             if (this.isLargerThanStar) 
             {
+                console.log("is larger");
                 //turn this back on when bounce has completed
                 this.scene.star.orbitalEntered = false;
                 this.isCollidable = false;
+                this.scene.flashBox.setVisible(true);
+                this.scene.triggerFlash();
+                this.scene.cameras.main.shake(700, 0.01, 0.01, 0, false); 
                 this.scene.star.shrinkUpdate(this.x, this.y);
-                this.isCollidable = true;
-
+                this.currRotationDuration = 0;
             }
             else 
             {
@@ -205,7 +302,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                 if (this.scene.star.x - this.x >= 0) this.angleToStar += Math.PI;
 
                 this.isCollidable = false;
-                this.scene.star.growUpdate(this, this.Scale/2);
+                this.scene.star.growUpdate(this, this.origScale); //was this.Scale/2
 
                 this.preStick();
             }
@@ -314,9 +411,13 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
     }
     
     //called from level.js when star changes 
-    updateOrbital(starScale)
+    updateSize()
     {
-        this.isLargerThanStar = starScale < this.Scale - 0.01 ? true : false;
+        this.orbitalRadiusWeighted = this.orbitalRadius * this.Scale * 1.8 * 0.5;
+        this.setScale(this.Scale);
+        this.orbital.setScale(this.Scale * 1.8 * 0.5);
+
+        this.isLargerThanStar = this.scene.star.Scale < this.Scale ? true : false;
 
         if (this.isLargerThanStar) 
         {
@@ -352,7 +453,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
             this.scene.star.orbitalEntered = true;
             this.scene.resetTimer = 0;
             this.orbitalLeft = false;
-
+            this.scene.star.cameraSetBool = true; 
         }
     }
 
@@ -426,7 +527,6 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                     let distVecX = diffX - this.scene.star.x;
                     let distVecY = diffY - this.scene.star.y;
                     let distVecNormalized = this.normalize(distVecX, distVecY, 1);
-
                     
                     // console.log("diffX is "+ diffX + " " + (diffX == this.scene.star.x ? true : false));
                     // console.log("diffY is "+ diffY + " " + (diffY == this.scene.star.y ? true : false));
@@ -478,7 +578,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                     this.orbitalLeft = true;
                     this.scene.updateBackground = true;
                     this.scene.star.updateBackgroundScroll();
-
+                    this.scene.star.cameraSetBool = true;
                 }
             }
             //star leaving orbital
@@ -509,6 +609,9 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                     this.orbitalLeft = true;
                     this.scene.updateBackground = true;
                     this.scene.star.updateBackgroundScroll();
+                    this.scene.star.cameraSetBool = true;
+
+                    
 
                 }
             }
@@ -541,7 +644,8 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                 this.orbitalLeft = true;
                 this.scene.updateBackground = true;
                 this.scene.star.updateBackgroundScroll();
-
+                this.isCollidable = true;
+                this.scene.star.cameraSetBool = true;
 
             }
         }
