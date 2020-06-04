@@ -237,7 +237,9 @@ class Star extends Phaser.Physics.Arcade.Sprite {
                     )
                 );
         }
-        this.anims.play(this.scene.a_starPC_powerUp);
+        this.anims.play(this.scene.a_starPC_powerUp_1);
+        this.scene.sound.play('s_grow', {volume: 1});
+        this.scene.star.chooseBaseAnim();
         this.scene.updateScreenValues();
         this.updateSpeed();
         this.scene.updateSatellites(this.Scale, 1); //is it + satelliteScale
@@ -291,6 +293,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
             this.scene.updateSatellites(this.Scale, 0);
         }
         this.anims.play(this.scene.a_starPC_hit);
+        this.anims.chain(this.scene.a_starPC_hit);
         this.scene.star.chooseBaseAnim();
         this.canLoseSatellite = false;
         this.scene.killAllSatellites();
@@ -298,6 +301,10 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         this.isBouncing = false;
         this.setCameraToStar(this.Scale);
         this.startSpeeding();
+        this.scene.s_subtleOrbit.stop();
+        this.scene.sound.play('s_hit', {volume: 1});
+        this.scene.sound.play('s_blowup', {volume: 1});
+
 
         console.log("index is now " + this.scene.satelliteArrayIndex);
         

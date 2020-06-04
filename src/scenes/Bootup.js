@@ -50,8 +50,15 @@ class Bootup extends Phaser.Scene {
         this.load.spritesheet('starPC_hit', './assets/sprites/starPC_hit.png', {frameWidth: 150, frameHeight: 150});
         this.load.spritesheet('starPC_wink', './assets/sprites/starPC_wink.png', {frameWidth: 150, frameHeight: 150});
         this.load.spritesheet('starPC_normal', './assets/sprites/starPC_normal.png', {frameWidth: 150, frameHeight: 150});
-        this.load.spritesheet('starPC_powerUp', './assets/sprites/starPC_powerUp.png', {frameWidth: 150, frameHeight: 150});
+        // this.load.spritesheet('starPC_powerUp', './assets/sprites/starPC_powerUp.png', {frameWidth: 150, frameHeight: 150});
         this.load.spritesheet('starPC_happy', './assets/sprites/starPC_happy.png', {frameWidth: 150, frameHeight: 150});
+        this.load.spritesheet('starPC_orbit', './assets/sprites/starPC_orbit.png', {frameWidth: 150, frameHeight: 150});
+        this.load.spritesheet('starPC_powerUp_1', './assets/sprites/starPC_powerup_1.png', {frameWidth: 150, frameHeight: 150});
+        this.load.spritesheet('starPC_powerUp_2', './assets/sprites/starPC_powerup_2.png', {frameWidth: 150, frameHeight: 150});
+
+
+        //////SFX/////////
+
 
 
 
@@ -63,6 +70,18 @@ class Bootup extends Phaser.Scene {
 
         this.load.spritesheet('creditsP', './assets/sprites/menuScreenCredits.png', {frameWidth: 720, frameHeight: 720, startFrame: 0, endFrame: 9});
         this.load.spritesheet('rulesP', './assets/sprites/menuScreenRules.png', {frameWidth: 720, frameHeight: 720, startFrame: 0, endFrame: 9});
+
+
+        this.load.audio('s_grow', './assets/sfx/ES_PREL_Hit_Twinkle_2_SFX_Producer.wav');
+        // this.load.audio('s_shrink', './assets/sfx/ES_PREL_Special_FX_Des_77_SFX_Producer.wav');
+        this.load.audio('s_speeding', './assets/sfx/ES_PREL_Whoosh_Twinkle_SFX_Producer.wav');
+        this.load.audio('s_hit', './assets/sfx/ES_PREL_Special_FX_Des_41_SFX_Producer.wav');
+        this.load.audio('s_blowup', './assets/sfx/ES_Sci_Fi_Magical_10_SFX_Producer.wav');
+        // this.load.audio('s_', './assets/sfx/ES_PREL_Whoosh_Small_SFX_Producer.wav');
+        this.load.audio('s_subtleOrbit', './assets/sfx/ES_Twinkling_Stars_SFX_Producer.wav');
+
+
+
 
         //////////////////
     }

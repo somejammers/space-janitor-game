@@ -283,7 +283,27 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                 this.scene.triggerFlash();
                 this.scene.cameras.main.shake(700, 0.01, 0.01, 0, false); 
                 this.scene.star.shrinkUpdate(this.x, this.y);
+                this.scene.star.anims.play(this.scene.a_starPC_hit);
                 this.currRotationDuration = 0;
+
+                this.orbitalAccelMod = this.orbitalAccelModDefault;
+                    this.orbitalEntered = false;
+                    this.orbitalBody.setEnable(true);
+                    this.canStopOrbiting = false;
+                    this.currRotationDuration = 0;
+                    this.scene.star.orbitalEntered = false;
+                    this.canReEnterOrbit = false;
+                    this.scene.star.setCameraToStar(this.scene.star.Scale);
+                    this.scene.strandedTimer = 0;
+                    this.scene.isStrandedTicking = true;
+                    this.orbitalLeft = true;
+                    this.scene.updateBackground = true;
+                    this.scene.star.updateBackgroundScroll();
+                    this.scene.star.cameraSetBool = true;
+                    // this.scene.star.anims.play(this.scene.a_starPC_twirl);
+                    this.scene.star.lastCamWasZoomedIn = true;
+                    this.scene.star.zoomTimer = 0;
+                    this.scene.star.justLeftOrbit = true;
             }
             else 
             {
@@ -306,6 +326,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                 this.scene.star.growUpdate(this, this.origScale); //was this.Scale/2
 
                 this.preStick();
+                
             }
         }
         this.scene.isStrandedTicking = true;
@@ -459,6 +480,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
             this.orbitalLeft = false;
             this.scene.star.cameraSetBool = true;
             this.scene.star.isSpeeding = false;
+            this.scene.s_subtleOrbit.play();
         }
     }
 
@@ -488,6 +510,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                 //https://en.wikipedia.org/wiki/Circle#Equations
                 //parametric form: x = origin.x + radius * cos(0~2pi)
                 // positive angleOffset for counter clockwise
+                this.scene.star.anims.play(this.scene.a_starPC_orbit);
                 let degrees = (Math.pow(125, 1.4) / Math.pow(this.scene.star.speedMod, 1.4)); //start at 3 for 0.25 star scale. if this spirals, increase the base and the exponent. an initial 3/1 basis
                 let angleOffset = this.clockRotation * degrees * Math.PI / 180; //tweak this for difficulty scaling
                 let angle = Math.atan(
@@ -593,6 +616,9 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                     this.scene.star.lastCamWasZoomedIn = true;
                     this.scene.star.zoomTimer = 0;
                     this.scene.star.justLeftOrbit = true;
+                    // this.scene.sound.play('s_speeding', {volume: 1});
+                    this.scene.s_subtleOrbit.stop();
+
 
                 }
             }
@@ -630,6 +656,9 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                     this.scene.star.lastCamWasZoomedIn = true;
                     this.scene.star.zoomTimer = 0;
                     this.scene.star.justLeftOrbit = true;
+                    this.scene.sound.play('s_speeding', {volume: 1});
+                    this.scene.s_subtleOrbit.stop();
+
 
                     console.log("leaving");
                 }
@@ -670,6 +699,9 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                 this.scene.star.lastCamWasZoomedIn = false;
                 this.scene.star.zoomTimer = 60;
                 this.scene.star.justLeftOrbit = true;
+                this.scene.sound.play('s_speeding', {volume: 1});
+                this.scene.s_subtleOrbit.stop();
+
             }
         }
     }

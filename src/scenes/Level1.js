@@ -35,15 +35,27 @@ class Level1 extends Phaser.Scene {
             frameRate: 2,
             repeat: 999
         });
-        this.a_starPC_powerUp = this.anims.create({
-            key: 'starPC_powerUp',
-            frames: this.anims.generateFrameNumbers('starPC_powerUp'),
-            frameRate: 2,
+        this.a_starPC_powerUp_1 = this.anims.create({
+            key: 'starPC_powerUp_1',
+            frames: this.anims.generateFrameNumbers('starPC_powerUp_1'),
+            frameRate: 7,
+            repeat: 2
+        });
+        this.a_starPC_powerUp_2 = this.anims.create({
+            key: 'starPC_powerUp_1',
+            frames: this.anims.generateFrameNumbers('starPC_powerUp_2'),
+            frameRate: 30,
             repeat: 3
         });
         this.a_starPC_happy = this.anims.create({
             key: 'starPC_happy',
             frames: this.anims.generateFrameNumbers('starPC_happy'),
+            frameRate: 2,
+            repeat: 999
+        });
+        this.a_starPC_orbit = this.anims.create({
+            key: 'starPC_orbit',
+            frames: this.anims.generateFrameNumbers('starPC_orbit'),
             frameRate: 2,
             repeat: 999
         });
@@ -197,6 +209,8 @@ class Level1 extends Phaser.Scene {
         this.flashBox = this.add.rectangle(this.cameras.main.width/2, this.cameras.main.height/2, 2000, 2000, 0xFFFFFF).setScrollFactor(0);
         this.flashBox.setDepth(10);
         this.flashBox.setVisible(false);
+
+        this.s_subtleOrbit = this.sound.add('s_subtleOrbit', {volume: 2});
     }
 
 
