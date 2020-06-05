@@ -48,15 +48,16 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         // CHANGE BOTH BASED ON STAR INDEX
          //update this every growth
         if (this.satelliteIndex > this.scene.satelliteArrayIndex){
-            this.orbitalAccelModDefault =  1 - (0.9/4 * ( this.satelliteIndex - this.scene.satelliteArrayIndex)); //0.1 when largest possible, 0.2, 
-            console.log(this.satelliteIndex - this.scene.satelliteArrayIndex);}
+            this.orbitalAccelModDefault =  1 - (0.8/4 * ( this.satelliteIndex - this.scene.satelliteArrayIndex)); //0.1 when largest possible, 0.2, 
+            // console.log(this.satelliteIndex - this.scene.satelliteArrayIndex);
+        }
         else    
             this.orbitalAccelModDefault = 7;
 
         // this.orbitalAccelMod *= 170 * Math.pow(1+this.postGrowthScale,1.4);
         
             //i wanna make this higher but lower scaling. started at 0.065. this should start higher w smaller satellites
-        this.orbitalAccelModScaling = 1.25 - 0.05 * (this.satelliteIndex - this.scene.satelliteArrayIndex); //increase this asa a whole, reduce with incresaing scale diff
+        this.orbitalAccelModScaling = 1.25 - 0.03 * (this.satelliteIndex - this.scene.satelliteArrayIndex); //increase this asa a whole, reduce with incresaing scale diff
         this.orbitalAccelMod = this.orbitalAccelModDefault;
         this.orbitalEntered = false;
         this.canStopOrbiting = false;
@@ -178,11 +179,25 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         this.dirToStarY = this.scene.star.y - this.y;
 
         this.sizeRate = Math.abs(this.targetSize - this.Scale) / 50;
+        //DIST NOW
+        this.distToStarX = this.x - this.scene.star.x;
+        this.distToStarY = this.y - this.scene.star.y;
+        let changeInScale = this.scene.lastUniversalScalar - this.scene.universalScalar;
+        // console.log(changeInScale);
+        // this.distToStarVecMultipliedToChangeInScale = this.normalize(this.distToStarX, this.distToStarY, changeInScale1 );
+        // this.targetX = this.distToStarVecMultipliedToChangeInScale[0];
+        // this.targetY = this.distToStarVecMultipliedToChangeInScale[1];
+        this.targetX = this.distToStarX * changeInScale;
+        this.targetY = this.distToStarY * changeInScale;
+        // console.log(this.targetY);
 
-        this.perspectiveMovementRate = this.sizeRate * this.scene.collectedSatelliteRadius;
+        // this.perspectiveMovementRate = this.sizeRate * this.scene.collectedSatelliteRadius;
         // console.log(this.scene.lowestOrbitalRadius);
 
-        this.dirToStarVec = this.normalize(this.dirToStarX, this.dirToStarY, this.perspectiveMovementRate);
+        // this.dirToStarVec = this.normalize(this.dirToStarX, this.dirToStarY, this.perspectiveMovementRate);
+
+        this.targetXRate = this.targetX / 50;
+        this.targetYRate = this.targetY / 50;
 
     }
 
@@ -210,10 +225,14 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
             if (this.targetSize <= this.Scale) {
                 this.Scale -= this.sizeRate;
                 this.updateSize();
-                this.x += this.dirToStarVec[0];
-                this.y += this.dirToStarVec[1];
-                this.orbital.x += this.dirToStarVec[0];
-                this.orbital.y += this.dirToStarVec[1];
+                // this.x += this.dirToStarVec[0];
+                // this.y += this.dirToStarVec[1];
+                this.x -= this.targetXRate;
+                this.y -= this.targetYRate;
+                // this.orbital.x += this.dirToStarVec[0];
+                // this.orbital.y += this.dirToStarVec[1];
+                this.orbital.x -=  this.targetXRate;
+                this.orbital.y -=  this.targetYRate;
             }
             else
             {

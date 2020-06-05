@@ -127,7 +127,7 @@ class Level1 extends Phaser.Scene {
         // lerp determines how quickly the camera follows
         
         this.universalScalar = this.star.Scale / (this.star.Scale + (this.star.totalScaleGained)/2); //this affects the satellites and backgroundstars. decreases as the star grows "bigger"
-
+        this.lastUniversalScalar = this.universalScalar;
         // this.star.setCameraToStar(this.star.Scale);
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -288,6 +288,7 @@ class Level1 extends Phaser.Scene {
     }
 
     updateUniversalScalar() {
+        this.lastUniversalScalar = this.universalScalar;
         this.universalScalar = this.star.Scale / (this.star.Scale + (this.star.totalScaleGained)/2); //this affects the satellites and backgroundstars. decreases as the star grows "bigger"
     }
 
