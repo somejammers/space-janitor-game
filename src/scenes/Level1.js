@@ -143,7 +143,7 @@ class Level1 extends Phaser.Scene {
         this.farthestZoomValue = Math.abs(0.2/(this.star.postGrowthScale *1.5)); //was 0.5+(0.05/this.satelliteScaleArray[this.satelliteArrayIndex + 3]
         //this needs to be based on the zoomout of the highest possible object in the current tier of scale
         // canvas_width * 
-        this.fullViewportDiameter = 1020 + (600 * this.satelliteScaleArray[this.satelliteArrayIndex + 5] * this.universalScalar * 1.8 * 0.5);// this is the radius of the largest possible satellite
+        this.fullViewportDiameter = 1020 + (600 * this.satelliteScaleArray[this.satelliteArrayIndex + 5] * this.universalScalar * 2.0 * 0.5);// this is the radius of the largest possible satellite
         this.fullViewportRadius = this.fullViewportDiameter/2;
         this.killDist = Math.sqrt(this.fullViewportRadius * this.fullViewportRadius
             + this.fullViewportRadius * this.fullViewportRadius);
@@ -367,7 +367,7 @@ class Level1 extends Phaser.Scene {
 
         //now offset it on either side of the star
         let scale = this.satelliteScaleArray[this.satelliteArrayIndex + 2];
-        let orbitalRadius = 150 * scale * 1.8;
+        let orbitalRadius = 150 * scale * 2.0;
 
         let signPicker = Math.random();
         let sign;
@@ -410,7 +410,7 @@ class Level1 extends Phaser.Scene {
 
     updateScreenValues() {
         this.farthestZoomValue = Math.abs(0.2/(this.star.postGrowthScale * 1.5)); //was 0.5+(0.05/this.satelliteScaleArray[this.satelliteArrayIndex + 3]
-        this.fullViewportDiameter = 1020 + (600 * this.satelliteScaleArray[this.satelliteArrayIndex + 5] * this.universalScalar * 1.8 * 0.5); // this is the radius of the largest possible satellite
+        this.fullViewportDiameter = 1020 + (600 * this.satelliteScaleArray[this.satelliteArrayIndex + 5] * this.universalScalar * 2.0 * 0.5); // this is the radius of the largest possible satellite
         this.fullViewportRadius = this.fullViewportDiameter/2;
         this.killDist = 1.5 * Math.sqrt((this.fullViewportRadius * this.fullViewportRadius)
                         + (this.fullViewportRadius * this.fullViewportRadius)); //make this dist from star to corner of screen
@@ -482,7 +482,7 @@ class Level1 extends Phaser.Scene {
 
         let satelliteIndex = Phaser.Math.Between(indexMin, indexMax);
 
-        let radiusOfChosen = 150 * 1.8 * this.satelliteScaleArray[satelliteIndex];
+        let radiusOfChosen = 150 * 2.0 * this.satelliteScaleArray[satelliteIndex];
         
         //A
         if (currBox == 0) {
@@ -533,12 +533,12 @@ class Level1 extends Phaser.Scene {
             if(backgroundStarX != undefined && backgroundStarY != undefined )
                 this.createBackgroundStar(backgroundStarX, backgroundStarY, "BackgroundStar", backgroundStarScale);
 
-            // backgroundStarX = Math.floor(Math.random() * (x2 - x1)) + x1;
-            // backgroundStarY = Math.floor(Math.random() * (y2 - y1)) + y1;
+            backgroundStarX = Math.floor(Math.random() * (x2 - x1)) + x1;
+            backgroundStarY = Math.floor(Math.random() * (y2 - y1)) + y1;
 
-            // backgroundStarScale = Math.random() * this.star.Scale + this.star.Scale/2 + 0.01;
+            backgroundStarScale = Math.random() * this.star.Scale + this.star.Scale/2 + 0.01;
 
-            // this.createBackgroundStar(backgroundStarX, backgroundStarY, "BackgroundStar", backgroundStarScale);
+            this.createBackgroundStar(backgroundStarX, backgroundStarY, "BackgroundStar", backgroundStarScale);
 
             // backgroundStarX = Math.floor(Math.random() * (x2 - x1)) + x1;
             // backgroundStarY = Math.floor(Math.random() * (y2 - y1)) + y1;
@@ -568,7 +568,7 @@ class Level1 extends Phaser.Scene {
         //if too close to another satellite, return false
         let satellites = this.satelliteGroup.getChildren();
         let orbitalRadiusOfNewSat = 
-            150 * this.satelliteScaleArray[satelliteIndex] * 1.8;
+            150 * this.satelliteScaleArray[satelliteIndex] * 2.0;
 
 
         for (var i = 0; i < satellites.length; i++) 

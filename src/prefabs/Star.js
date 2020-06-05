@@ -36,7 +36,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
 
         this.pastSatellitesDist = 0;
 
-        this.speedMod = 160 * Math.pow(1+this.postGrowthScale,1.4);
+        this.speedMod = 170 * Math.pow(1+this.postGrowthScale,1.4);
 
         this.satellitesCollected = 0;
 
@@ -237,7 +237,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
                     )
                 );
         }
-        this.anims.play(this.scene.a_starPC_powerUp_1);
+        this.anims.play(this.scene.a_starPC_powerUp_2);
         this.scene.sound.play('s_grow', {volume: 1});
         this.scene.star.chooseBaseAnim();
         this.scene.updateScreenValues();

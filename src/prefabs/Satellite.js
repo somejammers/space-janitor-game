@@ -31,7 +31,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         this.orbitalBody = this.orbital.body;
         this.orbitalRadius = 300;
         //update this in the checkLocationValidity()
-        this.orbitalRadiusWeighted = this.orbitalRadius * this.Scale * 1.8 * 0.5;
+        this.orbitalRadiusWeighted = this.orbitalRadius * this.Scale * 2.0 * 0.5;
 
 
         this.orbital.setImmovable(true);
@@ -41,14 +41,22 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         this.orbital.setCircle(
             this.orbitalRadius - this.scene.star.radius/8, 
             this.scene.star.radius/8, this.scene.star.radius/8);
-        this.orbital.setScale(this.Scale * 1.8 * 0.5); //note: the * 2 is because the orbital sprite is 4 times the size of the satellite sprite
+        this.orbital.setScale(this.Scale * 2.0 * 0.5); //note: the * 2 is because the orbital sprite is 4 times the size of the satellite sprite
 
 
         this.satelliteIndex = satelliteIndex;
         // CHANGE BOTH BASED ON STAR INDEX
-        this.orbitalAccelModDefault =  3 + (0.3 * ( 2 - ( this.satelliteIndex - this.scene.satelliteArrayIndex)) * this.scene.satelliteArrayIndex) + 
-            (0.5 * this.scene.satelliteArrayIndex);//i wanna make this higher but lower scaling. started at 0.065. this should start higher w smaller satellites
-        this.orbitalAccelModScaling = 1 + 0.0005 * 100 + 0.005 * this.scene.satelliteArrayIndex; //this needs to scale with. started at 1 + 0.0005 * 125.
+         //update this every growth
+        if (this.satelliteIndex > this.scene.satelliteArrayIndex){
+            this.orbitalAccelModDefault =  1 - (0.9/4 * ( this.satelliteIndex - this.scene.satelliteArrayIndex)); //0.1 when largest possible, 0.2, 
+            console.log(this.satelliteIndex - this.scene.satelliteArrayIndex);}
+        else    
+            this.orbitalAccelModDefault = 7;
+
+        // this.orbitalAccelMod *= 170 * Math.pow(1+this.postGrowthScale,1.4);
+        
+            //i wanna make this higher but lower scaling. started at 0.065. this should start higher w smaller satellites
+        this.orbitalAccelModScaling = 1.25 - 0.05 * (this.satelliteIndex - this.scene.satelliteArrayIndex); //increase this asa a whole, reduce with incresaing scale diff
         this.orbitalAccelMod = this.orbitalAccelModDefault;
         this.orbitalEntered = false;
         this.canStopOrbiting = false;
@@ -437,9 +445,9 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
     //called from level.js when star changes 
     updateSize()
     {
-        this.orbitalRadiusWeighted = this.orbitalRadius * this.Scale * 1.8 * 0.5;
+        this.orbitalRadiusWeighted = this.orbitalRadius * this.Scale * 2.0 * 0.5;
         this.setScale(this.Scale);
-        this.orbital.setScale(this.Scale * 1.8 * 0.5);
+        this.orbital.setScale(this.Scale * 2.0 * 0.5);
 
         this.isLargerThanStar = this.scene.star.Scale < this.Scale ? true : false;
 
@@ -481,6 +489,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
             this.scene.star.cameraSetBool = true;
             this.scene.star.isSpeeding = false;
             this.scene.s_subtleOrbit.play();
+            this.currRotationDuration = 0;
         }
     }
 
