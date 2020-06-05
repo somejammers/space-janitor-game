@@ -42,10 +42,10 @@ class Level1 extends Phaser.Scene {
             repeat: 2
         });
         this.a_starPC_powerUp_2 = this.anims.create({
-            key: 'starPC_powerUp_1',
+            key: 'starPC_powerUp_2',
             frames: this.anims.generateFrameNumbers('starPC_powerUp_2'),
-            frameRate: 30,
-            repeat: 3
+            frameRate: 10,
+            repeat: 1
         });
         this.a_starPC_happy = this.anims.create({
             key: 'starPC_happy',
@@ -56,6 +56,12 @@ class Level1 extends Phaser.Scene {
         this.a_starPC_orbit = this.anims.create({
             key: 'starPC_orbit',
             frames: this.anims.generateFrameNumbers('starPC_orbit'),
+            frameRate: 2,
+            repeat: 999
+        });
+        this.a_starPC_orbital = this.anims.create({
+            key: 'starPC_orbital',
+            frames: this.anims.generateFrameNumbers('starPC_orbital'),
             frameRate: 2,
             repeat: 999
         });
@@ -82,7 +88,7 @@ class Level1 extends Phaser.Scene {
         
         this.star.anims.play(this.a_starPC_normal);
         this.star.startSpeeding();
-        this.star.zoomTimer = 60;
+        this.star.zoomTimer = 90;
         
         this.satelliteGroup = this.add.group({
             runChildUpdate: true

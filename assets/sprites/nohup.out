@@ -507,3 +507,521 @@ Falling back to node net library..
 [WebContents] crashed... reloading
 [17561:0603/170429.136402:ERROR:buffer_manager.cc(488)] [.DisplayCompositor]GL ERROR :GL_INVALID_OPERATION : glBufferData: <- error from previous GL command
 [17561:0603/170429.155359:ERROR:buffer_manager.cc(488)] [.DisplayCompositor]GL ERROR :GL_INVALID_OPERATION : glBufferData: <- error from previous GL command
+Discord 0.0.10
+Starting app.
+Starting updater.
+[Modules] Modules initializing
+[Modules] Distribution: remote
+[Modules] Host updates: enabled
+[Modules] Module updates: enabled
+[Modules] Module install path: /home/a/.config/discord/0.0.10/modules
+[Modules] Module installed file path: /home/a/.config/discord/0.0.10/modules/installed.json
+[Modules] Module download path: /home/a/.config/discord/0.0.10/modules/pending
+[12117:0604/202029.067510:ERROR:buffer_manager.cc(488)] [.DisplayCompositor]GL ERROR :GL_INVALID_OPERATION : glBufferData: <- error from previous GL command
+[Modules] No updates to install
+[Modules] Checking for host updates.
+[Modules] Host is up to date.
+[Modules] Checking for module updates at https://discordapp.com/api/modules/stable/versions.json
+[Modules] No module updates available.
+[12117:0604/202029.585066:ERROR:buffer_manager.cc(488)] [.DisplayCompositor]GL ERROR :GL_INVALID_OPERATION : glBufferData: <- error from previous GL command
+[Modules] Starting to install discord_krisp...
+[Modules] Fetching discord_krisp@0 from https://discordapp.com/api/modules/stable/discord_krisp/0
+[Modules] Streaming discord_krisp@0 to /home/a/.config/discord/0.0.10/modules/pending/discord_krisp-0.zip
+Error downloading with electron net: HTTP Error: Status Code 403
+Falling back to node net library..
+(electron) 'isAccessibilitySupportEnabled function' is deprecated and will be removed. Please use 'accessibilitySupportEnabled property' instead.
+[Modules] Failed fetching module discord_krisp@0: Error: HTTP Error: Status Code 403
+[Modules] Finished module downloads. [success: 0] [failure: 1]
+(electron) 'setBadgeCount function' is deprecated and will be removed. Please use 'badgeCount property' instead.
+[12117:0604/202047.485996:ERROR:buffer_manager.cc(488)] [.DisplayCompositor]GL ERROR :GL_INVALID_OPERATION : glBufferData: <- error from previous GL command
+
+(discord:12087): libnotify-WARNING **: 20:21:29.318: Failed to connect to proxy
+
+(discord:12087): libnotify-WARNING **: 20:21:29.322: Failed to connect to proxy
+
+(discord:12087): libnotify-WARNING **: 20:21:29.325: Failed to connect to proxy
+
+(discord:12087): libnotify-WARNING **: 20:22:06.521: Failed to connect to proxy
+
+(discord:12087): libnotify-WARNING **: 20:22:06.525: Failed to connect to proxy
+
+(discord:12087): libnotify-WARNING **: 20:22:06.527: Failed to connect to proxy
+
+(discord:12087): libnotify-WARNING **: 20:22:09.947: Failed to connect to proxy
+
+(discord:12087): libnotify-WARNING **: 20:22:09.949: Failed to connect to proxy
+
+(discord:12087): libnotify-WARNING **: 20:22:09.951: Failed to connect to proxy
+[000:000] [12201] (audio_send_stream.cc:285): Failed to set up send codec state.
+[000:026] [12201] (audio_send_stream.cc:285): Failed to set up send codec state.
+[000:026] [12201] (audio_device_generic.cc:31): BuiltInAECIsAvailable: Not supported on this platform
+[000:072] [12201] (audio_send_stream.cc:285): Failed to set up send codec state.
+
+(discord:12087): libnotify-WARNING **: 20:24:21.073: Failed to connect to proxy
+
+(discord:12087): libnotify-WARNING **: 20:24:21.075: Failed to connect to proxy
+
+(discord:12087): libnotify-WARNING **: 20:24:21.078: Failed to connect to proxy
+
+(discord:12087): libnotify-WARNING **: 20:24:34.390: Failed to connect to proxy
+
+(discord:12087): libnotify-WARNING **: 20:24:34.393: Failed to connect to proxy
+
+(discord:12087): libnotify-WARNING **: 20:24:34.395: Failed to connect to proxy
+[461:798] [12205] (audio_device_pulse_linux.cc:1855): Can't query latency
+extServer: Server started at http://127.0.0.1:45653/
+updateManager: Checking for updates.
+20:41:04.434 › Checking for update
+20:41:04.449 › Error: Error: ENOENT: no such file or directory, open '/snap/standard-notes/10/resources/app-update.yml'
+updateManager: Exception caught while checking for autoupdates: [Error: ENOENT: no such file or directory, open '/snap/standard-notes/10/resources/app-update.yml'] {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/snap/standard-notes/10/resources/app-update.yml'
+}
+updateManager: Finished checking for updates. Latest version:
+ 3.4.1 Current version: 3.4.1
+PackageManager: received sync event for: Batch Manager (undefined) (deleted: false), Extensions (undefined) (deleted: false)
+PackageManager: Tried to install a component with no download url: Batch Manager
+PackageManager: Tried to install a component with no download url: Extensions
+archiveManager: Data backup successfully saved: 2020-06-05T03-41-41.570Z.txt
+
+(discord:12087): libnotify-WARNING **: 21:03:21.048: Failed to connect to proxy
+
+(discord:12087): libnotify-WARNING **: 21:03:21.052: Failed to connect to proxy
+
+(discord:12087): libnotify-WARNING **: 21:03:21.054: Failed to connect to proxy
+
+(discord:12087): libnotify-WARNING **: 21:07:35.746: Failed to connect to proxy
+
+(discord:12087): libnotify-WARNING **: 21:07:35.748: Failed to connect to proxy
+
+(discord:12087): libnotify-WARNING **: 21:07:35.750: Failed to connect to proxy
+Failed to get crash dump id.
+Report Id: 
+Discord 0.0.10
+Starting app.
+Starting updater.
+[Modules] Modules initializing
+[Modules] Distribution: remote
+[Modules] Host updates: enabled
+[Modules] Module updates: enabled
+[Modules] Module install path: /home/a/.config/discord/0.0.10/modules
+[Modules] Module installed file path: /home/a/.config/discord/0.0.10/modules/installed.json
+[Modules] Module download path: /home/a/.config/discord/0.0.10/modules/pending
+[1990:0604/211226.366908:ERROR:buffer_manager.cc(488)] [.DisplayCompositor]GL ERROR :GL_INVALID_OPERATION : glBufferData: <- error from previous GL command
+[Modules] No updates to install
+[Modules] Checking for host updates.
+[Modules] Host is up to date.
+[Modules] Checking for module updates at https://discordapp.com/api/modules/stable/versions.json
+[Modules] No module updates available.
+[1990:0604/211226.880489:ERROR:buffer_manager.cc(488)] [.DisplayCompositor]GL ERROR :GL_INVALID_OPERATION : glBufferData: <- error from previous GL command
+[Modules] Starting to install discord_krisp...
+[Modules] Fetching discord_krisp@0 from https://discordapp.com/api/modules/stable/discord_krisp/0
+[Modules] Streaming discord_krisp@0 to /home/a/.config/discord/0.0.10/modules/pending/discord_krisp-0.zip
+Error downloading with electron net: HTTP Error: Status Code 403
+Falling back to node net library..
+[Modules] Failed fetching module discord_krisp@0: Error: HTTP Error: Status Code 403
+[Modules] Finished module downloads. [success: 0] [failure: 1]
+(electron) 'isAccessibilitySupportEnabled function' is deprecated and will be removed. Please use 'accessibilitySupportEnabled property' instead.
+(electron) 'setBadgeCount function' is deprecated and will be removed. Please use 'badgeCount property' instead.
+[000:000] [2077] (audio_send_stream.cc:285): Failed to set up send codec state.
+[000:050] [2077] (audio_send_stream.cc:285): Failed to set up send codec state.
+[000:057] [2077] (audio_device_generic.cc:31): BuiltInAECIsAvailable: Not supported on this platform
+[000:123] [2077] (audio_send_stream.cc:285): Failed to set up send codec state.
+[012:206] [2077] (audio_send_stream.cc:285): Failed to set up send codec state.
+[012:229] [2077] (audio_send_stream.cc:285): Failed to set up send codec state.
+[012:230] [2077] (audio_device_generic.cc:31): BuiltInAECIsAvailable: Not supported on this platform
+[012:268] [2077] (audio_send_stream.cc:285): Failed to set up send codec state.
+
+(discord:1956): libnotify-WARNING **: 21:19:46.328: Failed to connect to proxy
+
+(discord:1956): libnotify-WARNING **: 21:19:46.331: Failed to connect to proxy
+
+(discord:1956): libnotify-WARNING **: 21:19:46.333: Failed to connect to proxy
+21:19:50 INFO: Opening in existing instance
+21:19:50 INFO: Request to www.google-analytics.com blocked by host blocker.
+21:19:50 INFO: Request to secure.quantserve.com blocked by host blocker.
+21:19:50 INFO: Request to sb.scorecardresearch.com blocked by host blocker.
+21:19:51 INFO: Request to www.googletagservices.com blocked by host blocker.
+[880:662] [2081] (audio_device_pulse_linux.cc:1855): Can't query latency
+
+(discord:1956): libnotify-WARNING **: 21:29:35.199: Failed to connect to proxy
+
+(discord:1956): libnotify-WARNING **: 21:29:35.204: Failed to connect to proxy
+
+(discord:1956): libnotify-WARNING **: 21:29:35.206: Failed to connect to proxy
+21:29:39 INFO: Opening in existing instance
+[13210:30892:0604/212940.969411:ERROR:object_proxy.cc(505)] Rejecting a message from a wrong sender.
+[13210:30892:0604/212940.969503:ERROR:object_proxy.cc(505)] Rejecting a message from a wrong sender.
+21:29:41 INFO: Request to static.doubleclick.net blocked by host blocker.
+21:29:42 INFO: Request to googleads.g.doubleclick.net blocked by host blocker.
+21:29:43 INFO: Request to googleads.g.doubleclick.net blocked by host blocker.
+21:29:45 INFO: Request to pagead2.googlesyndication.com blocked by host blocker.
+21:29:55 INFO: Yanked URL to clipboard: https://www.youtube.com/watch?v=YX40hbAHx3s
+21:31:37 INFO: Opening in existing instance
+21:31:40 INFO: Request to googleads.g.doubleclick.net blocked by host blocker.
+21:31:41 INFO: Request to static.doubleclick.net blocked by host blocker.
+21:31:46 INFO: Yanked URL to clipboard: https://www.youtube.com/watch?v=mr1FMrwi6Ew
+21:33:40 INFO: Request to googleads.g.doubleclick.net blocked by host blocker.
+21:35:40 INFO: Request to googleads.g.doubleclick.net blocked by host blocker.
+Failed to get crash dump id.
+Report Id: 
+Discord 0.0.10
+Starting app.
+Starting updater.
+[Modules] Modules initializing
+[Modules] Distribution: remote
+[Modules] Host updates: enabled
+[Modules] Module updates: enabled
+[Modules] Module install path: /home/a/.config/discord/0.0.10/modules
+[Modules] Module installed file path: /home/a/.config/discord/0.0.10/modules/installed.json
+[Modules] Module download path: /home/a/.config/discord/0.0.10/modules/pending
+[17066:0604/214022.160301:ERROR:buffer_manager.cc(488)] [.DisplayCompositor]GL ERROR :GL_INVALID_OPERATION : glBufferData: <- error from previous GL command
+[Modules] No updates to install
+[Modules] Checking for host updates.
+[Modules] Host is up to date.
+[Modules] Checking for module updates at https://discordapp.com/api/modules/stable/versions.json
+[Modules] No module updates available.
+[17066:0604/214022.690134:ERROR:buffer_manager.cc(488)] [.DisplayCompositor]GL ERROR :GL_INVALID_OPERATION : glBufferData: <- error from previous GL command
+[Modules] Starting to install discord_krisp...
+[Modules] Fetching discord_krisp@0 from https://discordapp.com/api/modules/stable/discord_krisp/0
+[Modules] Streaming discord_krisp@0 to /home/a/.config/discord/0.0.10/modules/pending/discord_krisp-0.zip
+Error downloading with electron net: HTTP Error: Status Code 403
+Falling back to node net library..
+[Modules] Failed fetching module discord_krisp@0: Error: HTTP Error: Status Code 403
+[Modules] Finished module downloads. [success: 0] [failure: 1]
+(electron) 'isAccessibilitySupportEnabled function' is deprecated and will be removed. Please use 'accessibilitySupportEnabled property' instead.
+(electron) 'setBadgeCount function' is deprecated and will be removed. Please use 'badgeCount property' instead.
+[000:000] [17153] (audio_send_stream.cc:285): Failed to set up send codec state.
+[000:041] [17153] (audio_send_stream.cc:285): Failed to set up send codec state.
+[000:042] [17153] (audio_device_generic.cc:31): BuiltInAECIsAvailable: Not supported on this platform
+[000:087] [17153] (audio_send_stream.cc:285): Failed to set up send codec state.
+[060:546] [17157] (audio_device_pulse_linux.cc:1855): Can't query latency
+
+(discord:17037): libnotify-WARNING **: 21:52:11.719: Failed to connect to proxy
+
+(discord:17037): libnotify-WARNING **: 21:52:11.721: Failed to connect to proxy
+
+(discord:17037): libnotify-WARNING **: 21:52:11.723: Failed to connect to proxy
+
+(discord:17037): libnotify-WARNING **: 21:53:05.950: Failed to connect to proxy
+
+(discord:17037): libnotify-WARNING **: 21:53:05.954: Failed to connect to proxy
+
+(discord:17037): libnotify-WARNING **: 21:53:05.957: Failed to connect to proxy
+
+(discord:17037): libnotify-WARNING **: 21:56:52.601: Failed to connect to proxy
+
+(discord:17037): libnotify-WARNING **: 21:56:52.604: Failed to connect to proxy
+
+(discord:17037): libnotify-WARNING **: 21:56:52.607: Failed to connect to proxy
+
+(discord:17037): libnotify-WARNING **: 22:00:08.311: Failed to connect to proxy
+
+(discord:17037): libnotify-WARNING **: 22:00:08.316: Failed to connect to proxy
+
+(discord:17037): libnotify-WARNING **: 22:00:08.318: Failed to connect to proxy
+
+(discord:17037): libnotify-WARNING **: 22:00:09.381: Failed to connect to proxy
+
+(discord:17037): libnotify-WARNING **: 22:00:09.387: Failed to connect to proxy
+
+(discord:17037): libnotify-WARNING **: 22:00:09.389: Failed to connect to proxy
+Failed to get crash dump id.
+Report Id: 
+Discord 0.0.10
+Starting app.
+Starting updater.
+[Modules] Modules initializing
+[Modules] Distribution: remote
+[Modules] Host updates: enabled
+[Modules] Module updates: enabled
+[Modules] Module install path: /home/a/.config/discord/0.0.10/modules
+[Modules] Module installed file path: /home/a/.config/discord/0.0.10/modules/installed.json
+[Modules] Module download path: /home/a/.config/discord/0.0.10/modules/pending
+[28285:0604/220602.460522:ERROR:buffer_manager.cc(488)] [.DisplayCompositor]GL ERROR :GL_INVALID_OPERATION : glBufferData: <- error from previous GL command
+[Modules] No updates to install
+[Modules] Checking for host updates.
+[Modules] Host is up to date.
+[Modules] Checking for module updates at https://discordapp.com/api/modules/stable/versions.json
+[Modules] No module updates available.
+[28285:0604/220603.016741:ERROR:buffer_manager.cc(488)] [.DisplayCompositor]GL ERROR :GL_INVALID_OPERATION : glBufferData: <- error from previous GL command
+[Modules] Starting to install discord_krisp...
+[Modules] Fetching discord_krisp@0 from https://discordapp.com/api/modules/stable/discord_krisp/0
+[Modules] Streaming discord_krisp@0 to /home/a/.config/discord/0.0.10/modules/pending/discord_krisp-0.zip
+Error downloading with electron net: HTTP Error: Status Code 403
+Falling back to node net library..
+[Modules] Failed fetching module discord_krisp@0: Error: HTTP Error: Status Code 403
+[Modules] Finished module downloads. [success: 0] [failure: 1]
+(electron) 'isAccessibilitySupportEnabled function' is deprecated and will be removed. Please use 'accessibilitySupportEnabled property' instead.
+(electron) 'setBadgeCount function' is deprecated and will be removed. Please use 'badgeCount property' instead.
+[000:000] [28375] (audio_device_pulse_linux.cc:1855): Can't query latency
+[000:006] [28370] (audio_send_stream.cc:285): Failed to set up send codec state.
+[000:044] [28370] (audio_send_stream.cc:285): Failed to set up send codec state.
+[000:044] [28370] (audio_device_generic.cc:31): BuiltInAECIsAvailable: Not supported on this platform
+[000:109] [28370] (audio_send_stream.cc:285): Failed to set up send codec state.
+
+###!!! [Parent][MessageChannel] Error: (msgtype=0x6A0008,name=PMessagePort::Msg___delete__) Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+###!!! [Parent][RunMessage] Error: Channel closing: too late to send/recv, messages will be lost
+
+
+(discord:28228): libnotify-WARNING **: 22:07:15.157: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 22:07:15.159: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 22:07:15.161: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 22:08:23.993: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 22:08:23.996: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 22:08:23.999: Failed to connect to proxy
+22:13:02 INFO: Opening in existing instance
+
+(discord:28228): libnotify-WARNING **: 22:13:21.783: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 22:13:21.784: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 22:13:21.787: Failed to connect to proxy
+[1309:685] [28374] (audio_device_pulse_linux.cc:1855): Can't query latency
+
+(discord:28228): libnotify-WARNING **: 23:02:19.273: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:02:19.278: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:02:19.284: Failed to connect to proxy
+[3401:418] [28374] (audio_device_pulse_linux.cc:1855): Can't query latency
+[Child 32138, MediaDecoderStateMachine #4] WARNING: Decoder=7fab0a5ac800 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-4NVViI/firefox-76.0.1+build1/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Child 32138, MediaDecoderStateMachine #4] WARNING: Decoder=7fab0a5ac800 Decode error: NS_ERROR_DOM_MEDIA_FATAL_ERR (0x806e0005) - RefPtr<MediaSourceTrackDemuxer::SamplesPromise> mozilla::MediaSourceTrackDemuxer::DoGetSamples(int32_t): manager is detached.: file /build/firefox-4NVViI/firefox-76.0.1+build1/dom/media/MediaDecoderStateMachine.cpp, line 3367
+[Modules] Checking for host updates.
+[Modules] Host is up to date.
+[Modules] Checking for module updates at https://discordapp.com/api/modules/stable/versions.json
+[Modules] No module updates available.
+Corrupt JPEG data: 262144 extraneous bytes before marker 0xd9
+
+(discord:28228): libnotify-WARNING **: 23:15:30.613: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:15:30.616: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:15:30.618: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:16:02.279: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:16:02.284: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:16:02.286: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:16:11.442: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:16:11.444: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:16:11.447: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:16:18.403: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:16:18.410: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:16:18.414: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:16:22.741: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:16:22.743: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:16:22.744: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:16:29.580: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:16:29.588: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:16:29.593: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:16:30.097: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:16:30.106: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:16:30.111: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:16:34.574: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:16:34.581: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:16:34.583: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:16:40.253: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:16:40.257: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:16:40.258: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:20:16.697: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:20:16.701: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:20:16.702: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:20:21.831: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:20:21.833: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:20:21.834: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:20:32.530: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:20:32.536: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:20:32.541: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:20:37.477: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:20:37.479: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:20:37.482: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:20:42.429: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:20:42.437: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:20:42.444: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:21:13.996: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:21:13.998: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:21:14.000: Failed to connect to proxy
+[4534:416] [28374] (audio_device_pulse_linux.cc:1855): Can't query latency
+
+(discord:28228): libnotify-WARNING **: 23:22:44.804: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:22:44.809: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:22:44.810: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:22:49.839: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:22:49.844: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:22:49.845: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:22:55.008: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:22:55.013: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:22:55.015: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:23:00.431: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:23:00.434: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:23:00.436: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:23:04.208: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:23:04.212: Failed to connect to proxy
+
+(discord:28228): libnotify-WARNING **: 23:23:04.213: Failed to connect to proxy
+Crash dump id: 69333e65-3700-4f3f-82d5-985fad1e9f1c
+23:26:47 WARNING: The X11 connection broke: I/O error (code 1)
+XIO:  fatal IO error 0 (Success) on X server ":0"
+      after 10132 requests (10132 known processed) with 0 events remaining.

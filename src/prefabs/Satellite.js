@@ -10,7 +10,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
 
 
         //update this on star hitting satellite in scene
-        this.setDepth(6);
+        this.setDepth(7);
 
         this.satelliteBody = this.body;
 
@@ -122,7 +122,9 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         this.backgroundStarSpdY = 0;
 
         this.scene.physics.add.overlap(this.scene.star, this.orbital, this.orbitalEntry, null, this);
-        this.scene.physics.add.overlap(this.scene.star, this, this.handleStarCollision, null, this);
+        this.scene.physics.add.overlap(this.scene.star.orbital, this, this.handleStarCollisionSmaller, null, this);
+        this.scene.physics.add.overlap(this.scene.star, this, this.handleStarCollisionLarger, null, this);
+
 
         // this.pan = this.scene.cameras.add(this.x, this.y, 4000, 'Power2');
         // this.panFX = new PanFX(this.scene.cameras.main);
@@ -182,23 +184,11 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         //DIST NOW
         this.distToStarX = this.x - this.scene.star.x;
         this.distToStarY = this.y - this.scene.star.y;
-        let changeInScale = this.scene.lastUniversalScalar - this.scene.universalScalar;
-        // console.log(changeInScale);
-        // this.distToStarVecMultipliedToChangeInScale = this.normalize(this.distToStarX, this.distToStarY, changeInScale1 );
-        // this.targetX = this.distToStarVecMultipliedToChangeInScale[0];
-        // this.targetY = this.distToStarVecMultipliedToChangeInScale[1];
-        this.targetX = this.distToStarX * changeInScale;
-        this.targetY = this.distToStarY * changeInScale;
-        // console.log(this.targetY);
-
-        // this.perspectiveMovementRate = this.sizeRate * this.scene.collectedSatelliteRadius;
-        // console.log(this.scene.lowestOrbitalRadius);
-
-        // this.dirToStarVec = this.normalize(this.dirToStarX, this.dirToStarY, this.perspectiveMovementRate);
-
+        this.changeInScale = this.scene.lastUniversalScalar - this.scene.universalScalar;
+        this.targetX = this.distToStarX * this.changeInScale;
+        this.targetY = this.distToStarY * this.changeInScale;
         this.targetXRate = this.targetX / 50;
         this.targetYRate = this.targetY / 50;
-
     }
 
     changeSizeGradually() {
@@ -218,19 +208,18 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
             }
         }
         if (this.isDecreasingSize == 1) {
-            this.dirToStarX = this.scene.star.x - this.x;
-            this.dirToStarY = this.scene.star.y - this.y;
-            this.dirToStarVec = this.normalize(this.dirToStarX, this.dirToStarY, this.perspectiveMovementRate);
+            this.distToStarX = this.x - this.scene.star.x;
+            this.distToStarY = this.y - this.scene.star.y;
+            this.targetX = this.distToStarX * this.changeInScale;
+            this.targetY = this.distToStarY * this.changeInScale;
+            this.targetXRate = this.targetX / 50;
+            this.targetYRate = this.targetY / 50;
 
             if (this.targetSize <= this.Scale) {
                 this.Scale -= this.sizeRate;
                 this.updateSize();
-                // this.x += this.dirToStarVec[0];
-                // this.y += this.dirToStarVec[1];
                 this.x -= this.targetXRate;
                 this.y -= this.targetYRate;
-                // this.orbital.x += this.dirToStarVec[0];
-                // this.orbital.y += this.dirToStarVec[1];
                 this.orbital.x -=  this.targetXRate;
                 this.orbital.y -=  this.targetYRate;
             }
@@ -357,6 +346,78 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
             }
         }
         this.scene.isStrandedTicking = true;
+    }
+
+    handleStarCollisionSmaller() {
+        if (this.isCollidable) 
+        {
+            if (!this.isLargerThanStar) 
+            {
+                {
+                    //this will be the strata that the satellite rotates on
+                    this.distToStar = Math.sqrt(
+                        (this.x - this.scene.star.x) * (this.x - this.scene.star.x)
+                        +
+                        (this.y - this.scene.star.y) * (this.y - this.scene.star.y)
+                    );
+    
+                    this.angleToStar = Math.atan(
+                        (this.scene.star.y - this.y)
+                        /
+                        (this.scene.star.x - this.x)
+                    );
+                    if (this.scene.star.x - this.x >= 0) this.angleToStar += Math.PI;
+    
+                    this.isCollidable = false;
+                    this.scene.collectedSatelliteRadius = this.orbitalRadiusWeighted;
+                    this.scene.star.growUpdate(this, this.origScale); //was this.Scale/2
+    
+                    this.preStick();
+                    
+                }
+            }
+            this.scene.isStrandedTicking = true;
+        }
+    }
+    
+    handleStarCollisionLarger() {
+        if (this.isCollidable) 
+        {
+            if (this.isLargerThanStar) 
+            {
+                console.log("is larger");
+                //turn this back on when bounce has completed
+                this.scene.star.orbitalEntered = false;
+                this.isCollidable = false;
+                this.scene.flashBox.setVisible(true);
+                this.scene.triggerFlash();
+                this.scene.cameras.main.shake(700, 0.01, 0.01, 0, false); 
+                this.scene.star.shrinkUpdate(this.x, this.y);
+                this.scene.star.anims.play(this.scene.a_starPC_hit);
+                this.currRotationDuration = 0;
+
+                this.orbitalAccelMod = this.orbitalAccelModDefault;
+                this.orbitalEntered = false;
+                this.orbitalBody.setEnable(true);
+                this.canStopOrbiting = false;
+                this.currRotationDuration = 0;
+                this.scene.star.orbitalEntered = false;
+                this.canReEnterOrbit = false;
+                this.scene.star.setCameraToStar(this.scene.star.Scale);
+                this.scene.strandedTimer = 0;
+                this.scene.isStrandedTicking = true;
+                this.orbitalLeft = true;
+                this.scene.updateBackground = true;
+                this.scene.star.updateBackgroundScroll();
+                this.scene.star.cameraSetBool = true;
+                // this.scene.star.anims.play(this.scene.a_starPC_twirl);
+                this.scene.star.lastCamWasZoomedIn = true;
+                this.scene.star.zoomTimer = 0;
+                this.scene.star.justLeftOrbit = true;
+            }
+        }
+        this.scene.isStrandedTicking = true;
+
     }
 
     preStick() {
@@ -509,6 +570,10 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
             this.scene.star.isSpeeding = false;
             this.scene.s_subtleOrbit.play();
             this.currRotationDuration = 0;
+            this.scene.star.setNormalSize();
+            this.scene.star.totalFlicks = 0;
+            this.scene.star.isFlickering = false;
+            this.scene.star.fadeOutOrbital = true;
         }
     }
 
@@ -583,8 +648,12 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                     let distVecX = diffX - this.scene.star.x;
                     let distVecY = diffY - this.scene.star.y;
                     let distVecNormalized = this.normalize(distVecX, distVecY, 1);
-                    this.scene.star.x_velocity = distVecNormalized[0] * this.distByVelocity;
-                    this.scene.star.y_velocity = distVecNormalized[1] * this.distByVelocity;
+
+                    let xvel = distVecNormalized[0] * this.distByVelocity
+                    let yvel = distVecNormalized[1] * this.distByVelocity;
+
+                    this.scene.star.x_velocity = xvel;
+                    this.scene.star.y_velocity = yvel;
                     
                     
                 
@@ -597,12 +666,13 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                     // distVecNormalized[1] * this.distByVelocity);
 
 
-                    this.scene.star.setVelocity(distVecNormalized[0] * this.distByVelocity,
-                                                distVecNormalized[1] * this.distByVelocity);
+                    this.scene.star.setVelocity(xvel, yvel);
+                    this.scene.star.orbital.setVelocity(yvel, yvel);
+
                     
                     // this.scene.star.x = diffX;
                     // this.scene.star.y = diffY;
-                    this.scene.star.addAcceleration(addAccelX, addAccelY);
+                    // this.scene.star.addAcceleration(addAccelX, addAccelY);
                     this.scene.updateBackground = false;
 
                 }
@@ -647,7 +717,11 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                     // this.scene.sound.play('s_speeding', {volume: 1});
                     this.scene.s_subtleOrbit.stop();
 
+                    this.scene.star.orbital.x = this.scene.star.x;
+                    this.scene.star.orbital.y = this.scene.star.y;
 
+                    this.scene.star.fadeInOrbital = true;
+                    this.scene.star.fadeOutOrbital = false;
                 }
             }
             //star leaving orbital
@@ -660,6 +734,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                     (this.y - this.scene.star.y) * (this.y - this.scene.star.y)
                 );
                 //balance this later
+                this.orbitalAccelMod = this.orbitalAccelModDefault;
                 // this.orbitalAccelMod = this.orbitalAccelModDefault * 10; //not a full reset of accel but a bit better
                 this.currRotationDuration = 0;
                 if (this.distToStar - this.scene.star.radiusWeighted > this.orbitalRadiusWeighted) {
@@ -687,8 +762,13 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                     this.scene.sound.play('s_speeding', {volume: 1});
                     this.scene.s_subtleOrbit.stop();
 
+                    this.scene.star.orbital.x = this.scene.star.x;
+                    this.scene.star.orbital.y = this.scene.star.y;
 
-                    console.log("leaving");
+                    this.scene.star.fadeInOrbital = true;
+                    this.scene.star.fadeOutOrbital = false;
+
+
                 }
             }
         } 
@@ -729,6 +809,13 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                 this.scene.star.justLeftOrbit = true;
                 this.scene.sound.play('s_speeding', {volume: 1});
                 this.scene.s_subtleOrbit.stop();
+                
+                this.scene.star.orbital.x = this.scene.star.x;
+                this.scene.star.orbital.y = this.scene.star.y;
+
+                this.scene.star.fadeInOrbital = true;
+                this.scene.star.fadeOutOrbital = false;
+
 
             }
         }

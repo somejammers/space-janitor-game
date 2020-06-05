@@ -9,7 +9,7 @@ class Bootup extends Phaser.Scene {
 
         /////SPRITES/////////////
         this.load.image("Star", "./assets/sprites/Star.png");
-        this.load.image("StarOrbital", "./assets/sprites/StarOrbital.png");
+        this.load.spritesheet("starPC_orbital", "./assets/sprites/star_orbital.png", {frameWidth: 300, frameHeight: 300});
         this.load.image("Satellite", "./assets/sprites/Satellite.png");
         this.load.image("Orbital", "./assets/sprites/Orbital.png");
         this.load.image("BackgroundStar", "./assets/sprites/BackgroundStar.png");
@@ -53,8 +53,8 @@ class Bootup extends Phaser.Scene {
         // this.load.spritesheet('starPC_powerUp', './assets/sprites/starPC_powerUp.png', {frameWidth: 150, frameHeight: 150});
         this.load.spritesheet('starPC_happy', './assets/sprites/starPC_happy.png', {frameWidth: 150, frameHeight: 150});
         this.load.spritesheet('starPC_orbit', './assets/sprites/starPC_orbit.png', {frameWidth: 150, frameHeight: 150});
-        this.load.spritesheet('starPC_powerUp_1', './assets/sprites/starPC_powerup_1.png', {frameWidth: 150, frameHeight: 150});
-        this.load.spritesheet('starPC_powerUp_2', './assets/sprites/starPC_powerup_2.png', {frameWidth: 150, frameHeight: 150});
+        this.load.spritesheet('starPC_powerUp_1', './assets/sprites/starPC_powerup_3.png', {frameWidth: 180, frameHeight: 180});
+        this.load.spritesheet('starPC_powerUp_2', './assets/sprites/starPC_powerup_3.png', {frameWidth: 180, frameHeight: 180});
 
 
         //////SFX/////////

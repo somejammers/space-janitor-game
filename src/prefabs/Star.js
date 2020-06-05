@@ -9,7 +9,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
 
         //update this on growth/hit
         
-        this.setDepth(5); //behind bigger satellites, ahead of smaller
+        this.setDepth(6); //behind bigger satellites, ahead of smaller
         //Scale measures orbital scale
         this.Scale = scale;
         this.defaultScale = 0.2;
@@ -60,12 +60,35 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         this.scene.backgroundStarSpdY = this.y_velocity/500;
         this.rotation = 1.5*Math.PI + 0.01;
         this.lastCamWasZoomedIn = true;
+        this.flickerCounter = 1;
+        this.totalFlicks = 0;
+
+        this.orbital = this.scene.physics.add.sprite(
+            this.x, this.y, "StarOrbital"
+        );
+        this.orbital.anims.play(this.scene.a_starPC_orbital);
+
+        // this.orbitalBody = this.orbital.body;
+        this.orbitalRadius = 150;
+        this.orbitalRadiusWeighted = this.orbitalRadius * this.Scale;
+
+        this.orbital.setImmovable(true);
+        this.orbital.setDepth(5);
+        //we offset the radius by star.radius in order to not let the star ride
+        //the outer edge of the orbital
+        this.orbital.setCircle(this.orbitalRadius, 0, 0);
+        this.orbital.setScale(this.Scale);
+        // this.orbital.body.setScale(this.Scale);
 
         // this.pointerLineLength = 1100;
         // this.pointerLineWidth = 100;
         // this.pointerLine = this.scene.physics.add.sprite(this.x - this.pointerlineWidth, this.y + this.pointerlineLength, 'pointerLine').setOrigin(0.5, 0);
         // this.pointerLine.scale = 1/Math.abs(0.2/(this.postGrowthScale * 1.5));
         // this.pointerLine.setDepth(4);
+
+        this.fadeInOrbital = false;
+        this.fadeOutOrbital = false;
+        this.fadeRate = 0.1;
     }
 
     update() {
@@ -104,11 +127,14 @@ class Star extends Phaser.Physics.Arcade.Sprite {
             this.scene.backgroundStarSpdY = this.y_velocity/500;
 
             this.setVelocity(this.x_velocity, this.y_velocity);
+            this.orbital.setVelocity(this.x_velocity, this.y_velocity);
+
 
             this.findTrajectory();
             this.rotation += this.trajectory - this.lastTrajectory;
             
             this.resetAcceleration();
+
         }
         else
         {
@@ -131,13 +157,83 @@ class Star extends Phaser.Physics.Arcade.Sprite {
             this.scene.backgroundStarSpdX = 0;
             this.scene.backgroundStarSpdY = 0;
 
+            this.orbital.x = this.x;
+            this.orbital.y = this.y;
         }
 
         if (this.cameraSetBool) this.setCameraToStar();
+                // this.orbital.x = this.x;
+        // this.orbital.y = this.y;
+
 
         // this.updatePointerLine();
 
+        this.handleOrbitalFadeEffect();
 
+        this.flickerSize();
+
+    }
+
+    handleOrbitalFadeEffect() {
+        if (this.fadeInOrbital) {
+
+
+            if (this.orbital.alpha <= 0.94){
+                this.orbital.alpha += this.fadeRate; 
+            }
+            else
+                this.fadeInOrbital = false;
+        }
+
+        if (this.fadeOutOrbital) {
+            if (this.orbital.alpha >= 0.06){
+                this.orbital.alpha -= this.fadeRate; 
+            }
+            else
+            {
+                this.orbital.alpha = 0;
+                this.fadeOutOrbital = false;
+            }
+
+        }
+    }
+
+    flickerSize() {
+
+            // if(this.isFlickering && this.totalFlicks <= 5) {
+                
+            //     console.log(this.flickerCounter % 10);
+
+            //     if (this.flickerCounter % 100 == 0)
+            //     {
+            //         if (this.isNormalSize) 
+            //         {
+            //             this.setScale(this.Scale * 1.4);
+            //             this.isNormalSize = false;
+            //             this.flickerCounter = 1;
+            //             this.totalFlicks++;
+
+            //         }
+            //         else
+            //             this.setNormalSize();
+            //             this.flickerCounter = 1;
+            //             this.totalFlicks++;
+
+            //     }
+                
+            //     this.flickerCounter++;
+                
+            // }
+            // else
+            // {
+            //     this.totalFlicks = 0;
+            //     this.isFlickering = false;
+            // }
+    }
+
+    setNormalSize() {
+        this.setScale(this.Scale);
+        this.isNormalSize = true;
     }
 
     chooseBaseAnim() {
@@ -224,7 +320,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         this.totalScaleGained += satelliteScale;
         this.scene.updateUniversalScalar();
 
-        if (!this.orbitalEntered) this.setCameraToStar(this.Scale);//(this.Scale + satelliteScale);
+        // if (!this.orbitalEntered) this.setCameraToStar(this.Scale);//(this.Scale + satelliteScale);
 
         this.updateSpeed();
         while (this.Scale+satelliteScale >= this.scene.satelliteScaleArray[this.scene.satelliteArrayIndex] 
@@ -237,6 +333,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
                     )
                 );
         }
+        this.isFlickering = true;
         this.anims.play(this.scene.a_starPC_powerUp_2);
         this.scene.sound.play('s_grow', {volume: 1});
         this.scene.star.chooseBaseAnim();
@@ -304,6 +401,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         this.scene.s_subtleOrbit.stop();
         this.scene.sound.play('s_hit', {volume: 1});
         this.scene.sound.play('s_blowup', {volume: 1});
+        this.orbital.alpha = 1;
 
 
         console.log("index is now " + this.scene.satelliteArrayIndex);
@@ -331,8 +429,6 @@ class Star extends Phaser.Physics.Arcade.Sprite {
 
         this.isBouncing = true;
         this.scene.strandedEventTime = 120;
-
-        // this.findTrajectory();
 
     }
 
@@ -374,7 +470,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
             this.zoomTimer ++;
             // this.justLeftOrbit = false;
 
-            if (this.zoomTimer > 60 && this.lastCamWasZoomedIn)  {
+            if (this.zoomTimer > 90 && this.lastCamWasZoomedIn)  {
                 this.scene.cameras.main.panEffect.reset(); //this doesn't work apparently
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         
