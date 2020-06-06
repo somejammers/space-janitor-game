@@ -76,14 +76,14 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         this.orbital.setDepth(5);
         //we offset the radius by star.radius in order to not let the star ride
         //the outer edge of the orbital
-        this.orbital.setCircle(this.orbitalRadius, 0, 0);
-        this.orbital.setScale(this.Scale);
+        this.orbital.setCircle(this.orbitalRadius-20, 20, 20);
+        this.orbital.setScale(this.Scale*1.2);
         // this.orbital.body.setScale(this.Scale);
 
         this.pointerLineLength = 1100;
         this.pointerLineWidth = 100;
         this.pointerLine = this.scene.physics.add.sprite(this.x, this.y, 'pointerLine').setOrigin(0.5, 0);
-        this.pointerLine.scale = 1/Math.abs(0.2/(this.postGrowthScale * 1.5));
+        this.pointerLine.scale = this.Scale;
         this.pointerLine.setDepth(4);
         this.pointerLine.alpha = 0;
         
@@ -91,10 +91,14 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         this.fadeInOrbital = false;
         this.fadeOutOrbital = false;
         this.fadeRate = 0.1;
+
+        this.zoomTimerThresh = 75;
+
         
     }
 
     update() {
+
         //error checking, make this better later
         if (!this.isSmoothOrbiting)
         {
@@ -336,11 +340,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
             && this.scene.satelliteArrayIndex < this.scene.satelliteScaleArray.length - 5) 
         {
             this.scene.satelliteArrayIndex++;
-            this.scene.farthestZoomValue =
-                Math.abs(0.5+(0.05/
-                    this.scene.satelliteScaleArray[this.scene.satelliteArrayIndex + 3]
-                    )
-                );
+            
         }
         this.isFlickering = true;
         this.anims.play(this.scene.a_starPC_powerUp_2);
@@ -371,16 +371,12 @@ class Star extends Phaser.Physics.Arcade.Sprite {
 
             //this while loop was outside of this if before, if it crashes put i tback
             while (this.Scale < this.scene.satelliteScaleArray[this.scene.satelliteArrayIndex] 
-                && this.scene.satelliteArrayIndex > 2) 
+                && this.scene.satelliteArrayIndex > 3) 
             {  
              this.scene.satelliteArrayIndex--;
              console.log("shrinking index to "+this.scene.satelliteArrayIndex);
  
-             this.scene.farthestZoomValue =
-                 Math.abs(0.5+(0.05/
-                     this.scene.satelliteScaleArray[this.scene.satelliteArrayIndex + 3]
-                     )
-                 );
+             
              this.updateSpeed();
              //do anim here and delay kill                
 
@@ -410,6 +406,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         this.scene.s_subtleOrbit.stop();
         this.scene.sound.play('s_hit', {volume: 1});
         this.scene.sound.play('s_blowup', {volume: 1});
+        this.zoomTimer = 75;
         this.orbital.alpha = 1;
         this.pointerLine.alpha = 0;
 
@@ -458,8 +455,9 @@ class Star extends Phaser.Physics.Arcade.Sprite {
     setCameraToStar(postScale) {
         //do this every frame, when camerasetbool is true
         
-        if ((keySPACE.isDown && !this.lastCamWasZoomedIn) || this.justLeftOrbit) {
+        if ((keySPACE.isDown && !this.lastCamWasZoomedIn) || (this.justLeftOrbit && keySPACE.isDown)) {
 
+            this.scene.isFadingFont = true;
             this.scene.cameras.main.panEffect.reset(); //this doesn't work apparently
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
@@ -468,6 +466,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
             this.cameraSetBool = true;
     
             this.scene.cameras.main.zoomEffect.reset();
+            this.scene.zoomValue = Math.abs(0.2/(0.4*0.9-(this.scene.satelliteArrayIndex * 0.01)));
             this.scene.cameras.main.zoomTo(Math.abs(0.2/(0.4*0.9-(this.scene.satelliteArrayIndex * 0.01))), 1000, 'Sine.easeInOut');
 
 
@@ -475,12 +474,12 @@ class Star extends Phaser.Physics.Arcade.Sprite {
             this.zoomTimer = 0;
             this.justLeftOrbit = false;
         }
-        else if (!keySPACE.isDown && this.lastCamWasZoomedIn ) {
+        else if ((!keySPACE.isDown && this.lastCamWasZoomedIn || (this.justLeftOrbit && !keySPACE.isDown )) ){
                 
             this.zoomTimer ++;
             // this.justLeftOrbit = false;
 
-            if (this.zoomTimer > 90 && this.lastCamWasZoomedIn)  {
+            if (this.zoomTimer > this.zoomTimerThresh && this.lastCamWasZoomedIn)  {
                 this.scene.cameras.main.panEffect.reset(); //this doesn't work apparently
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         
@@ -489,6 +488,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
                 this.cameraSetBool = true;
                 
                 this.scene.cameras.main.zoomEffect.reset();
+                this.scene.zoomValue = Math.abs(0.2/(0.15*0.9-(this.scene.satelliteArrayIndex * 0.01)));
                 this.scene.cameras.main.zoomTo(Math.abs(0.2/(0.15*0.9-(this.scene.satelliteArrayIndex * 0.01))), 1500, 'Sine.easeInOut');
 
                 this.lastCamWasZoomedIn = false;

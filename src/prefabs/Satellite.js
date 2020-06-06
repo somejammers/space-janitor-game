@@ -196,7 +196,10 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
 
     preChangeSizeGradually(sizeDir) {
         //run this fater you update the universalScalar
-        this.targetSize = this.scene.universalScalar * this.origScale;
+        if(!this.isAttachedToStar)
+            this.targetSize = this.scene.universalScalar * this.origScale;
+        else
+            this.targetSize = (Math.sqrt(this.scene.universalScalar)) * this.origScale;
         // sizeDir 1 means star increasing, 0 is decreasing
         if (sizeDir == 1) 
         {
@@ -808,8 +811,9 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                     this.scene.star.updateBackgroundScroll();
                     this.scene.star.cameraSetBool = true;
                     this.scene.star.lastCamWasZoomedIn = true;
-                    this.scene.star.zoomTimer = 0;
+                    this.scene.star.zoomTimer = this.scene.star.zoomTimerThresh;
                     this.scene.star.justLeftOrbit = true;
+                    this.scene.star.setCameraToStar();
                     this.scene.s_subtleOrbit.stop();
 
                     this.scene.star.orbital.x = this.scene.star.x;
@@ -856,7 +860,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                 this.isCollidable = true;
                 this.scene.star.cameraSetBool = true;
                 this.scene.star.lastCamWasZoomedIn = false;
-                this.scene.star.zoomTimer = 60;
+                this.scene.star.zoomTimer = this.scene.star.zoomTimerThresh;
                 this.scene.star.justLeftOrbit = true;
                 // this.scene.sound.play('s_speeding', {volume: 1});
                 this.scene.s_subtleOrbit.stop();

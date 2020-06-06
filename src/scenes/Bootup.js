@@ -9,7 +9,7 @@ class Bootup extends Phaser.Scene {
 
         /////SPRITES/////////////
         this.load.image("Star", "./assets/sprites/Star.png");
-        this.load.spritesheet("starPC_orbital", "./assets/sprites/star_orbital.png", {frameWidth: 300, frameHeight: 300});
+        this.load.spritesheet("starPC_orbital", "./assets/sprites/pulse2-Sheet.png", {frameWidth: 300, frameHeight: 300});
         this.load.image("Satellite", "./assets/sprites/Satellite.png");
         this.load.image("Orbital", "./assets/sprites/Orbital.png");
         this.load.image("BackgroundStar", "./assets/sprites/BackgroundStar.png");
@@ -45,6 +45,9 @@ class Bootup extends Phaser.Scene {
 
 
         this.load.image("pointerLine", "./assets/sprites/pointer_line.png");
+
+        //FONT
+        // this.load.text('font', 'assets/test.txt');
 
         this.load.spritesheet('starPC_twirl', './assets/sprites/starPC_twirl.png', {frameWidth: 150, frameHeight: 150});
         this.load.spritesheet('starPC_hit', './assets/sprites/starPC_hit.png', {frameWidth: 150, frameHeight: 150});

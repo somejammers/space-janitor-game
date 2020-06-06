@@ -62,7 +62,7 @@ class Level1 extends Phaser.Scene {
         this.a_starPC_orbital = this.anims.create({
             key: 'starPC_orbital',
             frames: this.anims.generateFrameNumbers('starPC_orbital'),
-            frameRate: 2,
+            frameRate: 10,
             repeat: 999
         });
 
@@ -73,7 +73,7 @@ class Level1 extends Phaser.Scene {
         "debris_apple.png", "debris_ring.png", "debris_pillbottle.png", "debris_banana.png", "debris_donut.png", "debris_tp.png", "debris_sodacan.png", "debris_yarnball.png","debris_rubberduck.png","debris_shoe.png","debris_newspaper.png","debris_fish.png","debris_hotdog.png","debris_hat.png","debris_meat.png","debris_toybunny.png","debris_balloon.png","debris_basketball.png","debris_beachball.png","debris_fishbowl.png","debris_kite.png","debris_computer.png","debris_umbrella.png","debris_couch.png","debris_dumpster.png","debris_rocket.png" ];
         //I think scaling should be d = a + c and have the largest object in tier be 3 ahead. from newspaper i manually balance it
         this.satelliteScaleArray =   [0.15,     0.25,                    0.4,                 0.6,               0.80,            1,                 1.2,                  1.4,                  1.6,               6.0,                8.0,                10.3];
-        this.satelliteArrayIndex = 2; //start at size banana but cant go lower, can see apple, banana, soda, and shoe. scaling is adding last two together. updated upto kite
+        this.satelliteArrayIndex = 3; //start at size banana but cant go lower, can see apple, banana, soda, and shoe. scaling is adding last two together. updated upto kite
 
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
@@ -85,6 +85,7 @@ class Level1 extends Phaser.Scene {
         this.star = new Star(
             this, starSpawnX, starSpawnY, this.p_scale, "Star"
         );
+        
         
         this.star.anims.play(this.a_starPC_normal);
         this.star.startSpeeding();
@@ -146,7 +147,10 @@ class Level1 extends Phaser.Scene {
         //use this.object.setScrollFactor(0); you can also do parallax like this
 
 
-        this.farthestZoomValue = Math.abs(0.2/(this.star.postGrowthScale *1.5)); //was 0.5+(0.05/this.satelliteScaleArray[this.satelliteArrayIndex + 3]
+        this.cameras.main.setZoom(Math.abs(0.2/(0.15*0.9-(this.satelliteArrayIndex * 0.01))));
+        this.farthestZoomValue = Math.abs(0.2/(this.star.postGrowthScale *1.5)); 
+        this.zoomValue = this.farthestZoomValue;
+        //was 0.5+(0.05/this.satelliteScaleArray[this.satelliteArrayIndex + 3]
         //this needs to be based on the zoomout of the highest possible object in the current tier of scale
         // canvas_width * 
         this.fullViewportDiameter = 1020 + (600 * this.satelliteScaleArray[this.satelliteArrayIndex + 5] * this.universalScalar * 2.0 * 0.5);// this is the radius of the largest possible satellite
@@ -217,13 +221,24 @@ class Level1 extends Phaser.Scene {
         this.flashBox.setVisible(false);
 
         this.s_subtleOrbit = this.sound.add('s_subtleOrbit', {volume: 2});
+
+//////TEXT////
+
+        let fontStyle = { font: "20px Garamond", fill: "#FFFFFF", wordWrap: true, wordWrapWidth: 200, align: "center"};
+        this.instructionsText = this.add.text(this.star.x - 182, this.star.y + 450, "Press SPACE to Orbit & Zoom Out", fontStyle).setScrollFactor(0);
+        this.instructionsText.setDepth(11);
+    
+//////SHADOW EFFECT///
+        this.shadowStarGroup = this.add.group({
+            runChildUpdate: true
+        });
+
+        this.shadowStarTimer = 1;
+        this.shadowStarRate = 6;
+
     }
 
-
-
     update() {
-        // console.log(this.star.satelliteScaleStack.length);
-
 
         let hexColor = Phaser.Display.Color.Interpolate.ColorWithColor(this.color1Object, this.color2Object, 100, this.colorIndex);
         this.cameras.main.setBackgroundColor(hexColor);
@@ -291,11 +306,38 @@ class Level1 extends Phaser.Scene {
             this.isStrandedTicking = true;
             this.star.cameraSetBool = true;
         }
+
+        this.fadeFont();
+
+        this.addShadowStar();
+    }
+
+    addShadowStar() {
+
+        this.shadowStarTimer++;
+
+            if (this.shadowStarTimer % this.shadowStarRate == 0)
+            {
+                let shadowStar = new Shadow_Star(this, this.star.x, this.star.y, this.star.anims.currentAnim.key, 
+                                                this.star.Scale, this.star.rotation, this.star.anims.currentAnim.frame);
+
+                this.shadowStarGroup.add(shadowStar);
+
+                this.shadowStarTimer = 1;
+            }
     }
 
     updateUniversalScalar() {
         this.lastUniversalScalar = this.universalScalar;
         this.universalScalar = this.star.Scale / (this.star.Scale + (this.star.totalScaleGained)/2); //this affects the satellites and backgroundstars. decreases as the star grows "bigger"
+    }
+
+    fadeFont() {
+        if (this.isFadingFont) {
+            if (this.instructionsText.alpha > 0) {
+                this.instructionsText.alpha -= 0.1;
+            }
+        } 
     }
 
     triggerFlash() {
@@ -484,7 +526,7 @@ class Level1 extends Phaser.Scene {
 
         //pick the satellite
 
-        let indexMin = this.satelliteArrayIndex - 2;
+        let indexMin = this.satelliteArrayIndex - 3;
         let indexMax = this.satelliteArrayIndex + 4;
 
         let satelliteIndex = Phaser.Math.Between(indexMin, indexMax);
@@ -589,6 +631,7 @@ class Level1 extends Phaser.Scene {
         }
         return true;
     }
+    
 
     createSatellite(x, y, satelliteIndex) {
         // let scale = scaleArray[tier]; 
@@ -680,6 +723,7 @@ class Level1 extends Phaser.Scene {
         for (var i = 0; i < satellites.length; i++) 
         {
             // this.findLowestOrbitalRadius();
+            
             satellites[i].preChangeSizeGradually(sizeDir);
         }
         
