@@ -416,9 +416,9 @@ class Level1 extends Phaser.Scene {
     }
 
     updateScreenValues() {
-        this.farthestZoomValue = Math.abs(0.2/(this.star.postGrowthScale * 1.5)); //was 0.5+(0.05/this.satelliteScaleArray[this.satelliteArrayIndex + 3]
-        this.fullViewportDiameter = 1020 + (600 * this.satelliteScaleArray[this.satelliteArrayIndex + 5] * this.universalScalar * 2.0 * 0.5); // this is the radius of the largest possible satellite
-        this.fullViewportRadius = this.fullViewportDiameter/2;
+        // this.farthestZoomValue = Math.abs(0.2/(this.star.postGrowthScale * 1.5)); //was 0.5+(0.05/this.satelliteScaleArray[this.satelliteArrayIndex + 3]
+        // this.fullViewportDiameter = 1020 + (600 * this.satelliteScaleArray[this.satelliteArrayIndex + 5] * this.universalScalar * 2.0 * 0.5); // this is the radius of the largest possible satellite
+        // this.fullViewportRadius = this.fullViewportDiameter/2;
         this.killDist = 1.5 * Math.sqrt((this.fullViewportRadius * this.fullViewportRadius)
                         + (this.fullViewportRadius * this.fullViewportRadius)); //make this dist from star to corner of screen
 

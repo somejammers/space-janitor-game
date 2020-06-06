@@ -80,15 +80,18 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         this.orbital.setScale(this.Scale);
         // this.orbital.body.setScale(this.Scale);
 
-        // this.pointerLineLength = 1100;
-        // this.pointerLineWidth = 100;
-        // this.pointerLine = this.scene.physics.add.sprite(this.x - this.pointerlineWidth, this.y + this.pointerlineLength, 'pointerLine').setOrigin(0.5, 0);
-        // this.pointerLine.scale = 1/Math.abs(0.2/(this.postGrowthScale * 1.5));
-        // this.pointerLine.setDepth(4);
+        this.pointerLineLength = 1100;
+        this.pointerLineWidth = 100;
+        this.pointerLine = this.scene.physics.add.sprite(this.x, this.y, 'pointerLine').setOrigin(0.5, 0);
+        this.pointerLine.scale = 1/Math.abs(0.2/(this.postGrowthScale * 1.5));
+        this.pointerLine.setDepth(4);
+        this.pointerLine.alpha = 0;
+        
 
         this.fadeInOrbital = false;
         this.fadeOutOrbital = false;
         this.fadeRate = 0.1;
+        
     }
 
     update() {
@@ -166,7 +169,9 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         // this.orbital.y = this.y;
 
 
-        // this.updatePointerLine();
+        this.pointerLine.setVelocity(this.x_velocity, this.y_velocity);
+
+        this.updatePointerLine();
 
         this.handleOrbitalFadeEffect();
 
@@ -177,21 +182,26 @@ class Star extends Phaser.Physics.Arcade.Sprite {
     handleOrbitalFadeEffect() {
         if (this.fadeInOrbital) {
 
-
             if (this.orbital.alpha <= 0.94){
                 this.orbital.alpha += this.fadeRate; 
-            }
-            else
-                this.fadeInOrbital = false;
-        }
-
-        if (this.fadeOutOrbital) {
-            if (this.orbital.alpha >= 0.06){
-                this.orbital.alpha -= this.fadeRate; 
+                this.pointerLine.alpha -= this.fadeRate;
             }
             else
             {
-                this.orbital.alpha = 0;
+                this.pointerLine.alpha = 0;
+                this.orbital.alpha = 1;
+                this.fadeInOrbital = false;
+            }
+        }
+        else if (this.fadeOutOrbital) {
+            if (this.orbital.alpha >= 0.06){
+                this.orbital.alpha -= this.fadeRate; 
+                this.pointerLine.alpha += this.fadeRate;
+            }
+            else
+            {
+                this.pointerLine.alpha = 1;
+                this.orbital.alpha = 0.00;
                 this.fadeOutOrbital = false;
             }
 
@@ -253,9 +263,8 @@ class Star extends Phaser.Physics.Arcade.Sprite {
 
     updatePointerLine() 
     {
-        // this.pointerLine.rotation = this.trajectory + Math.PI/2;
-        // this.pointerLine.x = this.x;
-        // this.pointerLine.y = this.y;
+        this.pointerLine.rotation = this.trajectory + Math.PI/2;
+        
     }
 
     updatePointerLineSize() 
@@ -402,6 +411,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         this.scene.sound.play('s_hit', {volume: 1});
         this.scene.sound.play('s_blowup', {volume: 1});
         this.orbital.alpha = 1;
+        this.pointerLine.alpha = 0;
 
 
         console.log("index is now " + this.scene.satelliteArrayIndex);
