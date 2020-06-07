@@ -19,7 +19,7 @@ class Title extends Phaser.Scene {
         // this.scene.start("level1Scene");
 
 
-        music = this.sound.add('menu_bgm');
+        music = this.sound.add('menu_bgm', {volume: 0.5});
         music.setLoop(true);
         music.play();
         

@@ -1024,7 +1024,7 @@
         this.scene.time.delayedCall(transitionLength, () => { 
             this.okayToKill = true;
             if (this.isAlive && !this.scene.star.isBouncing && this.orbitalEntered) {
-                this.scene.cameras.main.stopFollow();
+                // this.scene.cameras.main.stopFollow();
                 this.scene.cameras.main.startFollow(this, false, 0.1, 0.1);
             }
             }
