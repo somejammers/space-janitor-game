@@ -55,6 +55,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         this.isSmoothOrbiting = false;
 
         this.totalScaleGained = 0;
+        this.totalPointsGained = this.scene.satellitePointsArray[this.scene.satelliteArrayIndex];
 
         this.scene.backgroundStarSpdX = this.x_velocity/500;
         this.scene.backgroundStarSpdY = this.y_velocity/500;
@@ -331,31 +332,30 @@ class Star extends Phaser.Physics.Arcade.Sprite {
     }
 
     //if original satellite isnt referenced, try pushing into stack in satellite.js
-    growUpdate(satellite, satelliteScale) {
+    growUpdate(satellite, satelliteScale, satelliteIndex) {
         this.scene.star.canLoseSatellite = true;
         this.satellitesCollected++;
         this.satelliteStack.push(satellite);
         this.satelliteScaleStack.push(satelliteScale);
-        this.postGrowthScale = this.Scale + satelliteScale;
+        this.postGrowthScale = this.Scale;
         this.totalScaleGained += satelliteScale;
+        this.totalPointsGained += this.scene.satellitePointsArray[satelliteIndex];
         this.scene.updateUniversalScalar();
 
         // if (!this.orbitalEntered) this.setCameraToStar(this.Scale);//(this.Scale + satelliteScale);
 
-        this.updateSpeed();
-        while (this.Scale >= this.scene.satelliteScaleArray[this.scene.satelliteArrayIndex] * this.scene.universalScalar 
-            && this.scene.satelliteArrayIndex < this.scene.satelliteScaleArray.length - 5) 
+        while (this.totalPointsGained >= this.scene.satellitePointsArray[this.scene.satelliteArrayIndex]
+            && this.scene.satelliteArrayIndex < this.scene.satelliteTextureArray.length - 5) 
         {
             console.log("growing to "+this.scene.satelliteArrayIndex);
             this.scene.satelliteArrayIndex++;
-            
         }
         this.isFlickering = true;
         this.anims.play(this.scene.a_starPC_powerUp_2);
         this.scene.sound.play('s_grow', {volume: 1});
         this.scene.star.chooseBaseAnim();
-        this.scene.updateScreenValues();
-        this.updateSpeed();
+        // this.scene.updateScreenValues();
+        // this.updateSpeed();
         this.scene.updateSatellites(this.Scale, 1); //is it + satelliteScale
     }
 
@@ -456,8 +456,8 @@ class Star extends Phaser.Physics.Arcade.Sprite {
     }
 
     updateSize() {
-        this.radiusWeighted = this.radius * this.Scale;
-        this.setScale(this.Scale);
+        // this.radiusWeighted = this.radius * this.Scale;
+        // this.setScale(this.Scale);
     }
 
     setCameraToStar(postScale) {

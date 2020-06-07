@@ -90,7 +90,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         this.trajectory = 0;
         this.lastTrajectory = 0;
 
-        this.isLargerThanStar = this.scene.star.Scale < this.Scale ? true : false;
+        this.isLargerThanStar = this.scene.star.totalPointsGained < this.scene.satellitePointsArray[this.satelliteIndex] 
 
         
         this.scatterAngle = Math.random() * 2 * Math.PI;
@@ -381,7 +381,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
 
                 this.isCollidable = false;
                 this.scene.collectedSatelliteRadius = this.orbitalRadiusWeighted;
-                this.scene.star.growUpdate(this, this.origScale); //was this.Scale/2
+                this.scene.star.growUpdate(this, this.origScale, this.satelliteIndex); //was this.Scale/2
 
                 this.preStick();
                 
@@ -412,7 +412,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
     
                     this.isCollidable = false;
                     this.scene.collectedSatelliteRadius = this.orbitalRadiusWeighted;
-                    this.scene.star.growUpdate(this, this.origScale); //was this.Scale/2
+                    this.scene.star.growUpdate(this, this.origScale, this.satelliteIndex); //was this.Scale/2
     
                     this.preStick();
                     
@@ -573,7 +573,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         this.orbital.setScale(this.Scale * 2.0 * 0.5);
 
         let currIsLargerThanStar = this.isLargerThanStar;
-        this.isLargerThanStar = this.scene.star.Scale < this.Scale ? true : false;
+        this.isLargerThanStar = this.scene.star.totalPointsGained < this.scene.satellitePointsArray[this.satelliteIndex] ? true : false;
 
         if(currIsLargerThanStar != this.isLargerThanStar) {
 
