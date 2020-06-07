@@ -9,6 +9,8 @@ Simone Barie  - Animation, Art, Sound, & Menu
 
 https://thisisteamswag.github.io/scaleAndDistortionGame/
 
+BUG!!: On newer/powerful devices the game won't play as intended.
+
 //For Team//
 
 instructions to push:

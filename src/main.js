@@ -32,7 +32,7 @@ let config = {
     transparent: true, //removes black background at start
     scale: {
         mode: Phaser.Scale.FIT,
-        //autoCenter: Phaser.Scale.CENTER_BOTH,
+        autoCenter: Phaser.Scale.CENTER_BOTH,
     },
     scene: [ Bootup, Title, Level1, Level2] , //array, order matters
 };
