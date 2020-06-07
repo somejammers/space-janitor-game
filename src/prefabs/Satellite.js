@@ -671,6 +671,7 @@
             this.scene.star.isFlickering = false;
             this.scene.star.fadeInOrbital = false;
             this.scene.star.fadeOutOrbital = true;
+            this.timeSpentInOrbit = 0;
         }
     }
 
@@ -755,7 +756,7 @@
                     
                     this.checkAccidentalLeaving();
 
-                    if (this.distToNextSpot > this.orbitalRadiusWeighted && this.currRotationDuration != 0 && this.prevDistToStar < this.lastDistToStar) {
+                    if (this.distToNextSpot > this.orbitalRadiusWeighted && this.currRotationDuration != 0 && this.prevDistToStar < this.lastDistToStar && this.timeSpentInOrbit < 60) {
                         console.log("accidental");
                         this.currRotationDuration = 90;
                         this.orbitalAccelMod = 90;
@@ -763,6 +764,7 @@
                     }
 
                     this.currRotationDuration ++;
+                    this.timeSpentInOrbit++;
                     this.prevDistToStar = this.lastDistToStar;
 
                 }
