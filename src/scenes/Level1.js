@@ -72,7 +72,7 @@ class Level1 extends Phaser.Scene {
         this.satelliteTextureArray = [
         "debris_apple.png", "debris_ring.png", "debris_pillbottle.png", "debris_banana.png", "debris_donut.png", "debris_tp.png", "debris_sodacan.png", "debris_yarnball.png","debris_rubberduck.png","debris_shoe.png","debris_newspaper.png","debris_fish.png","debris_hotdog.png","debris_hat.png","debris_meat.png","debris_toybunny.png","debris_balloon.png","debris_basketball.png","debris_beachball.png","debris_fishbowl.png","debris_kite.png","debris_computer.png","debris_umbrella.png","debris_couch.png","debris_dumpster.png","debris_rocket.png" ];
         //I think scaling should be d = a + c and have the largest object in tier be 3 ahead. from newspaper i manually balance it
-        this.satelliteScaleArray =   [0.15,     0.25,                    0.4,                 0.6,               0.80,            1,                 1.2,                  1.4,                  1.6,               6.0,                8.0,                10.3];
+        this.satelliteScaleArray = [0.15,     0.2,      0.4,             0.6,               0.80,            1,                 1.2,                  1.6,                  2.0,                       2.5,                3.0,                3.6,              4.2,                 4.8,             5.2];
         this.satelliteArrayIndex = 3; //start at size banana but cant go lower, can see apple, banana, soda, and shoe. scaling is adding last two together. updated upto kite
 
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -148,7 +148,7 @@ class Level1 extends Phaser.Scene {
 
 
         this.cameras.main.setZoom(Math.abs(0.2/(0.15*0.9-(this.satelliteArrayIndex * 0.01))));
-        this.farthestZoomValue = Math.abs(0.2/(this.star.postGrowthScale *1.5)); 
+        this.farthestZoomValue = Math.abs(0.15/(this.star.postGrowthScale *1.5)); //was 0.2, didnt seem to break anythinf but i might be wrong
         this.zoomValue = this.farthestZoomValue;
         //was 0.5+(0.05/this.satelliteScaleArray[this.satelliteArrayIndex + 3]
         //this needs to be based on the zoomout of the highest possible object in the current tier of scale
@@ -225,7 +225,7 @@ class Level1 extends Phaser.Scene {
 //////TEXT////
 
         let fontStyle = { font: "20px Garamond", fill: "#FFFFFF", wordWrap: true, wordWrapWidth: 200, align: "center"};
-        this.instructionsText = this.add.text(this.star.x - 182, this.star.y + 450, "Press SPACE to Orbit & Zoom Out", fontStyle).setScrollFactor(0);
+        this.instructionsText = this.add.text(this.star.x - 182, this.star.y + 450, "Hold SPACE to Orbit & Zoom Out", fontStyle).setScrollFactor(0);
         this.instructionsText.setDepth(11);
     
 //////SHADOW EFFECT///
@@ -236,6 +236,10 @@ class Level1 extends Phaser.Scene {
         this.shadowStarTimer = 1;
         this.shadowStarRate = 6;
 
+        // this.testBox = this.add.rectangle(this.cameras.main.width/2, this.cameras.main.height/2, 100, 100, 0xFFFFFF);
+        // this.testBox.setDepth(13);
+
+
     }
 
     update() {
@@ -244,6 +248,7 @@ class Level1 extends Phaser.Scene {
         this.cameras.main.setBackgroundColor(hexColor);
         // console.log(hexColor);
         this.changeBackgroundColor();
+
 
         // if(keySPACE.isDown) this.cameras.main.zoomTo( 0.3, 1000, 'Sine.easeInOut');
         //update bg size
@@ -407,6 +412,8 @@ class Level1 extends Phaser.Scene {
     }
     
     saveStrandedStar() {
+
+        console.log("saving");
         if (!this.star.orbitalEntered) this.star.cameraSetBool = true;
 
         // let the final in normalize() params denote how far the satellite is from the star
@@ -415,8 +422,8 @@ class Level1 extends Phaser.Scene {
         let savingSatelliteY = this.star.y + normVel[1];
 
         //now offset it on either side of the star
-        let scale = this.satelliteScaleArray[this.satelliteArrayIndex + 2];
-        let orbitalRadius = 150 * scale * 2.0;
+        let scale = this.satelliteScaleArray[this.satelliteArrayIndex + 1];
+        let orbitalRadius = 300 * scale * 2.0 * 0.5;
 
         let signPicker = Math.random();
         let sign;
@@ -425,7 +432,7 @@ class Level1 extends Phaser.Scene {
         //perpendicular
         let landingSpotX = savingSatelliteX;
         let landingSpotY = savingSatelliteY;
-        let normOffset = this.normalize(-this.star.x_velocity, -this.star.y_velocity, orbitalRadius / 1.5);
+        let normOffset = this.normalize(-this.star.x_velocity, -this.star.y_velocity, orbitalRadius / 2);
         
         savingSatelliteX += -sign * normOffset[0];
         savingSatelliteY += sign * normOffset[1];
@@ -433,7 +440,7 @@ class Level1 extends Phaser.Scene {
         if (this.killOverlappingSatellites(savingSatelliteX, savingSatelliteY, orbitalRadius) )
         {
             
-            this.createSatellite(savingSatelliteX, savingSatelliteY, this.satelliteArrayIndex + 2, landingSpotX, landingSpotY);
+            this.createSatellite(savingSatelliteX, savingSatelliteY, this.satelliteArrayIndex + 1, landingSpotX, landingSpotY);
 
         }
 
@@ -589,12 +596,12 @@ class Level1 extends Phaser.Scene {
 
             this.createBackgroundStar(backgroundStarX, backgroundStarY, "BackgroundStar", backgroundStarScale);
 
-            // backgroundStarX = Math.floor(Math.random() * (x2 - x1)) + x1;
-            // backgroundStarY = Math.floor(Math.random() * (y2 - y1)) + y1;
+            backgroundStarX = Math.floor(Math.random() * (x2 - x1)) + x1;
+            backgroundStarY = Math.floor(Math.random() * (y2 - y1)) + y1;
 
-            // backgroundStarScale = Math.random() * this.star.Scale + this.star.Scale/2 + 0.01;
+            backgroundStarScale = Math.random() * this.star.Scale + this.star.Scale/2 + 0.01;
 
-            // this.createBackgroundStar(backgroundStarX, backgroundStarY, "BackgroundStar", backgroundStarScale);
+            this.createBackgroundStar(backgroundStarX, backgroundStarY, "BackgroundStar", backgroundStarScale);
 
             this.screenXonLastSatSpawn = this.screenXcurrent;
             this.screenYonLastSatSpawn = this.screenYcurrent;
@@ -671,6 +678,7 @@ class Level1 extends Phaser.Scene {
         this.killingSatellites = true;
         this.time.delayedCall(200, () => {
             this.killingSatellites = false;
+            this.saveStrandedStar();
         });
     }
 

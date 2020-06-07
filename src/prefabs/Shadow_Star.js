@@ -7,11 +7,11 @@ class Shadow_Star extends Phaser.GameObjects.Sprite {
 
             this.rotation = rotation;
 
-            this.alpha = 0.5;
+            this.alpha = 0.7;
 
             this.scale = scale;
 
-            this.fadeRate = 0.015;
+            this.fadeRate = 0.013;
 
             this.setDepth(5);
 

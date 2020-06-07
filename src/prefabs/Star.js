@@ -94,7 +94,12 @@ class Star extends Phaser.Physics.Arcade.Sprite {
 
         this.zoomTimerThresh = 75;
 
-        
+        this.camDirFromSatX = 0;
+        this.camDirFromSatY = 0;
+        this.camDirFromSatXDropoff = 0;
+        this.camDirFromSatYDropoff = 0;
+        this.camDirOffsetCounter = 1;
+        this.camDirOffsetThresh = 60;
     }
 
     update() {
@@ -180,6 +185,8 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         this.handleOrbitalFadeEffect();
 
         this.flickerSize();
+
+        this.activateStartFollowing();
 
     }
 
@@ -336,9 +343,10 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         // if (!this.orbitalEntered) this.setCameraToStar(this.Scale);//(this.Scale + satelliteScale);
 
         this.updateSpeed();
-        while (this.Scale+satelliteScale >= this.scene.satelliteScaleArray[this.scene.satelliteArrayIndex] 
+        while (this.Scale >= this.scene.satelliteScaleArray[this.scene.satelliteArrayIndex] * this.scene.universalScalar 
             && this.scene.satelliteArrayIndex < this.scene.satelliteScaleArray.length - 5) 
         {
+            console.log("growing to "+this.scene.satelliteArrayIndex);
             this.scene.satelliteArrayIndex++;
             
         }
@@ -370,26 +378,26 @@ class Star extends Phaser.Physics.Arcade.Sprite {
             this.scene.updateUniversalScalar();
 
             //this while loop was outside of this if before, if it crashes put i tback
-            while (this.Scale < this.scene.satelliteScaleArray[this.scene.satelliteArrayIndex] 
-                && this.scene.satelliteArrayIndex > 3) 
-            {  
-             this.scene.satelliteArrayIndex--;
-             console.log("shrinking index to "+this.scene.satelliteArrayIndex);
+            // while (this.Scale < this.scene.satelliteScaleArray[this.scene.satelliteArrayIndex] * this.scene.universalScalar 
+            //     && this.scene.satelliteArrayIndex > 3) 
+            // {  
+            //  this.scene.satelliteArrayIndex--;
+            //  console.log("shrinking index to "+this.scene.satelliteArrayIndex);
  
              
-             this.updateSpeed();
-             //do anim here and delay kill                
+            //  this.updateSpeed();
+            //  //do anim here and delay kill                
 
-             this.scene.time.delayedCall(500, () => { 
+            //  this.scene.time.delayedCall(500, () => { 
 
                  this.orbitalEntered = false;
                 //  this.scene.cameras.main.flash(3000);
                  this.orbitalAccelMod = this.orbitalAccelModDefault;
-                    this.setCameraToStar(this.scene.star.Scale);
-                    this.updateBackgroundScroll();
-                    this.cameraSetBool = true;
-             });
-            }
+                this.setCameraToStar(this.scene.star.Scale);
+                this.updateBackgroundScroll();
+                this.cameraSetBool = true;
+            //  });
+            // }
             this.scene.updateScreenValues();
 
             this.scene.updateSatellites(this.Scale, 0);
@@ -461,13 +469,13 @@ class Star extends Phaser.Physics.Arcade.Sprite {
             this.scene.cameras.main.panEffect.reset(); //this doesn't work apparently
             ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     
-            this.scene.cameras.main.startFollow(this, true, 1, 1); 
+            //this.scene.cameras.main.startFollow(this, true, 1, 1); 
     
             this.cameraSetBool = true;
     
             this.scene.cameras.main.zoomEffect.reset();
-            this.scene.zoomValue = Math.abs(0.2/(0.4*0.9-(this.scene.satelliteArrayIndex * 0.01)));
-            this.scene.cameras.main.zoomTo(Math.abs(0.2/(0.4*0.9-(this.scene.satelliteArrayIndex * 0.01))), 1000, 'Sine.easeInOut');
+            this.scene.zoomValue = Math.abs(0.2/(0.4*0.9));
+            this.scene.cameras.main.zoomTo(Math.abs(0.2/(0.4*0.9)), 1000, 'Sine.easeInOut');
 
 
             this.lastCamWasZoomedIn = true;
@@ -483,13 +491,14 @@ class Star extends Phaser.Physics.Arcade.Sprite {
                 this.scene.cameras.main.panEffect.reset(); //this doesn't work apparently
                 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         
-                this.scene.cameras.main.startFollow(this, true, 1, 1); //https://rexrainbow.github.io/phaser3-rex-notes/docs/site/camera/
-        
+                //instead turn on a bool that turns on an update() func that does startfollow w the offset
+                //this.scene.cameras.main.startFollow(this, true, 1, 1); //https://rexrainbow.github.io/phaser3-rex-notes/docs/site/camera/
+         
                 this.cameraSetBool = true;
                 
                 this.scene.cameras.main.zoomEffect.reset();
-                this.scene.zoomValue = Math.abs(0.2/(0.15*0.9-(this.scene.satelliteArrayIndex * 0.01)));
-                this.scene.cameras.main.zoomTo(Math.abs(0.2/(0.15*0.9-(this.scene.satelliteArrayIndex * 0.01))), 1500, 'Sine.easeInOut');
+                this.scene.zoomValue = Math.abs(0.2/(0.15*0.9));
+                this.scene.cameras.main.zoomTo(Math.abs(0.2/(0.15*0.9)), 1500, 'Sine.easeInOut');
 
                 this.lastCamWasZoomedIn = false;
             }
@@ -499,6 +508,18 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //ACCESSING SPECIFIC MEMBERS/METHODS FROM A PHASER CLASS, 
         //https://photonstorm.github.io/phaser3-docs/Phaser.Cameras.Scene2D.Camera.html#shakeEffect__anchor
+        }
+    }
+
+    activateStartFollowing() {
+        //needa reset camdirFormsatX when entering another satellite
+        if (this.cameraSetBool) {
+            if (this.camDirOffsetCounter <= this.camDirOffsetThresh){
+                this.camDirFromSatX -= this.camDirFromSatXDropoff;
+                this.camDirFromSatY -= this.camDirFromSatYDropoff;
+                this.camDirOffsetCounter++;
+            }
+            this.scene.cameras.main.startFollow(this, true, 1, 1, this.camDirFromSatX, this.camDirFromSatY); //https://rexrainbow.github.io/phaser3-rex-notes/docs/site/camera/
         }
     }
 }
