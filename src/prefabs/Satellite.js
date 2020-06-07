@@ -131,6 +131,8 @@
 
         // this.pan = this.scene.cameras.add(this.x, this.y, 4000, 'Power2');
         // this.panFX = new PanFX(this.scene.cameras.main);
+
+        this.prevDistToStar = 0;
     }
 
     update() {
@@ -682,7 +684,6 @@
         );
 
         let nextSpot = this.normalize(this.scene.star.x_velocity, this.scene.star.y_velocity, this.speedByDelta);
-        console.log(nextSpot[0] +" and "+nextSpot[1]);
         nextSpot[0] = this.scene.star.x - nextSpot[0];
         nextSpot[1] = this.scene.star.y - nextSpot[1];
 
@@ -691,7 +692,6 @@
             +
             (this.y - nextSpot[1]) * (this.y - nextSpot[1])
         );
-        console.log(this.distToNextSpot +" and "+this.orbitalRadiusWeighted);
     }
 
     orbitalRotation() {
@@ -755,14 +755,15 @@
                     
                     this.checkAccidentalLeaving();
 
-                    if (this.distToNextSpot - this.scene.star.orbitalRadiusWeighted > this.orbitalRadiusWeighted) {
+                    if (this.distToNextSpot > this.orbitalRadiusWeighted && this.currRotationDuration != 0 && this.prevDistToStar < this.lastDistToStar) {
                         console.log("accidental");
-                        this.currRotationDuration = 89;
+                        this.currRotationDuration = 90;
                         this.orbitalAccelMod = 90;
-                        // this.canReEnterSmoothOrbit = true;
+                        this.canReEnterSmoothOrbit = true;
                     }
 
                     this.currRotationDuration ++;
+                    this.prevDistToStar = this.lastDistToStar;
 
                 }
                 else if (this.canReEnterSmoothOrbit)

@@ -337,12 +337,9 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         this.scene.star.canLoseSatellite = true;
         this.satellitesCollected++;
         this.satelliteStack.push(satellite);
-        this.satelliteScaleStack.push(satelliteScale);
+        this.satelliteScaleStack.push(satelliteScale/4);
         this.postGrowthScale = this.Scale + satelliteScale;
-        if (satelliteScale > 1)
-            this.totalScaleGained += Math.sqrt(satelliteScale);
-        else 
-            this.totalScaleGained += satelliteScale;
+        this.totalScaleGained += (satelliteScale)/4;
 
         this.scene.updateUniversalScalar();
 

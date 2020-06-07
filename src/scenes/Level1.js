@@ -297,7 +297,6 @@ class Level1 extends Phaser.Scene {
         this.resetTimer++;
         if (this.isStrandedTicking) this.strandedTimer ++;
         if (this.strandedTimer > this.strandedEventTime) {
-            this.strandedTimer = 0;
             this.resetTimer = 0;
             this.strandedEventTimeLoop = 120 + 30 * this.satelliteArrayIndex;
             this.strandedEventTime = this.strandedEventTimeLoop;
@@ -440,11 +439,11 @@ class Level1 extends Phaser.Scene {
         savingSatelliteX += -sign * normOffset[0];
         savingSatelliteY += sign * normOffset[1];
 
-        if (this.killOverlappingSatellites(savingSatelliteX, savingSatelliteY, orbitalRadius) )
+        if (this.checkLocationValidity(savingSatelliteX, savingSatelliteY, this.satelliteArrayIndex+2 ))
         {
             
             this.createSatellite(savingSatelliteX, savingSatelliteY, this.satelliteArrayIndex + 2, landingSpotX, landingSpotY);
-
+            this.strandedTimer = 0;
         }
 
     }
