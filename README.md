@@ -1,4 +1,11 @@
-Theme: Scale and Distortion
+SPACE JANITOR
+Team Swag's CMPM/ARTG 120 Game, Spring 2020
+Given Theme: Scale and Distortion
+
+Credits:
+Ari Iramanesh - Concept, Gameplay, & Programming
+Aurelia Swift - Animation & Art
+Simone Barie  - Animation, Art, Sound, & Menu
 
 https://thisisteamswag.github.io/scaleAndDistortionGame/
 

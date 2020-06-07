@@ -15,13 +15,13 @@ class Title extends Phaser.Scene {
 
         ///For Debug
 
-        this.scene.stop("titleScene");
-        this.scene.start("level1Scene");
+        // this.scene.stop("titleScene");
+        // this.scene.start("level1Scene");
 
 
         var music = this.sound.add('menu_bgm');
         music.setLoop(true);
-        //music.play();
+        music.play();
 
         
         
