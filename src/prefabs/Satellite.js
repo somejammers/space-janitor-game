@@ -1,5 +1,5 @@
  //check the strata values again , compare them with the orbital rotation.
-class Satellite extends Phaser.Physics.Arcade.Sprite {
+ class Satellite extends Phaser.Physics.Arcade.Sprite {
     constructor(
         scene, x_pos, y_pos, scale, texture, satelliteIndex, frame
         ) {
@@ -90,7 +90,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         this.trajectory = 0;
         this.lastTrajectory = 0;
 
-        this.isLargerThanStar = this.scene.star.totalPointsGained < this.scene.satellitePointsArray[this.satelliteIndex] 
+        this.isLargerThanStar = this.scene.star.Scale < this.Scale ? true : false;
 
         
         this.scatterAngle = Math.random() * 2 * Math.PI;
@@ -381,7 +381,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
 
                 this.isCollidable = false;
                 this.scene.collectedSatelliteRadius = this.orbitalRadiusWeighted;
-                this.scene.star.growUpdate(this, this.origScale, this.satelliteIndex); //was this.Scale/2
+                this.scene.star.growUpdate(this, this.origScale); //was this.Scale/2
 
                 this.preStick();
                 
@@ -412,7 +412,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
     
                     this.isCollidable = false;
                     this.scene.collectedSatelliteRadius = this.orbitalRadiusWeighted;
-                    this.scene.star.growUpdate(this, this.origScale, this.satelliteIndex); //was this.Scale/2
+                    this.scene.star.growUpdate(this, this.origScale); //was this.Scale/2
     
                     this.preStick();
                     
@@ -573,7 +573,7 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         this.orbital.setScale(this.Scale * 2.0 * 0.5);
 
         let currIsLargerThanStar = this.isLargerThanStar;
-        this.isLargerThanStar = this.scene.star.totalPointsGained < this.scene.satellitePointsArray[this.satelliteIndex] ? true : false;
+        this.isLargerThanStar = this.scene.star.Scale < this.Scale ? true : false;
 
         if(currIsLargerThanStar != this.isLargerThanStar) {
 
@@ -672,6 +672,28 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         }
     }
 
+    checkAccidentalLeaving() {
+        let deltaX = this.scene.star.body.deltaXFinal();
+        let deltaY = this.scene.star.body.deltaYFinal();
+        
+        this.speedByDelta = Math.sqrt(
+            (deltaX * deltaX) +
+            (deltaY * deltaY)
+        );
+
+        let nextSpot = this.normalize(this.scene.star.x_velocity, this.scene.star.y_velocity, this.speedByDelta);
+        console.log(nextSpot[0] +" and "+nextSpot[1]);
+        nextSpot[0] = this.scene.star.x - nextSpot[0];
+        nextSpot[1] = this.scene.star.y - nextSpot[1];
+
+        this.distToNextSpot = Math.sqrt(
+            (this.x - nextSpot[0]) * (this.x - nextSpot[0])
+            +
+            (this.y - nextSpot[1]) * (this.y - nextSpot[1])
+        );
+        console.log(this.distToNextSpot +" and "+this.orbitalRadiusWeighted);
+    }
+
     orbitalRotation() {
         // console.log(this.scene.star.speedMod);
 
@@ -731,6 +753,15 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
                         (this.scene.star.y_velocity * this.scene.star.y_velocity)
                     );
                     
+                    this.checkAccidentalLeaving();
+
+                    if (this.distToNextSpot - this.scene.star.orbitalRadiusWeighted > this.orbitalRadiusWeighted) {
+                        console.log("accidental");
+                        this.currRotationDuration = 89;
+                        this.orbitalAccelMod = 90;
+                        // this.canReEnterSmoothOrbit = true;
+                    }
+
                     this.currRotationDuration ++;
 
                 }
@@ -987,7 +1018,6 @@ class Satellite extends Phaser.Physics.Arcade.Sprite {
         this.scene.time.delayedCall(transitionLength, () => { 
             this.okayToKill = true;
             if (this.isAlive && !this.scene.star.isBouncing && this.orbitalEntered) {
-                console.log("OK");
                 this.scene.cameras.main.stopFollow();
                 this.scene.cameras.main.startFollow(this, false, 0.1, 0.1);
             }
