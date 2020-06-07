@@ -37,63 +37,63 @@ class BackgroundStar extends Phaser.GameObjects.Sprite {
         }
 
         preChangeSizeGradually(sizeDir) {
-            //run this fater you update the universalScalar
-            this.targetSize = this.scene.universalScalar * this.origScale;
-            // sizeDir 1 means star increasing, 0 is decreasing
-            if (sizeDir == 1) 
-            {
-                this.isDecreasingSize = 1;
-                this.isIncreasingSize = 0;
-            }
-            else 
-            {
-                this.isIncreasingSize = 1;
-                this.isDecreasingSize = 0;
-            }
+            // //run this fater you update the universalScalar
+            // this.targetSize = this.scene.universalScalar * this.origScale;
+            // // sizeDir 1 means star increasing, 0 is decreasing
+            // if (sizeDir == 1) 
+            // {
+            //     this.isDecreasingSize = 1;
+            //     this.isIncreasingSize = 0;
+            // }
+            // else 
+            // {
+            //     this.isIncreasingSize = 1;
+            //     this.isDecreasingSize = 0;
+            // }
     
-            this.dirToStarX = this.scene.star.x - this.x;
-            this.dirToStarY = this.scene.star.y - this.y;
+            // this.dirToStarX = this.scene.star.x - this.x;
+            // this.dirToStarY = this.scene.star.y - this.y;
 
-            this.sizeRate = Math.abs(this.targetSize - this.Scale) / 50;
+            // this.sizeRate = Math.abs(this.targetSize - this.Scale) / 50;
 
-            this.perspectiveMovementRate = this.sizeRate * this.lengthWeighted * 5;
+            // this.perspectiveMovementRate = this.sizeRate * this.lengthWeighted * 5;
 
-            this.dirToStarVec = this.normalize(this.dirToStarX, this.dirToStarY, this.perspectiveMovementRate);
+            // this.dirToStarVec = this.normalize(this.dirToStarX, this.dirToStarY, this.perspectiveMovementRate);
     
         }
     
         changeSizeGradually() {
-            if (this.isIncreasingSize == 1) {
-                //star is "decreasing" size
-                if (this.targetSize >= this.Scale) {
-                    this.Scale += this.sizeRate;
+            // if (this.isIncreasingSize == 1) {
+            //     //star is "decreasing" size
+            //     if (this.targetSize >= this.Scale) {
+            //         this.Scale += this.sizeRate;
                     
-                    // this.setScale(this.Scale);
+            //         // this.setScale(this.Scale);
 
-                }
-                else 
-                {
-                    this.isIncreasingSize = 0;
-                }
-            }
-            if (this.isDecreasingSize == 1) {
+            //     }
+            //     else 
+            //     {
+            //         this.isIncreasingSize = 0;
+            //     }
+            // }
+            // if (this.isDecreasingSize == 1) {
 
-                this.dirToStarX = this.scene.star.x - this.x;
-                this.dirToStarY = this.scene.star.y - this.y;
-                this.dirToStarVec = this.normalize(this.dirToStarX, this.dirToStarY, this.perspectiveMovementRate);
+            //     this.dirToStarX = this.scene.star.x - this.x;
+            //     this.dirToStarY = this.scene.star.y - this.y;
+            //     this.dirToStarVec = this.normalize(this.dirToStarX, this.dirToStarY, this.perspectiveMovementRate);
 
-                if (this.targetSize <= this.Scale) {
-                    this.Scale -= this.sizeRate;
-                    this.setScale(this.Scale);
+            //     if (this.targetSize <= this.Scale) {
+            //         this.Scale -= this.sizeRate;
+            //         this.setScale(this.Scale);
 
-                    this.x += this.dirToStarVec[0];
-                    this.y += this.dirToStarVec[1];
-                }
-                else
-                {
-                    this.isDecreasingSize = 0;
-                }
-            }
+            //         this.x += this.dirToStarVec[0];
+            //         this.y += this.dirToStarVec[1];
+            //     }
+            //     else
+            //     {
+            //         this.isDecreasingSize = 0;
+            //     }
+            // }
             
         }
 
@@ -120,7 +120,7 @@ class BackgroundStar extends Phaser.GameObjects.Sprite {
                 let results = [normX * mod, normY * mod];
                 return results;
             }
-            return 0;
+            return [0, 0];
         }
 
         updateSize()

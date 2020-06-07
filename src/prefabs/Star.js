@@ -337,9 +337,14 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         this.scene.star.canLoseSatellite = true;
         this.satellitesCollected++;
         this.satelliteStack.push(satellite);
-        this.satelliteScaleStack.push(satelliteScale/4);
-        this.postGrowthScale = this.Scale + satelliteScale;
-        this.totalScaleGained += (satelliteScale)/4;
+
+        let scaleToAdd;
+        if (satelliteScale > 6.6) scaleToAdd = satelliteScale/4;
+            else scaleToAdd = satelliteScale/2;
+
+        this.satelliteScaleStack.push(scaleToAdd);
+        // this.postGrowthScale = this.Scale + satelliteScale;
+        this.totalScaleGained += scaleToAdd;
 
         this.scene.updateUniversalScalar();
 
@@ -373,7 +378,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
             lostSatellite.isOrbitingStar = false;
             // this.Scale -= this.satelliteScaleStack.pop();
             // if (this.Scale < this.defaultScale) this.Scale = this.defaultScale;
-            this.postGrowthScale = this.Scale;
+            // this.postGrowthScale = this.Scale;
             this.updateSize();
             // this.scene.universalScalar /= this.satelliteScaleStack.pop();
             this.totalScaleGained -= this.satelliteScaleStack.pop();

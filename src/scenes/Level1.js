@@ -72,8 +72,8 @@ class Level1 extends Phaser.Scene {
         this.satelliteTextureArray = [
         "debris_apple.png", "debris_ring.png", "debris_pillbottle.png", "debris_banana.png", "debris_donut.png", "debris_tp.png", "debris_sodacan.png", "debris_yarnball.png","debris_rubberduck.png","debris_shoe.png","debris_newspaper.png","debris_fish.png","debris_hotdog.png","debris_hat.png","debris_meat.png","debris_toybunny.png","debris_balloon.png","debris_basketball.png","debris_beachball.png","debris_fishbowl.png","debris_kite.png","debris_computer.png","debris_umbrella.png","debris_couch.png","debris_dumpster.png","debris_rocket.png" ];
         //I think scaling should be d = a + c and have the largest object in tier be 3 ahead. from newspaper i manually balance it
-        this.satelliteScaleArray = [0.15,     0.2,      0.4,             0.6,               0.80,            1,                 1.2,                  1.6,                  2.0,                       2.5,                3.0,                3.6,              4.2,                 4.8,             5.6,             6.3,                  7.1,                 7.9,                     8.8];
-        this.satelliteArrayIndex = 2; //start at size banana but cant go lower, can see apple, banana, soda, and shoe. scaling is adding last two together. updated upto kite
+        this.satelliteScaleArray = [0.24,     0.24,      0.4,             0.6,               0.80,            1,                 1.2,                  1.6,                  2.0,                       2.5,                3.2,                4.0,              4.8,                 5.7,             6.6,             6.6,                  7.8,                 9.0,                     10.2,                  10.6,                  11.1,             12.5,                 14.1,                 15.6,             17.4,                  30.1];
+        this.satelliteArrayIndex = 3; //start at size banana but cant go lower, can see apple, banana, soda, and shoe. scaling is adding last two together. updated upto kite
 
         keySPACE = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
 
@@ -89,7 +89,7 @@ class Level1 extends Phaser.Scene {
         
         this.star.anims.play(this.a_starPC_normal);
         this.star.startSpeeding();
-        this.star.zoomTimer = 90;
+        this.star.zoomTimer = 75;
         
         this.satelliteGroup = this.add.group({
             runChildUpdate: true
@@ -205,7 +205,7 @@ class Level1 extends Phaser.Scene {
 // https://rexrainbow.github.io/phaser3-rex-notes/docs/site/color/
         this.colorIndex = 1;
         this.isColorIndexIncreasing = true;
-        this.backgroundColorArray = ['#4E007A', '#4F2593', '#3A3CBB', '#2C73C9', '#21AAD4', '#34D5D5'];
+        this.backgroundColorArray = ['#3c249c', '#8b4e95', '#dac0ff', '#9f81e1', '#6a5cc3', '#5b4cb1'];
         this.color1Value = this.backgroundColorArray[0];
         this.color2Value = this.backgroundColorArray[3];
         this.color1Object = Phaser.Display.Color.HexStringToColor(this.color1Value);
@@ -240,6 +240,7 @@ class Level1 extends Phaser.Scene {
         // this.testBox = this.add.rectangle(this.cameras.main.width/2, this.cameras.main.height/2, 100, 100, 0xFFFFFF);
         // this.testBox.setDepth(13);
 
+        this.gameBegan = false;
 
     }
 
@@ -290,13 +291,13 @@ class Level1 extends Phaser.Scene {
 
         this.calculateScreenOffset();
 
-        if (this.offsetVolume > this.volThreshold && this.star.cameraSetBool) {
+        if (this.offsetVolume > this.volThreshold && this.star.cameraSetBool && this.gameBegan) {
             this.generateSatellite();
         }
 
         this.resetTimer++;
         if (this.isStrandedTicking) this.strandedTimer ++;
-        if (this.strandedTimer > this.strandedEventTime) {
+        if (this.strandedTimer > this.strandedEventTime && this.gameBegan) {
             this.resetTimer = 0;
             this.strandedEventTimeLoop = 120 + 30 * this.satelliteArrayIndex;
             this.strandedEventTime = this.strandedEventTimeLoop;
@@ -340,7 +341,9 @@ class Level1 extends Phaser.Scene {
     }
 
     fadeFont() {
+
         if (this.isFadingFont) {
+            this.gameBegan = true;
             if (this.instructionsText.alpha > 0) {
                 this.instructionsText.alpha -= 0.1;
             }
@@ -357,7 +360,7 @@ class Level1 extends Phaser.Scene {
     changeBackgroundColor() {
         if (this.isColorIndexIncreasing) 
         {
-            this.colorIndex += 0.5;
+            this.colorIndex += 0.3;
             
             if (this.colorIndex >= 100 ) {
                 this.isColorIndexIncreasing = false;
@@ -366,7 +369,7 @@ class Level1 extends Phaser.Scene {
         }
         else
         {
-            this.colorIndex -= 0.5;
+            this.colorIndex -= 0.3;
             
             if (this.colorIndex <= 0 ) {
                 this.isColorIndexIncreasing = true;
@@ -535,7 +538,7 @@ class Level1 extends Phaser.Scene {
 
         //pick the satellite
 
-        let indexMin = this.satelliteArrayIndex - 2;
+        let indexMin = this.satelliteArrayIndex - 3;
         let indexMax = this.satelliteArrayIndex + 4;
 
         let satelliteIndex = Phaser.Math.Between(indexMin, indexMax);
@@ -598,12 +601,12 @@ class Level1 extends Phaser.Scene {
 
             this.createBackgroundStar(backgroundStarX, backgroundStarY, "BackgroundStar", backgroundStarScale);
 
-            // backgroundStarX = Math.floor(Math.random() * (x2 - x1)) + x1;
-            // backgroundStarY = Math.floor(Math.random() * (y2 - y1)) + y1;
+            backgroundStarX = Math.floor(Math.random() * (x2 - x1)) + x1;
+            backgroundStarY = Math.floor(Math.random() * (y2 - y1)) + y1;
 
-            // backgroundStarScale = Math.random() * this.star.Scale + this.star.Scale/2 + 0.01;
+            backgroundStarScale = Math.random() * this.star.Scale + this.star.Scale/2 + 0.01;
 
-            // this.createBackgroundStar(backgroundStarX, backgroundStarY, "BackgroundStar", backgroundStarScale);
+            this.createBackgroundStar(backgroundStarX, backgroundStarY, "BackgroundStar", backgroundStarScale);
 
             this.screenXonLastSatSpawn = this.screenXcurrent;
             this.screenYonLastSatSpawn = this.screenYcurrent;

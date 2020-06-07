@@ -47,17 +47,19 @@
         this.satelliteIndex = satelliteIndex;
         // CHANGE BOTH BASED ON STAR INDEX
          //update this every growth
-        if (this.satelliteIndex > this.scene.satelliteArrayIndex){
-            this.orbitalAccelModDefault =  0.07 - (0.055/4 * ( this.satelliteIndex - this.scene.satelliteArrayIndex)); //0.1 when largest possible, 0.2, 
-            // console.log(this.satelliteIndex - this.scene.satelliteArrayIndex);
-        }
-        else    
-            this.orbitalAccelModDefault = 7;
+        // if (this.satelliteIndex > this.scene.satelliteArrayIndex){
+        //     this.orbitalAccelModDefault =  0.08 - (0.055/4 * ( this.satelliteIndex - this.scene.satelliteArrayIndex)); //0.1 when largest possible, 0.2, 
+        //     // console.log(this.satelliteIndex - this.scene.satelliteArrayIndex);
+        // }
+        // else    
+        //     this.orbitalAccelModDefault = 7;
+
+        this.orbitalAccelModDefault = 2400 * (1/Math.pow(this.orbitalRadiusWeighted, 1.5));//90 * (1/Math.pow(this.orbitalRadiusWeighted, 1.6));
 
         // this.orbitalAccelMod *= 170 * Math.pow(1+this.postGrowthScale,1.4);
         
             //i wanna make this higher but lower scaling. started at 0.065. this should start higher w smaller satellites
-        this.orbitalAccelModScaling = 1.25 - 0.04 * (this.satelliteIndex - this.scene.satelliteArrayIndex); //increase this asa a whole, reduce with incresaing scale diff
+        this.orbitalAccelModScaling = 1.15;//1.25 - 0.03 * (this.satelliteIndex - this.scene.satelliteArrayIndex); //increase this asa a whole, reduce with incresaing scale diff
         this.orbitalAccelMod = this.orbitalAccelModDefault;
         this.orbitalAccelModLeaving = 4;
         this.canReEnterSmoothOrbit = true;
@@ -207,7 +209,7 @@
         if(!this.isAttachedToStar)
             this.targetSize = this.scene.universalScalar * this.origScale;
         else
-            this.targetSize = (Math.sqrt(this.scene.universalScalar)) * this.origScale;
+            this.targetSize = this.universalScalar*2 * this.origScale;
         // sizeDir 1 means star increasing, 0 is decreasing
         if (sizeDir == 1) 
         {
@@ -619,8 +621,8 @@
         }
         else 
         {
-            this.orbitalBody.setEnable(false);
-            this.orbital.setVisible(false);
+            // this.orbitalBody.setEnable(false);
+            // this.orbital.setVisible(false);
         }
     }
 
@@ -756,7 +758,7 @@
                     
                     this.checkAccidentalLeaving();
 
-                    if (this.distToNextSpot > this.orbitalRadiusWeighted && this.currRotationDuration != 0 && this.prevDistToStar < this.lastDistToStar && this.timeSpentInOrbit < 60) {
+                    if (this.distToNextSpot > this.orbitalRadiusWeighted && this.currRotationDuration != 0 && this.prevDistToStar < this.lastDistToStar && this.timeSpentInOrbit < 40) {
                         console.log("accidental");
                         this.currRotationDuration = 90;
                         this.orbitalAccelMod = 90;
@@ -889,7 +891,8 @@
 
                 if (this.distToStar - this.scene.star.radiusWeighted > this.orbitalRadiusWeighted) {
                     // imerhis.canReEnterOrbit = false;       
-                    this.orbitalAccelMod = this.orbitalAccelModDefault;this.orbitalEntered = false;
+                    this.orbitalAccelMod = this.orbitalAccelModDefault;
+                    this.orbitalEntered = false;
                     this.orbitalBody.setEnable(true);
                     this.canStopOrbiting = false;
                     this.currRotationDuration = 0;
