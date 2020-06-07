@@ -1,5 +1,5 @@
 SPACE JANITOR  
-Team Swag's CMPM/ARTG 120 Game, Spring 2020  
+Team Swag's CMPM/ARTG 120 Final Game, Spring 2020  
 Given Theme: Scale and Distortion  
 
 Credits:
