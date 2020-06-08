@@ -354,7 +354,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         while (this.Scale >= this.scene.satelliteScaleArray[this.scene.satelliteArrayIndex] * this.scene.universalScalar 
             && this.scene.satelliteArrayIndex < this.scene.satelliteScaleArray.length - 5) 
         {
-            console.log("growing to "+this.scene.satelliteArrayIndex);
+            // console.log("growing to "+this.scene.satelliteArrayIndex);
             this.scene.satelliteArrayIndex++;
             
         }
@@ -427,7 +427,7 @@ class Star extends Phaser.Physics.Arcade.Sprite {
         this.pointerLine.alpha = 0;
 
 
-        console.log("index is now " + this.scene.satelliteArrayIndex);
+        // console.log("index is now " + this.scene.satelliteArrayIndex);
         
         //if scale goes lower than the current object scale at index, drop index by 1 and check again
         // this.updatePointerLineSize();

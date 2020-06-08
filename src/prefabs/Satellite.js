@@ -337,7 +337,7 @@
         {
             if (this.isLargerThanStar) 
             {
-                console.log("is larger");
+                // console.log("is larger");
                 //turn this back on when bounce has completed
                 this.scene.star.orbitalEntered = false;
                 this.isCollidable = false;
@@ -431,7 +431,7 @@
         {
             if (this.isLargerThanStar) 
             {
-                console.log("is larger");
+                // console.log("is larger");
                 //turn this back on when bounce has completed
                 this.scene.star.orbitalEntered = false;
                 this.isCollidable = false;
@@ -652,7 +652,7 @@
                 (this.y - this.scene.star.y) * (this.y - this.scene.star.y)
             );
 
-            console.log("entered");
+            // console.log("entered");
             this.scene.strandedTimer = 0;
             this.scene.isStrandedTicking = false;
             this.findClockRotation();
@@ -759,7 +759,7 @@
                     this.checkAccidentalLeaving();
 
                     if (this.distToNextSpot > this.orbitalRadiusWeighted && this.currRotationDuration != 0 && this.prevDistToStar < this.lastDistToStar && this.timeSpentInOrbit < 40) {
-                        console.log("accidental");
+                        // console.log("accidental");
                         this.currRotationDuration = 90;
                         this.orbitalAccelMod = 90;
                         this.canReEnterSmoothOrbit = true;

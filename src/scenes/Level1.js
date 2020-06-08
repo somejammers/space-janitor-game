@@ -307,7 +307,6 @@ class Level1 extends Phaser.Scene {
 
         if (this.resetTimer > this.resetEventTime) 
         {
-            console.log("bug");
             this.resetTimer = 0;
             this.star.orbitalEntered = false;
             this.star.isBouncing = false;
@@ -418,7 +417,6 @@ class Level1 extends Phaser.Scene {
     
     saveStrandedStar() {
 
-        console.log("saving");
         if (!this.star.orbitalEntered) this.star.cameraSetBool = true;
 
         // let the final in normalize() params denote how far the satellite is from the star
@@ -487,7 +485,6 @@ class Level1 extends Phaser.Scene {
         // this.bg.y -= bgOffset;
         // this.bg.tilePositionX -= bgOffset;
         // this.bg.tilePositionY -= bgOffset;
-        console.log("here");
         
     }
 
@@ -713,7 +710,7 @@ class Level1 extends Phaser.Scene {
         satellites = this.satelliteGroup.getChildren();
         for (var i = 0; i < satellites.length; i++) 
         {
-           console.log(satellites[i].hasAttachedToStar);
+        //    console.log(satellites[i].hasAttachedToStar);
             
         }
     }
