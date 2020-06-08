@@ -435,7 +435,7 @@ class Level1 extends Phaser.Scene {
         //perpendicular
         let landingSpotX = savingSatelliteX;
         let landingSpotY = savingSatelliteY;
-        let normOffset = this.normalize(-this.star.x_velocity, -this.star.y_velocity, orbitalRadius*2.3);
+        let normOffset = this.normalize(-this.star.x_velocity, -this.star.y_velocity, orbitalRadius*4);
         
         savingSatelliteX += -sign * normOffset[0];
         savingSatelliteY += sign * normOffset[1];

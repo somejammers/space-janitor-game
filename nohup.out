@@ -1602,3 +1602,96 @@ Error downloading with electron net: net::ERR_FAILED
 Falling back to node net library..
 [Modules] Failed fetching module discord_krisp@0: Error: HTTP Error: Status Code 403
 [Modules] Finished module downloads. [success: 0] [failure: 1]
+22:05:04 INFO: Request to www.google-analytics.com blocked by host blocker.
+22:06:18 INFO: Request to sb.scorecardresearch.com blocked by host blocker.
+22:06:19 INFO: Request to js-sec.indexww.com blocked by host blocker.
+22:06:19 INFO: Request to c.amazon-adsystem.com blocked by host blocker.
+22:06:19 INFO: Request to www.googletagservices.com blocked by host blocker.
+22:06:19 INFO: Request to ad.wsod.com blocked by host blocker.
+22:06:19 INFO: Request to tag.bounceexchange.com blocked by host blocker.
+22:06:19 INFO: Request to d1z2jf7jlzjs58.cloudfront.net blocked by host blocker.
+22:06:20 INFO: Request to ak.sail-horizon.com blocked by host blocker.
+22:06:20 INFO: Request to static.ads-twitter.com blocked by host blocker.
+22:06:20 INFO: Request to pixel.quantserve.com blocked by host blocker.
+22:06:20 INFO: Request to dpm.demdex.net blocked by host blocker.
+22:06:20 INFO: Request to www.googleadservices.com blocked by host blocker.
+22:06:20 INFO: Request to dpm.demdex.net blocked by host blocker.
+22:06:20 INFO: Request to ad.doubleclick.net blocked by host blocker.
+22:06:20 INFO: Request to tpc.googlesyndication.com blocked by host blocker.
+22:06:20 INFO: Request to ad.doubleclick.net blocked by host blocker.
+22:06:20 INFO: Request to ad.doubleclick.net blocked by host blocker.
+22:06:21 INFO: Request to cdn.taboola.com blocked by host blocker.
+[13949:16490:0607/220624.232414:ERROR:nss_ocsp.cc(591)] No URLRequestContext for NSS HTTP handler. host: ocsp.usertrust.com
+[13949:16490:0607/220624.232583:ERROR:nss_ocsp.cc(591)] No URLRequestContext for NSS HTTP handler. host: ocsp.usertrust.com
+[13949:16490:0607/220624.232693:ERROR:nss_ocsp.cc(591)] No URLRequestContext for NSS HTTP handler. host: crl.usertrust.com
+[13949:16490:0607/220624.235986:ERROR:nss_ocsp.cc(591)] No URLRequestContext for NSS HTTP handler. host: ocsp.usertrust.com
+[13949:16490:0607/220624.236058:ERROR:nss_ocsp.cc(591)] No URLRequestContext for NSS HTTP handler. host: ocsp.usertrust.com
+[13949:16490:0607/220624.236127:ERROR:nss_ocsp.cc(591)] No URLRequestContext for NSS HTTP handler. host: crl.usertrust.com
+Discord 0.0.10
+Starting app.
+Starting updater.
+[Modules] Modules initializing
+[Modules] Distribution: remote
+[Modules] Host updates: enabled
+[Modules] Module updates: enabled
+[Modules] Module install path: /home/a/.config/discord/0.0.10/modules
+[Modules] Module installed file path: /home/a/.config/discord/0.0.10/modules/installed.json
+[Modules] Module download path: /home/a/.config/discord/0.0.10/modules/pending
+[20276:0607/220825.557549:ERROR:buffer_manager.cc(488)] [.DisplayCompositor]GL ERROR :GL_INVALID_OPERATION : glBufferData: <- error from previous GL command
+[Modules] No updates to install
+[Modules] Checking for host updates.
+[Modules] Host is up to date.
+[Modules] Checking for module updates at https://discordapp.com/api/modules/stable/versions.json
+[Modules] No module updates available.
+[20276:0607/220826.475783:ERROR:buffer_manager.cc(488)] [.DisplayCompositor]GL ERROR :GL_INVALID_OPERATION : glBufferData: <- error from previous GL command
+[Modules] Starting to install discord_krisp...
+[Modules] Fetching discord_krisp@0 from https://discordapp.com/api/modules/stable/discord_krisp/0
+[Modules] Streaming discord_krisp@0 to /home/a/.config/discord/0.0.10/modules/pending/discord_krisp-0.zip
+(electron) 'isAccessibilitySupportEnabled function' is deprecated and will be removed. Please use 'accessibilitySupportEnabled property' instead.
+Error downloading with electron net: HTTP Error: Status Code 403
+Falling back to node net library..
+(electron) 'setBadgeCount function' is deprecated and will be removed. Please use 'badgeCount property' instead.
+[Modules] Failed fetching module discord_krisp@0: Error: HTTP Error: Status Code 403
+[Modules] Finished module downloads. [success: 0] [failure: 1]
+
+(discord:20222): libnotify-WARNING **: 22:10:59.765: Failed to connect to proxy
+
+(discord:20222): libnotify-WARNING **: 22:10:59.769: Failed to connect to proxy
+
+(discord:20222): libnotify-WARNING **: 22:10:59.773: Failed to connect to proxy
+
+(discord:20222): libnotify-WARNING **: 22:11:30.525: Failed to connect to proxy
+
+(discord:20222): libnotify-WARNING **: 22:11:30.528: Failed to connect to proxy
+
+(discord:20222): libnotify-WARNING **: 22:11:30.532: Failed to connect to proxy
+
+(discord:20222): libnotify-WARNING **: 22:13:54.620: Failed to connect to proxy
+
+(discord:20222): libnotify-WARNING **: 22:13:54.622: Failed to connect to proxy
+
+(discord:20222): libnotify-WARNING **: 22:13:54.626: Failed to connect to proxy
+
+(discord:20222): libnotify-WARNING **: 22:14:01.078: Failed to connect to proxy
+
+(discord:20222): libnotify-WARNING **: 22:14:01.083: Failed to connect to proxy
+
+(discord:20222): libnotify-WARNING **: 22:14:01.087: Failed to connect to proxy
+
+(discord:20222): libnotify-WARNING **: 22:15:44.775: Failed to connect to proxy
+
+(discord:20222): libnotify-WARNING **: 22:15:44.778: Failed to connect to proxy
+
+(discord:20222): libnotify-WARNING **: 22:15:44.782: Failed to connect to proxy
+
+(discord:20222): libnotify-WARNING **: 22:16:11.690: Failed to connect to proxy
+
+(discord:20222): libnotify-WARNING **: 22:16:11.697: Failed to connect to proxy
+
+(discord:20222): libnotify-WARNING **: 22:16:11.702: Failed to connect to proxy
+
+(discord:20222): libnotify-WARNING **: 22:16:31.198: Failed to connect to proxy
+
+(discord:20222): libnotify-WARNING **: 22:16:31.205: Failed to connect to proxy
+
+(discord:20222): libnotify-WARNING **: 22:16:31.207: Failed to connect to proxy
