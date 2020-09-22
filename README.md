@@ -1,8 +1,8 @@
-## ![ SPACE JANITOR ](https://thisisteamswag.github.io/scaleAndDistortionGame/ )  
+## [ SPACE JANITOR ](https://thisisteamswag.github.io/scaleAndDistortionGame/)  
 Class: CMPM/ARTG 120 Final Game, Spring 2020  
 Assigned Theme: Scale & Distortion  
 Build time: 4 weeks
-![Play here!](https://thisisteamswag.github.io/scaleAndDistortionGame/ )  
+[Play here!](https://thisisteamswag.github.io/scaleAndDistortionGame/)  
 
 ### Credits:
 - Ari Iramanesh - Concept, Gameplay, & Programming  
