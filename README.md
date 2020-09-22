@@ -6,9 +6,9 @@ Build time: 4 weeks
 
 ### Credits:
 - Ari Iramanesh - Concept, Gameplay, & Programming  
-Aurelia Swift - Animation & Art  
-Simone Barie  - Animation, Art, Sound, & Menu  
+- Aurelia Swift - Animation & Art  
+- Simone Barie  - Animation, Art, Sound, & Menu  
 
 ### Warning for newer/powerful devices: 
-the game runs too quickly, throwing off certain processes (if you
+The game runs too quickly, throwing off certain processes (if you
 know why, let us know!)
