@@ -6,13 +6,6 @@
 // Aurelia Swift - Animation & Art
 // Simone Barie - Animation, Art, Sound, & Menu
 
-// A note for brave code-splorers:
-// Hello! If you're reading this then you are probably interested in my code, and to that I say DON'T, unless you're willing 
-// to brave through a nightmare of amateur state machine implementation and confusing jargon. There were many scrapped mechanics whose 
-// entrails I left out without care. If this doesn't bother you, then nobody is stopping you!
-//
-// With love, Ari
-
 let canvas_height = 720;
 let canvas_width = 720;
 
