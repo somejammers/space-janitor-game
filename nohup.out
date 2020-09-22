@@ -1695,3 +1695,30 @@ Falling back to node net library..
 (discord:20222): libnotify-WARNING **: 22:16:31.205: Failed to connect to proxy
 
 (discord:20222): libnotify-WARNING **: 22:16:31.207: Failed to connect to proxy
+Discord 0.0.10
+Starting app.
+Starting updater.
+[Modules] Modules initializing
+[Modules] Distribution: remote
+[Modules] Host updates: enabled
+[Modules] Module updates: enabled
+[Modules] Module install path: /home/a/.config/discord/0.0.10/modules
+[Modules] Module installed file path: /home/a/.config/discord/0.0.10/modules/installed.json
+[Modules] Module download path: /home/a/.config/discord/0.0.10/modules/pending
+[10598:0607/231756.543855:ERROR:buffer_manager.cc(488)] [.DisplayCompositor]GL ERROR :GL_INVALID_OPERATION : glBufferData: <- error from previous GL command
+[Modules] No updates to install
+[Modules] Checking for host updates.
+[Modules] Host is up to date.
+[Modules] Checking for module updates at https://discordapp.com/api/modules/stable/versions.json
+[Modules] No module updates available.
+[10598:0607/231757.483416:ERROR:buffer_manager.cc(488)] [.DisplayCompositor]GL ERROR :GL_INVALID_OPERATION : glBufferData: <- error from previous GL command
+[Modules] Starting to install discord_krisp...
+[Modules] Fetching discord_krisp@0 from https://discordapp.com/api/modules/stable/discord_krisp/0
+[Modules] Streaming discord_krisp@0 to /home/a/.config/discord/0.0.10/modules/pending/discord_krisp-0.zip
+(electron) 'isAccessibilitySupportEnabled function' is deprecated and will be removed. Please use 'accessibilitySupportEnabled property' instead.
+Error downloading with electron net: HTTP Error: Status Code 403
+Falling back to node net library..
+(electron) 'setBadgeCount function' is deprecated and will be removed. Please use 'badgeCount property' instead.
+[Modules] Failed fetching module discord_krisp@0: Error: HTTP Error: Status Code 403
+[Modules] Finished module downloads. [success: 0] [failure: 1]
+23:19:15 INFO: Yanked URL to clipboard: https://thisisteamswag.github.io/scaleAndDistortionGame/
