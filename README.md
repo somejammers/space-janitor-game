@@ -9,6 +9,5 @@ Build time: 4 weeks
 - Aurelia Swift - Animation & Art  
 - Simone Barie  - Animation, Art, Sound, & Menu  
 
-### Warning for newer/powerful devices: 
-The game runs too quickly, throwing off certain processes (if you
-know why, let us know!)
+### Warning
+The game is only tested with screens of 60Hz, and won't work well with anything else.
