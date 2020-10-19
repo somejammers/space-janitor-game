@@ -10,4 +10,4 @@ Build time: 4 weeks
 - Simone Barie  - Animation, Art, Sound, & Menu  
 
 ### Warning
-The game is only tested with screens of 60Hz, and won't work well with anything else.
+The game is not yet frame-rate independent, and it won't run well on screens differing from 60Hz
